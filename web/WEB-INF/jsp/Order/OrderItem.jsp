@@ -1,0 +1,107 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Raymond Li
+  Date: 2022/10/23
+  Time: 21:00
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+	<title>OrderView</title>
+</head>
+<body>
+
+<%@include file="../common/Top.jsp" %>
+
+<div id="Content">
+
+	<div id="BackLink">
+		<a href="${pageContext.request.contextPath}">Return to Main Menu</a>
+	</div>
+
+	<div id="CenterForm">
+
+		<h3>Order</h3>
+		<table>
+			<colgroup>
+				<col style="width: 25%"/>
+				<col/>
+			</colgroup>
+			<tr>
+				<td>Order No.</td>
+				<td>${requestScope.order.getOrderID()}</td>
+			</tr>
+			<tr>
+				<td>Order Time</td>
+				<td>${requestScope.order.getOrderTime()}</td>
+			</tr>
+			<tr>
+				<td>Pay Tiem</td>
+				<td>${requestScope.order.getPayTime()}</td>
+			</tr>
+			<tr>
+				<td>Pay Method</td>
+				<td>${requestScope.order.getPayMethod()}</td>
+			</tr>
+		</table>
+
+		<h3>Shipping Address</h3>
+		<table>
+			<colgroup>
+				<col style="width: 25%;"/>
+				<col/>
+			</colgroup>
+			<tr>
+				<td>Receiver Name:</td>
+				<td>${requestScope.order.getReceiver().getReceiverName()}</td>
+			</tr>
+			<tr>
+				<td>Phone Number:</td>
+				<td>${requestScope.order.getReceiver().getPhoneNumber()}</td>
+			</tr>
+			<tr>
+				<td>Receiver Address:</td>
+				<td>${requestScope.order.getReceiver().getCountry()} ${requestScope.order.getReceiver().getProvince()} ${requestScope.order.getReceiver().getCity()} ${requestScope.order.getReceiver().getDistrict()} ${requestScope.order.getReceiver().getDetailedAddress()}</td>
+			</tr>
+		</table>
+
+		<h3>Ordering Products</h3>
+		<table style="text-align: center">
+			<tr>
+				<th><b>Item ID</b></th>
+				<th><b>Product ID</b></th>
+				<th><b>Description</b></th>
+				<th><b>In Stock?</b></th>
+				<th><b>Quantity</b></th>
+				<th><b>List Price</b></th>
+				<th><b>Total Cost</b></th>
+			</tr>
+			<c:forEach items="${requestScope.order.getCartItemList()}" var="cartItem">
+				<tr>
+					<td>${cartItem.itemID}</td>
+					<td>${cartItem.productID}</td>
+					<td style="text-align: left">${cartItem.description}</td>
+					<td>${cartItem.inStock}</td>
+					<td>${cartItem.quantity}</td>
+					<td>$${cartItem.listPrice}</td>
+					<td>$${cartItem.totalCost}</td>
+				</tr>
+			</c:forEach>
+			<tr>
+				<td colspan="5"></td>
+				<td><strong>Sub Total:</strong></td>
+				<td><strong>$${requestScope.order.getTotalPrice()}</strong></td>
+			</tr>
+		</table>
+
+		<div class="button-bar">
+			<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Order/deleteOrder?${requestScope.order.getOrderID()}'">Delete Order</button>
+		</div>
+	</div>
+</div>
+
+<%@include file="../common/Bottom.jsp" %>
+
+</body>
+</html>
