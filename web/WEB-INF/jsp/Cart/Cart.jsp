@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<%@include file="../common/Top.jsp" %>
+<%@include file="../Common/Top.jsp" %>
 
 <div id="Content">
 
@@ -104,7 +104,7 @@
 	</div>
 </div>
 
-<%@include file="../common/Bottom.jsp" %>
+<%@include file="../Common/Bottom.jsp" %>
 
 </body>
 </html>
