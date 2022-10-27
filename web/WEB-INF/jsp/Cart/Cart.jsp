@@ -76,6 +76,8 @@
 
 				</table>
 			</form>
+
+			<%--此处应添加js判断库存是否满足需求--%>
 			<c:if test="${!sessionScope.cartItemList.isEmpty()}">
 				<a class="button" href="${pageContext.request.contextPath}/Order/orderSubmit">Proceed to Checkout</a>
 			</c:if>

@@ -4,7 +4,9 @@ import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Order;
 import cn.tdsmy.JPetStore.Entity.User;
 import cn.tdsmy.JPetStore.Service.OrderService;
+import cn.tdsmy.JPetStore.Service.PetService;
 import cn.tdsmy.JPetStore.Service.impl.OrderServiceImpl;
+import cn.tdsmy.JPetStore.Service.impl.PetServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +27,7 @@ import java.util.List;
 public class OrderItemServlet extends HttpServlet
 {
     private OrderService orderService;
+    private PetService petService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -32,6 +35,10 @@ public class OrderItemServlet extends HttpServlet
         if (orderService == null)
         {
             orderService = new OrderServiceImpl();
+        }
+        if (petService == null)
+        {
+            petService = new PetServiceImpl();
         }
 
         String param = req.getQueryString();
@@ -47,6 +54,8 @@ public class OrderItemServlet extends HttpServlet
             order.setPayMethod(req.getParameter("payMethod"));
 
             orderService.addOrder("j2ee", order);//插入数据库
+            petService.updatePet(order.getCartItemList());//减去库存
+            
             req.setAttribute("order", order);//传参
         }
         else
