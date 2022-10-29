@@ -48,7 +48,7 @@
 
 	<div id="Search" data-hide-for="large">
 		<div id="SearchContent">
-			<form action="/catalog/searchProducts">
+			<form action="${pageContext.request.contextPath}/Pet/searchPet">
 				<div class="input-group">
 					<input class="input-group-field" type="text" name="keyword" placeholder="Product Search">
 					<div class="input-group-button">

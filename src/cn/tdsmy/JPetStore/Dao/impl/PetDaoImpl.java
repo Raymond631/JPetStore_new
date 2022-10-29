@@ -55,14 +55,14 @@ public class PetDaoImpl implements PetDao
         {
             while (res.next())
             {
-                String ProductID = res.getString("ProductID");//品种ID
-                String Name = res.getString("Name");//品种名
-                String Introduce = res.getString("Introduce");//品种简介
+                String productID = res.getString("productID");//品种ID
+                String name = res.getString("name");//品种名
+                String introduce = res.getString("introduce");//品种简介
 
                 Pet pet = new Pet();
-                pet.setProductID(ProductID);
-                pet.setName(Name);
-                pet.setIntroduce(Introduce);
+                pet.setProductID(productID);
+                pet.setName(name);
+                pet.setIntroduce(introduce);
 
                 petList.add(pet);
             }

@@ -1,5 +1,6 @@
 package cn.tdsmy.JPetStore.Controller;
 
+import cn.tdsmy.JPetStore.Entity.Pet;
 import cn.tdsmy.JPetStore.Service.PetService;
 import cn.tdsmy.JPetStore.Service.impl.PetServiceImpl;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author: Raymond Li
@@ -43,7 +45,26 @@ public class PetServlet extends HttpServlet
         String url = req.getPathInfo();
         switch (url)
         {
+            case "/searchPet":
+                searchPet(req, resp);
+                break;
+        }
+    }
 
+    /**
+     * post请求
+     */
+    public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        String key = req.getParameter("keyword");
+        List<Pet> petList = petService.searchPet(key);
+        for (Pet pet : petList)
+        {
+            System.out.println();
+            System.out.println(pet.getProductID());
+            System.out.println(pet.getName());
+            System.out.println(pet.getIntroduce());
+            System.out.println();
         }
     }
 }
