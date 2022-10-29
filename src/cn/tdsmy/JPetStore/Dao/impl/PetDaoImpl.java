@@ -2,7 +2,6 @@ package cn.tdsmy.JPetStore.Dao.impl;
 
 import cn.tdsmy.JPetStore.Dao.PetDao;
 import cn.tdsmy.JPetStore.Dao.Utils.DBUtils;
-import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Pet;
 
 import java.math.BigDecimal;
@@ -21,56 +20,22 @@ import java.util.List;
 public class PetDaoImpl implements PetDao
 {
     @Override
-    public void updatePet(List<CartItem> cartItemList)
-    {
-        try (Connection connection = DBUtils.getConnection())
-        {
-            for (CartItem cartItem : cartItemList)
-            {
-                String ItemID = cartItem.getItemID();
-                int Quantity = Integer.parseInt(cartItem.getQuantity());
-
-                int newStock = 0;
-                String sql1 = "select * from pet where ItemID ='" + ItemID + "'";
-                try (PreparedStatement statement = connection.prepareStatement(sql1); ResultSet res = statement.executeQuery(sql1))
-                {
-                    if (res.next())
-                    {
-                        int Stock = Integer.parseInt(res.getString("Stock"));
-                        newStock = Stock - Quantity;
-                    }
-                }
-
-                String sql2 = "update pet set Stock = '" + newStock + "' where ItemID ='" + ItemID + "'";
-                try (PreparedStatement statement = connection.prepareStatement(sql2))
-                {
-                    statement.executeUpdate();
-                }
-            }
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public Pet getPet(String ItemID)
+    public Pet getPet(String itemID)
     {
         Pet pet = null;//如果没查到，则返回null
-        String sql = "select * from pet where ItemID ='" + ItemID + "'";
+        String sql = "select * from pet where itemID ='" + itemID + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
             if (res.next())
             {
-                String Category = res.getString("Category");
-                String ProductID = res.getString("ProductID");
-                String Name = res.getString("Name");
-                String Description = res.getString("Description");
-                String Introduce = res.getString("Introduce");
-                String Stock = res.getString("Stock");
-                BigDecimal ListPrice = res.getBigDecimal("ListPrice");
-                pet = new Pet(Category, ProductID, ItemID, Name, Description, Introduce, Stock, ListPrice);
+                String category = res.getString("category");
+                String productID = res.getString("productID");
+                String name = res.getString("name");
+                String introduce = res.getString("introduce");
+                String description = res.getString("description");
+                int stock = res.getInt("stock");
+                BigDecimal listPrice = res.getBigDecimal("listPrice");
+                pet = new Pet(category, productID, name, introduce, itemID, description, stock, listPrice);
             }
         }
         catch (SQLException e)
@@ -84,8 +49,8 @@ public class PetDaoImpl implements PetDao
     public List<Pet> searchPet(String key)//SQL模糊查询
     {
         List<Pet> petList = new ArrayList<>();
-        String sql = "select * from pet where Category like '%" + key + "%' or ProductID like '%" + key + "%' or ItemID like '%" + key
-                + "%' or Name like '%" + key + "%' or Description like '%" + key + "%' or Introduce like '%" + key + "%'";
+        String sql = "select * from pet where category like '%" + key + "%' or productID like '%" + key + "%' or name like '%" + key
+                + "%' or introduce like '%" + key + "%' or itemID like '%" + key + "%' or description like '%" + key + "%'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
             while (res.next())

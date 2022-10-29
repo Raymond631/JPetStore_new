@@ -15,12 +15,11 @@ public class CartItem implements Serializable
     private String itemID;
     private String productID;
     private String description;
-    private String stock;
-    private String quantity;
+    private int stock;
+    private int quantity;
     private BigDecimal listPrice;
-    private BigDecimal totalCost;
 
-    public CartItem(String itemID, String productID, String description, String stock, String quantity, BigDecimal listPrice)
+    public CartItem(String itemID, String productID, String description, int stock, int quantity, BigDecimal listPrice)
     {
         this.itemID = itemID;
         this.productID = productID;
@@ -28,7 +27,21 @@ public class CartItem implements Serializable
         this.stock = stock;
         this.quantity = quantity;
         this.listPrice = listPrice;
-        this.totalCost = listPrice.multiply(new BigDecimal(quantity));
+    }
+
+    public CartItem()
+    {
+    }
+
+    @Override
+    public String toString()
+    {
+        return "itemID=" + itemID + "\n"
+                + "productID=" + productID + "\n"
+                + "description=" + description + "\n"
+                + "stock=" + stock + "\n"
+                + "quantity=" + quantity + "\n"
+                + "listPrice=" + listPrice + "\n";
     }
 
     public String getItemID()
@@ -61,22 +74,22 @@ public class CartItem implements Serializable
         this.description = description;
     }
 
-    public String getStock()
+    public int getStock()
     {
         return stock;
     }
 
-    public void setStock(String stock)
+    public void setStock(int stock)
     {
         this.stock = stock;
     }
 
-    public String getQuantity()
+    public int getQuantity()
     {
         return quantity;
     }
 
-    public void setQuantity(String quantity)
+    public void setQuantity(int quantity)
     {
         this.quantity = quantity;
     }
@@ -89,15 +102,5 @@ public class CartItem implements Serializable
     public void setListPrice(BigDecimal listPrice)
     {
         this.listPrice = listPrice;
-    }
-
-    public BigDecimal getTotalCost()
-    {
-        return totalCost;
-    }
-
-    public void setTotalCost(BigDecimal totalCost)
-    {
-        this.totalCost = totalCost;
     }
 }

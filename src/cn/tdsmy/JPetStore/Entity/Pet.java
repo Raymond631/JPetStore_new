@@ -11,110 +11,108 @@ import java.math.BigDecimal;
 public class Pet implements Serializable
 {
     private static final long serialVersionUID = -2420866370113193184L;
+    public String category;
+    public String productID;
+    public String name;
+    public String introduce;
+    public String itemID;
+    public String description;
+    public int stock;
+    public BigDecimal listPrice;
 
-    public String Category;
-    public String ProductID;
-    public String ItemID;//主键
-    public String Name;
-    public String Description;
-    public String Introduce;
-    public String Stock;
-    public BigDecimal ListPrice;
-
-    public Pet(String category, String productID, String itemID, String name, String description, String introduce, String stock, BigDecimal listPrice)
+    public Pet(String category, String productID, String name, String introduce, String itemID, String description, int stock, BigDecimal listPrice)
     {
-        Category = category;
-        ProductID = productID;
-        ItemID = itemID;
-        Name = name;
-        Description = description;
-        Introduce = introduce;
-        Stock = stock;
-        ListPrice = listPrice;
+        this.category = category;
+        this.productID = productID;
+        this.name = name;
+        this.introduce = introduce;
+        this.itemID = itemID;
+        this.description = description;
+        this.stock = stock;
+        this.listPrice = listPrice;
     }
 
     public Pet()
     {
-
     }
 
     public String getCategory()
     {
-        return Category;
+        return category;
     }
 
     public void setCategory(String category)
     {
-        Category = category;
+        this.category = category;
     }
 
     public String getProductID()
     {
-        return ProductID;
+        return productID;
     }
 
     public void setProductID(String productID)
     {
-        ProductID = productID;
-    }
-
-    public String getItemID()
-    {
-        return ItemID;
-    }
-
-    public void setItemID(String itemID)
-    {
-        ItemID = itemID;
+        this.productID = productID;
     }
 
     public String getName()
     {
-        return Name;
+        return name;
     }
 
     public void setName(String name)
     {
-        Name = name;
-    }
-
-    public String getDescription()
-    {
-        return Description;
-    }
-
-    public void setDescription(String description)
-    {
-        Description = description;
+        this.name = name;
     }
 
     public String getIntroduce()
     {
-        return Introduce;
+        return introduce;
     }
 
     public void setIntroduce(String introduce)
     {
-        Introduce = introduce;
+        this.introduce = introduce;
     }
 
-    public String getStock()
+    public String getItemID()
     {
-        return Stock;
+        return itemID;
     }
 
-    public void setStock(String stock)
+    public void setItemID(String itemID)
     {
-        Stock = stock;
+        this.itemID = itemID;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public int getStock()
+    {
+        return stock;
+    }
+
+    public void setStock(int stock)
+    {
+        this.stock = stock;
     }
 
     public BigDecimal getListPrice()
     {
-        return ListPrice;
+        return listPrice;
     }
 
     public void setListPrice(BigDecimal listPrice)
     {
-        ListPrice = listPrice;
+        this.listPrice = listPrice;
     }
 }

@@ -19,13 +19,13 @@
 
 	<div id="Logo">
 		<div id="LogoContent">
-			<a href="/catalog/"><img src="${pageContext.request.contextPath}/images/logo-topbar.gif"/></a>
+			<a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/images/logo-topbar.gif"/></a>
 		</div>
 	</div>
 
 	<div id="Menu">
 		<div id="MenuContent">
-			<a href="/cart/viewCart"><img align="middle" name="img_cart" src="${pageContext.request.contextPath}/images/cart.gif"/></a>
+			<a href="${pageContext.request.contextPath}/Cart/cartList"><img align="middle" name="img_cart" src="${pageContext.request.contextPath}/images/cart.gif"/></a>
 			<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
 
 			<c:if test="${sessionScope.accountBean == null}">
@@ -34,7 +34,7 @@
 				<a href="/account/newAccountForm">Sign Up</a>
 			</c:if>
 			<c:if test="${sessionScope.accountBean != null}">
-				<a href="/order/listOrders">My Orders</a>
+				<a href="${pageContext.request.contextPath}/Order/orderList">My Orders</a>
 				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
 				<a href="/account/editAccountForm">My Account</a>
 				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
@@ -42,7 +42,7 @@
 			</c:if>
 
 			<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-			<a href="/help.html">?</a>
+			<a href="${pageContext.request.contextPath}/help.html">?</a>
 		</div>
 	</div>
 

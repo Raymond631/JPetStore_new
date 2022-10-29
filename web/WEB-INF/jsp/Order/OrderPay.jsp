@@ -67,7 +67,7 @@
 					<td>${cartItem.stock}</td>
 					<td>${cartItem.quantity}</td>
 					<td>$${cartItem.listPrice}</td>
-					<td>$${cartItem.totalCost}</td>
+					<td>$${(cartItem.listPrice)*(cartItem.quantity)}</td>
 				</tr>
 			</c:forEach>
 			<tr>

@@ -4,9 +4,7 @@ import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Order;
 import cn.tdsmy.JPetStore.Entity.User;
 import cn.tdsmy.JPetStore.Service.OrderService;
-import cn.tdsmy.JPetStore.Service.PetService;
 import cn.tdsmy.JPetStore.Service.impl.OrderServiceImpl;
-import cn.tdsmy.JPetStore.Service.impl.PetServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +25,6 @@ import java.util.List;
 public class OrderServlet extends HttpServlet
 {
     private OrderService orderService;
-    private PetService petService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -46,10 +43,6 @@ public class OrderServlet extends HttpServlet
         if (orderService == null)
         {
             orderService = new OrderServiceImpl();
-        }
-        if (petService == null)
-        {
-            petService = new PetServiceImpl();
         }
 
         String url = req.getPathInfo();
@@ -127,19 +120,19 @@ public class OrderServlet extends HttpServlet
      */
     public void orderItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        if (req.getMethod().equals("POST"))
+        if (req.getMethod().equals("POST"))//新订单
         {
             Order order = new Order();
-            order.setPayTime(orderService.getTimeNow());
-            order.setOrderTime((String) req.getSession().getAttribute("OrderTime"));
             order.setOrderID(orderService.createOrderID());
+            order.setOrderTime((String) req.getSession().getAttribute("OrderTime"));
+            order.setPayTime(orderService.getTimeNow());
             order.setReceiver((User) req.getSession().getAttribute("receiver"));
             order.setCartItemList((List<CartItem>) req.getSession().getAttribute("cartItemList"));
+
             order.setTotalPrice((BigDecimal) req.getSession().getAttribute("allCost"));
             order.setPayMethod(req.getParameter("payMethod"));
 
             orderService.addOrder("j2ee", order);//插入数据库
-            petService.updatePet(order.getCartItemList());//减去库存
 
             req.setAttribute("order", order);
             req.setAttribute("newOrder", true);
@@ -156,10 +149,11 @@ public class OrderServlet extends HttpServlet
 
     /**
      * get请求
+     * 参数/deleteOrder?orderID=
      */
     public void deleteOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        String OrderID = req.getQueryString();
+        String OrderID = req.getQueryString().substring(8);
         orderService.deleteOrder(OrderID);
 
         resp.sendRedirect(req.getContextPath() + "/Order/orderList");

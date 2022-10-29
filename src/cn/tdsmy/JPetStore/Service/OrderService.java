@@ -16,11 +16,11 @@ public interface OrderService
 
     public void addOrder(String username, Order order);//提交订单
 
-    public void deleteOrder(String OrderID);//删除订单
+    public void deleteOrder(String orderID);//删除订单
 
-    public Order selectOrder(String OrderID);//查询订单详情
+    public Order selectOrder(String orderID);//查询订单详情
 
-    public List<Order> selectOrderList(String username);//查询历史订单
+    public List<Order> selectOrderList(String username);//查询订单列表
 
     public String getTimeNow();
 

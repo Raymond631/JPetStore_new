@@ -13,9 +13,9 @@ public interface OrderDao
 {
     public void addOrder(String username, Order order);//增
 
-    public void deleteOrder(String OrderId);//删
+    public void deleteOrder(String orderID);//删
 
-    public Order selectOrder(String OrderId);//查询订单详情
+    public Order selectOrder(String orderID);//查询订单详情
 
     public List<Order> selectOrderList(String username);//查询历史订单
 }

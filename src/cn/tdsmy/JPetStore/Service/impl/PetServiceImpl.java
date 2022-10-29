@@ -2,7 +2,6 @@ package cn.tdsmy.JPetStore.Service.impl;
 
 import cn.tdsmy.JPetStore.Dao.PetDao;
 import cn.tdsmy.JPetStore.Dao.impl.PetDaoImpl;
-import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Pet;
 import cn.tdsmy.JPetStore.Service.PetService;
 
@@ -18,23 +17,13 @@ public class PetServiceImpl implements PetService
     private PetDao petDao;
 
     @Override
-    public void updatePet(List<CartItem> cartItemList)
+    public Pet getPet(String itemID)
     {
         if (petDao == null)
         {
             petDao = new PetDaoImpl();
         }
-        petDao.updatePet(cartItemList);
-    }
-
-    @Override
-    public Pet getPet(String ItemID)
-    {
-        if (petDao == null)
-        {
-            petDao = new PetDaoImpl();
-        }
-        return petDao.getPet(ItemID);
+        return petDao.getPet(itemID);
     }
 
     @Override

@@ -20,16 +20,10 @@ import java.util.List;
 public class CartDaoImpl implements CartDao
 {
     @Override
-    public void addCartItem(String username, CartItem cartItem)
+    public void addCartItem(String username, String itemID, int quantity)
     {
-        String value = "'" + username + "','"
-                + cartItem.getItemID() + "','"
-                + cartItem.getProductID() + "','"
-                + cartItem.getDescription() + "','"
-                + cartItem.getStock() + "','"
-                + cartItem.getQuantity() + "','"
-                + cartItem.getListPrice() + "'";
-        String sql = "insert into cart (user,ItemID,ProductID,Description,Stock,Quantity,ListPrice) values (" + value + ")";
+        String value = "'" + username + "','" + itemID + "','" + quantity + "'";
+        String sql = "insert into cart (username,itemID,quantity) values (" + value + ")";
 
         //下面用到了try-with-resources语法: 执行完{}后，自动关闭()内的resources,不需要再写finally子句去手动关闭connection等资源
         //"增删改"括号内写2项，"查"括号内写3项
@@ -44,9 +38,9 @@ public class CartDaoImpl implements CartDao
     }
 
     @Override
-    public void removeCartItem(String username, String item)
+    public void removeCartItem(String username, String itemID)
     {
-        String sql = "delete from cart where user ='" + username + "'" + " and ItemID ='" + item + "'";
+        String sql = "delete from cart where username ='" + username + "'" + " and itemID ='" + itemID + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
         {
             statement.executeUpdate();
@@ -60,7 +54,7 @@ public class CartDaoImpl implements CartDao
     @Override
     public void clearCart(String username)
     {
-        String sql = "delete from cart where user ='" + username + "'";
+        String sql = "delete from cart where username ='" + username + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
         {
             statement.executeUpdate();
@@ -72,9 +66,9 @@ public class CartDaoImpl implements CartDao
     }
 
     @Override
-    public void updateCart(String username, String item, String quantity)
+    public void updateCart(String username, String itemID, int quantity)
     {
-        String sql = "update cart set Quantity = '" + quantity + "' where user ='" + username + "'" + " and ItemID ='" + item + "'";
+        String sql = "update cart set quantity = '" + quantity + "' where username ='" + username + "'" + " and itemID ='" + itemID + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
         {
             statement.executeUpdate();
@@ -89,19 +83,33 @@ public class CartDaoImpl implements CartDao
     public List<CartItem> selectCartList(String username)
     {
         List<CartItem> cartItemList = new ArrayList<>();
-        String sql = "select * from cart where user ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
+        String sql1 = "select * from cart where username ='" + username + "'";
+        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement1 = connection.prepareStatement(sql1); ResultSet res1 = statement1.executeQuery(sql1))
         {
-            while (res.next())
+            while (res1.next())
             {
-                String ItemID = res.getString("ItemID");
-                String ProductID = res.getString("ProductID");
-                String Description = res.getString("Description");
-                String Stock = res.getString("Stock");
-                String Quantity = res.getString("Quantity");
-                BigDecimal ListPrice = res.getBigDecimal("ListPrice");
+                CartItem cartItem = new CartItem();
 
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, Stock, Quantity, ListPrice);
+                String itemID = res1.getString("itemID");
+                int quantity = res1.getInt("quantity");
+                cartItem.setItemID(itemID);
+                cartItem.setQuantity(quantity);
+
+                String sql2 = "select * from pet where itemID = '" + itemID + "'";
+                try (PreparedStatement statement2 = connection.prepareStatement(sql2); ResultSet res2 = statement2.executeQuery(sql2))
+                {
+                    while (res2.next())
+                    {
+                        String productID = res2.getString("productID");
+                        String description = res2.getString("description");
+                        int stock = res2.getInt("stock");
+                        BigDecimal listPrice = res2.getBigDecimal("listPrice");
+                        cartItem.setProductID(productID);
+                        cartItem.setDescription(description);
+                        cartItem.setStock(stock);
+                        cartItem.setListPrice(listPrice);
+                    }
+                }
                 cartItemList.add(cartItem);
             }
         }

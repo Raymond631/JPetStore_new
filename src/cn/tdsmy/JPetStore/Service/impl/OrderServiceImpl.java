@@ -21,8 +21,7 @@ public class OrderServiceImpl implements OrderService
 {
     private UserDao userDao;
     private OrderDao orderDao;
-
-    private static int num = 1000;
+    private static int num = 1000;//用于生成订单号
 
     @Override
     public User selectReceiver(String username)
@@ -45,23 +44,23 @@ public class OrderServiceImpl implements OrderService
     }
 
     @Override
-    public void deleteOrder(String OrderID)
+    public void deleteOrder(String orderID)
     {
         if (orderDao == null)
         {
             orderDao = new OrderDaoImpl();
         }
-        orderDao.deleteOrder(OrderID);
+        orderDao.deleteOrder(orderID);
     }
 
     @Override
-    public Order selectOrder(String OrderID)
+    public Order selectOrder(String orderID)
     {
         if (orderDao == null)
         {
             orderDao = new OrderDaoImpl();
         }
-        return orderDao.selectOrder(OrderID);
+        return orderDao.selectOrder(orderID);
     }
 
     @Override

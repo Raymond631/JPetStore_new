@@ -59,8 +59,8 @@
 								<td>${cartItem.stock}</td>
 								<td><input type="number" name="${cartItem.itemID}" size="3" maxlength="3" value="${cartItem.quantity}"/></td>
 								<td>$${cartItem.listPrice}</td>
-								<td>$${cartItem.totalCost}</td>
-								<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?cartItem=${cartItem.itemID}">Remove</a></td>
+								<td>$${(cartItem.listPrice)*(cartItem.quantity)}</td>
+								<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a></td>
 							</tr>
 						</c:forEach>
 						<tr>
@@ -70,7 +70,7 @@
 							</td>
 							<td><strong>Sub Total:</strong></td>
 							<td><strong>$${sessionScope.allCost}</strong></td>
-							<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?cartItem=0">Remove All</a></td>
+							<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=0">Remove All</a></td>
 						</tr>
 					</c:if>
 

@@ -72,8 +72,7 @@ public class CartServlet extends HttpServlet
     public void cartList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         List<CartItem> cartItemList = cartService.selectCartList("j2ee");
-        BigDecimal allCost = cartService.calculateAllCost(cartItemList);
-
+        BigDecimal allCost = cartService.getAllCost(cartItemList);
         req.getSession().setAttribute("cartItemList", cartItemList);
         req.getSession().setAttribute("allCost", allCost);
 
@@ -88,21 +87,21 @@ public class CartServlet extends HttpServlet
         Enumeration<String> itemList = req.getParameterNames();
         while (itemList.hasMoreElements())
         {
-            String item = itemList.nextElement();
-            String quantity = String.valueOf(req.getParameter(item));
-            cartService.updateCart("j2ee", item, quantity);
+            String itemID = itemList.nextElement();
+            int quantity = Integer.parseInt(req.getParameter(itemID));
+            cartService.updateCart("j2ee", itemID, quantity);
         }
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
 
     /**
      * get请求
-     * url带参数 /removeCartItem?cartItem=
+     * url带参数 /removeCartItem?itemID=
      */
     public void removeCartItem(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
-        String item = req.getQueryString().substring(9);
-        cartService.removeCartItem("j2ee", item);
+        String itemID = req.getQueryString().substring(7);
+        cartService.removeCartItem("j2ee", itemID);
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
 }

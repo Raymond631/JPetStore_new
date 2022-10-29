@@ -15,7 +15,8 @@
 
 <div id="Content">
 	<h2>Welcome to JPetStore</h2>
-	<p><a href="actions/Catalog.action">Enter the Store</a></p>
+	<a href="${pageContext.request.contextPath}/Cart/cartList">cartList</a><br>
+	<a href="${pageContext.request.contextPath}/Order/orderList">orderList</a><br>
 </div>
 
 </body>

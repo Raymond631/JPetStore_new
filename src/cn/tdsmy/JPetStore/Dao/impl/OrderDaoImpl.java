@@ -49,12 +49,21 @@ public class OrderDaoImpl implements OrderDao
                         + order.getPayMethod() + "'";
 
                 //注意: order是mysql关键字，不可用作表名
-                String sql = "insert into orderlist (username,OrderID,OrderTime,PayTime,ReceiverName,PhoneNumber,Country,Province," +
-                        "City,District,DetailedAddress,ItemID,ProductID,Description,Stock,Quantity,ListPrice,TotalPrice,PayMethod) values (" + value + ")";
+                //order表保存下单时的商品快照信息，stock是下单前的库存
+                String sql1 = "insert into orderlist (username,orderID,orderTime,payTime,receiverName,phoneNumber,country,province," +
+                        "city,district,detailedAddress,itemID,productID,description,stock,quantity,listPrice,totalPrice,payMethod) values (" + value + ")";
 
-                try (PreparedStatement statement = connection.prepareStatement(sql))
+                try (PreparedStatement statement1 = connection.prepareStatement(sql1))
                 {
-                    statement.executeUpdate();
+                    statement1.executeUpdate();
+                }
+
+                //更新库存
+                int newStock = cartItem.getStock() - cartItem.getQuantity();
+                String sql2 = "update pet set stock = '" + newStock + "' where itemID ='" + cartItem.getItemID() + "'";
+                try (PreparedStatement statement2 = connection.prepareStatement(sql2))
+                {
+                    statement2.executeUpdate();
                 }
             }
         }
@@ -65,9 +74,9 @@ public class OrderDaoImpl implements OrderDao
     }
 
     @Override
-    public void deleteOrder(String OrderID)
+    public void deleteOrder(String orderID)//为了方便，删除订单 默认订单已完成，不再做库存复原操作
     {
-        String sql = "delete from orderlist where OrderID ='" + OrderID + "'";
+        String sql = "delete from orderlist where orderID ='" + orderID + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
         {
             statement.executeUpdate();
@@ -79,62 +88,63 @@ public class OrderDaoImpl implements OrderDao
     }
 
     @Override
-    public Order selectOrder(String OrderID)
+    public Order selectOrder(String orderID)
     {
         Order order = new Order();
-        String sql = "select * from orderlist where OrderID ='" + OrderID + "'";
-        System.out.println(sql);
+        order.setCartItemList(new ArrayList<>());
+        String sql = "select * from orderlist where orderID ='" + orderID + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
             if (res.next())
             {
-                String orderID = res.getString("orderID");
                 String orderTime = res.getString("orderTime");
                 String payTime = res.getString("payTime");
-                BigDecimal TotalPrice = res.getBigDecimal("TotalPrice");
-                String PayMethod = res.getString("PayMethod");
+                String receiverName = res.getString("receiverName");
+                String phoneNumber = res.getString("phoneNumber");
+                String country = res.getString("country");
+                String province = res.getString("province");
+                String city = res.getString("city");
+                String district = res.getString("district");
+                String detailedAddress = res.getString("detailedAddress");
+                String itemID = res.getString("itemID");
+                String productID = res.getString("productID");
+                String description = res.getString("description");
+                int stock = res.getInt("stock");
+                int quantity = res.getInt("quantity");
+                BigDecimal listPrice = res.getBigDecimal("listPrice");
+                BigDecimal totalPrice = res.getBigDecimal("totalPrice");
+                String payMethod = res.getString("payMethod");
 
-                String ReceiverName = res.getString("ReceiverName");
-                String PhoneNumber = res.getString("PhoneNumber");
-                String Country = res.getString("Country");
-                String Province = res.getString("Province");
-                String City = res.getString("City");
-                String District = res.getString("District");
-                String DetailedAddress = res.getString("DetailedAddress");
                 User receiver = new User();
-                receiver.setReceiverName(ReceiverName);
-                receiver.setPhoneNumber(PhoneNumber);
-                receiver.setCountry(Country);
-                receiver.setProvince(Province);
-                receiver.setCity(City);
-                receiver.setDistrict(District);
-                receiver.setDetailedAddress(DetailedAddress);
+                receiver.setReceiverName(receiverName);
+                receiver.setPhoneNumber(phoneNumber);
+                receiver.setCountry(country);
+                receiver.setProvince(province);
+                receiver.setCity(city);
+                receiver.setDistrict(district);
+                receiver.setDetailedAddress(detailedAddress);
 
                 order.setOrderID(orderID);
                 order.setOrderTime(orderTime);
                 order.setPayTime(payTime);
                 order.setReceiver(receiver);
-                order.setTotalPrice(TotalPrice);
-                order.setPayMethod(PayMethod);
+                order.setTotalPrice(totalPrice);
+                order.setPayMethod(payMethod);
 
-                String ItemID = res.getString("ItemID");
-                String ProductID = res.getString("ProductID");
-                String Description = res.getString("Description");
-                String Stock = res.getString("Stock");
-                String Quantity = res.getString("Quantity");
-                BigDecimal ListPrice = res.getBigDecimal("ListPrice");
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, Stock, Quantity, ListPrice);
+                CartItem cartItem = new CartItem(itemID, productID, description, stock, quantity, listPrice);
+                System.out.println(cartItem);
                 order.getCartItemList().add(cartItem);
             }
             while (res.next())
             {
-                String ItemID = res.getString("ItemID");
-                String ProductID = res.getString("ProductID");
-                String Description = res.getString("Description");
-                String Stock = res.getString("Stock");
-                String Quantity = res.getString("Quantity");
-                BigDecimal ListPrice = res.getBigDecimal("ListPrice");
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, Stock, Quantity, ListPrice);
+                String itemID = res.getString("itemID");
+                String productID = res.getString("productID");
+                String description = res.getString("description");
+                int stock = res.getInt("stock");
+                int quantity = res.getInt("quantity");
+                BigDecimal listPrice = res.getBigDecimal("listPrice");
+
+                CartItem cartItem = new CartItem(itemID, productID, description, stock, quantity, listPrice);
                 order.getCartItemList().add(cartItem);
             }
         }
@@ -159,12 +169,12 @@ public class OrderDaoImpl implements OrderDao
                 if (!nextOrderID.equals(orderID))
                 {
                     String orderTime = res.getString("orderTime");
-                    BigDecimal TotalPrice = res.getBigDecimal("TotalPrice");
+                    BigDecimal totalPrice = res.getBigDecimal("totalPrice");
 
                     Order order = new Order();
                     order.setOrderID(nextOrderID);
                     order.setOrderTime(orderTime);
-                    order.setTotalPrice(TotalPrice);
+                    order.setTotalPrice(totalPrice);
                     orderList.add(order);
                 }
                 orderID = nextOrderID;

@@ -1,6 +1,5 @@
 package cn.tdsmy.JPetStore.Service;
 
-import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Pet;
 
 import java.util.List;
@@ -12,9 +11,7 @@ import java.util.List;
  */
 public interface PetService
 {
-    public void updatePet(List<CartItem> cartItemList);//改库存
-
-    public Pet getPet(String ItemID);//通过id检索某个宠物的信息
+    public Pet getPet(String itemID);//通过id检索某个宠物的信息
 
     public List<Pet> searchPet(String key);//通过关键字搜索宠物列表
 }
