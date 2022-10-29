@@ -26,10 +26,10 @@ public class CartDaoImpl implements CartDao
                 + cartItem.getItemID() + "','"
                 + cartItem.getProductID() + "','"
                 + cartItem.getDescription() + "','"
-                + cartItem.getInStock() + "','"
+                + cartItem.getStock() + "','"
                 + cartItem.getQuantity() + "','"
                 + cartItem.getListPrice() + "'";
-        String sql = "insert into cart (user,ItemID,ProductID,Description,InStock,Quantity,ListPrice) values (" + value + ")";
+        String sql = "insert into cart (user,ItemID,ProductID,Description,Stock,Quantity,ListPrice) values (" + value + ")";
 
         //下面用到了try-with-resources语法: 执行完{}后，自动关闭()内的resources,不需要再写finally子句去手动关闭connection等资源
         //"增删改"括号内写2项，"查"括号内写3项
@@ -97,11 +97,11 @@ public class CartDaoImpl implements CartDao
                 String ItemID = res.getString("ItemID");
                 String ProductID = res.getString("ProductID");
                 String Description = res.getString("Description");
-                String InStock = res.getString("InStock");
+                String Stock = res.getString("Stock");
                 String Quantity = res.getString("Quantity");
                 BigDecimal ListPrice = res.getBigDecimal("ListPrice");
 
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, InStock, Quantity, ListPrice);
+                CartItem cartItem = new CartItem(ItemID, ProductID, Description, Stock, Quantity, ListPrice);
                 cartItemList.add(cartItem);
             }
         }

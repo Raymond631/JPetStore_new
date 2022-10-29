@@ -11,63 +11,11 @@
  Target Server Version : 50739 (5.7.39-log)
  File Encoding         : 65001
 
- Date: 28/10/2022 23:39:21
+ Date: 29/10/2022 00:05:19
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for cart
--- ----------------------------
-DROP TABLE IF EXISTS `cart`;
-CREATE TABLE `cart`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ItemID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ProductID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `InStock` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ListPrice` decimal(10, 2) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of cart
--- ----------------------------
-INSERT INTO `cart` VALUES (2, 'j2ee', 'EST-6', 'K9-BD-01', 'Male Adult Bulldog', 'TRUE', '10', 18.50);
-
--- ----------------------------
--- Table structure for orderlist
--- ----------------------------
-DROP TABLE IF EXISTS `orderlist`;
-CREATE TABLE `orderlist`  (
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `OrderID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `OrderTime` datetime NOT NULL,
-  `PayTime` datetime NOT NULL,
-  `ReceiverName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `PhoneNumber` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `City` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `District` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `DetailedAddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ItemID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ProductID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `InStock` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `Quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ListPrice` decimal(10, 2) NOT NULL,
-  `TotalPrice` decimal(10, 2) NOT NULL,
-  `PayMethod` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`OrderID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of orderlist
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for pet
@@ -112,32 +60,9 @@ INSERT INTO `pet` VALUES ('Dogs', 'K9-RT-01', 'EST-28', 'Golden Retriever', 'Adu
 INSERT INTO `pet` VALUES ('Fish', 'FI-SW-02', 'EST-3', 'Tiger Shark', 'Toothless Tiger Shark', 'Salt Water fish from Australia', '9345', 18.50);
 INSERT INTO `pet` VALUES ('Fish', 'FI-FW-01', 'EST-4', 'Koi', 'Spotted Koi', 'Fresh Water fish from Japan', '9720', 18.50);
 INSERT INTO `pet` VALUES ('Fish', 'FI-FW-01', 'EST-5', 'Koi', 'Spotless Koi	', 'Fresh Water fish from Japan', '9965', 18.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-BD-01', 'EST-6', 'Bulldog', 'Male Adult Bulldog', 'Friendly dog from England', '8472', 18.50);
+INSERT INTO `pet` VALUES ('Dogs', 'K9-BD-01', 'EST-6', 'Bulldog', 'Male Adult Bulldog', 'Friendly dog from England', '8471', 18.50);
 INSERT INTO `pet` VALUES ('Dogs', 'K9-BD-01', 'EST-7', 'Bulldog', 'Female Puppy Bulldog', 'Friendly dog from England', '9920', 18.50);
 INSERT INTO `pet` VALUES ('Dogs', 'K9-PO-02', 'EST-8', 'Poodle', 'Male Puppy Poodle', 'Cute dog from France', '9668', 18.50);
 INSERT INTO `pet` VALUES ('Dogs', 'K9-DL-01', 'EST-9', 'Dalmation', 'Spotless Male Puppy Dalmation', 'Great dog for a Fire Station', '9772', 18.50);
-
--- ----------------------------
--- Table structure for user
--- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user`  (
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ReceiverName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `Email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `PhoneNumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `Country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `Province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `City` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `District` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `DetailedAddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`username`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES ('j2ee', '111', '李四', 'abc@123.com', '15800000000', '中国', '湖南省', '长沙市', '天心区', '铁道学院');
 
 SET FOREIGN_KEY_CHECKS = 1;

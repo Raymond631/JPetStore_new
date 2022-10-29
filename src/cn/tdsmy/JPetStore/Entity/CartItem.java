@@ -15,17 +15,17 @@ public class CartItem implements Serializable
     private String itemID;
     private String productID;
     private String description;
-    private String inStock;
+    private String stock;
     private String quantity;
     private BigDecimal listPrice;
     private BigDecimal totalCost;
 
-    public CartItem(String itemID, String productID, String description, String inStock, String quantity, BigDecimal listPrice)
+    public CartItem(String itemID, String productID, String description, String stock, String quantity, BigDecimal listPrice)
     {
         this.itemID = itemID;
         this.productID = productID;
         this.description = description;
-        this.inStock = inStock;
+        this.stock = stock;
         this.quantity = quantity;
         this.listPrice = listPrice;
         this.totalCost = listPrice.multiply(new BigDecimal(quantity));
@@ -61,14 +61,14 @@ public class CartItem implements Serializable
         this.description = description;
     }
 
-    public String getInStock()
+    public String getStock()
     {
-        return inStock;
+        return stock;
     }
 
-    public void setInStock(String inStock)
+    public void setStock(String stock)
     {
-        this.inStock = inStock;
+        this.stock = stock;
     }
 
     public String getQuantity()

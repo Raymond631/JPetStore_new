@@ -42,7 +42,7 @@ public class OrderDaoImpl implements OrderDao
                         + cartItem.getItemID() + "','"
                         + cartItem.getProductID() + "','"
                         + cartItem.getDescription() + "','"
-                        + cartItem.getInStock() + "','"
+                        + cartItem.getStock() + "','"
                         + cartItem.getQuantity() + "','"
                         + cartItem.getListPrice() + "','"
                         + order.getTotalPrice() + "','"
@@ -50,7 +50,7 @@ public class OrderDaoImpl implements OrderDao
 
                 //注意: order是mysql关键字，不可用作表名
                 String sql = "insert into orderlist (username,OrderID,OrderTime,PayTime,ReceiverName,PhoneNumber,Country,Province," +
-                        "City,District,DetailedAddress,ItemID,ProductID,Description,InStock,Quantity,ListPrice,TotalPrice,PayMethod) values (" + value + ")";
+                        "City,District,DetailedAddress,ItemID,ProductID,Description,Stock,Quantity,ListPrice,TotalPrice,PayMethod) values (" + value + ")";
 
                 try (PreparedStatement statement = connection.prepareStatement(sql))
                 {
@@ -83,6 +83,7 @@ public class OrderDaoImpl implements OrderDao
     {
         Order order = new Order();
         String sql = "select * from orderlist where OrderID ='" + OrderID + "'";
+        System.out.println(sql);
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
             if (res.next())
@@ -119,10 +120,10 @@ public class OrderDaoImpl implements OrderDao
                 String ItemID = res.getString("ItemID");
                 String ProductID = res.getString("ProductID");
                 String Description = res.getString("Description");
-                String InStock = res.getString("InStock");
+                String Stock = res.getString("Stock");
                 String Quantity = res.getString("Quantity");
                 BigDecimal ListPrice = res.getBigDecimal("ListPrice");
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, InStock, Quantity, ListPrice);
+                CartItem cartItem = new CartItem(ItemID, ProductID, Description, Stock, Quantity, ListPrice);
                 order.getCartItemList().add(cartItem);
             }
             while (res.next())
@@ -130,10 +131,10 @@ public class OrderDaoImpl implements OrderDao
                 String ItemID = res.getString("ItemID");
                 String ProductID = res.getString("ProductID");
                 String Description = res.getString("Description");
-                String InStock = res.getString("InStock");
+                String Stock = res.getString("Stock");
                 String Quantity = res.getString("Quantity");
                 BigDecimal ListPrice = res.getBigDecimal("ListPrice");
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, InStock, Quantity, ListPrice);
+                CartItem cartItem = new CartItem(ItemID, ProductID, Description, Stock, Quantity, ListPrice);
                 order.getCartItemList().add(cartItem);
             }
         }
@@ -161,7 +162,7 @@ public class OrderDaoImpl implements OrderDao
                     BigDecimal TotalPrice = res.getBigDecimal("TotalPrice");
 
                     Order order = new Order();
-                    order.setOrderID(orderID);
+                    order.setOrderID(nextOrderID);
                     order.setOrderTime(orderTime);
                     order.setTotalPrice(TotalPrice);
                     orderList.add(order);

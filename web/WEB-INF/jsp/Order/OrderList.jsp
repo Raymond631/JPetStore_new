@@ -25,11 +25,16 @@
 				<th>Date</th>
 				<th>Total Price</th>
 			</tr>
+			<c:if test="${requestScope.orderList.isEmpty()}">
+				<tr>
+					<td colspan="3">You have no order.</td>
+				</tr>
+			</c:if>
 			<c:if test="${!requestScope.orderList.isEmpty()}">
 				<c:forEach items="${requestScope.orderList}" var="orderItem">
 					<tr>
 						<td>
-							<a href="${pageContext.request.contextPath}/Order/orderItem?${orderItem.getOrderID()}">${orderItem.getOrderID()}</a>
+							<a href="${pageContext.request.contextPath}/Order/orderItem?orderID=${orderItem.getOrderID()}">${orderItem.getOrderID()}</a>
 						</td>
 						<td>${orderItem.getOrderTime()}</td>
 						<td>${orderItem.getTotalPrice()}</td>

@@ -54,7 +54,7 @@
 				<th><b>Item ID</b></th>
 				<th><b>Product ID</b></th>
 				<th><b>Description</b></th>
-				<th><b>In Stock?</b></th>
+				<th><b>Stock</b></th>
 				<th><b>Quantity</b></th>
 				<th><b>List Price</b></th>
 				<th><b>Total Cost</b></th>
@@ -64,7 +64,7 @@
 					<td>${cartItem.itemID}</td>
 					<td>${cartItem.productID}</td>
 					<td style="text-align: left">${cartItem.description}</td>
-					<td>${cartItem.inStock}</td>
+					<td>${cartItem.stock}</td>
 					<td>${cartItem.quantity}</td>
 					<td>$${cartItem.listPrice}</td>
 					<td>$${cartItem.totalCost}</td>
@@ -85,7 +85,7 @@
 					<col/>
 				</colgroup>
 				<tr>
-					<td>Order Date</td>
+					<td>Order Time</td>
 					<td>
 						<%
 							Date date = new Date();
