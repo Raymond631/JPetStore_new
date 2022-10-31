@@ -73,4 +73,32 @@ public class PetDaoImpl implements PetDao
         }
         return petList;
     }
+
+    @Override
+    public List<Pet> getPetCategory(String category)
+    {
+        List<Pet> petList = new ArrayList<>();
+        String sql = "select * from pet where category = '" + category + "'";
+        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
+        {
+            while (res.next())
+            {
+                String productID = res.getString("productID");
+                String name = res.getString("name");
+                String introduce = res.getString("introduce");
+                String itemID = res.getString("itemID");
+                String description = res.getString("description");
+                int stock = res.getInt("stock");
+                BigDecimal listPrice = res.getBigDecimal("listPrice");
+
+                Pet pet = new Pet(category, productID, name, introduce, itemID, description, stock, listPrice);
+                petList.add(pet);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return petList;
+    }
 }

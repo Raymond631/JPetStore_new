@@ -17,6 +17,13 @@
 	<h2>Welcome to JPetStore</h2>
 	<a href="${pageContext.request.contextPath}/Cart/cartList">cartList</a><br>
 	<a href="${pageContext.request.contextPath}/Order/orderList">orderList</a><br>
+	<br>
+
+	<a href="${pageContext.request.contextPath}/Pet/petList?category=fish">Fish</a><br>
+	<a href="${pageContext.request.contextPath}/Pet/petList?category=dogs">Dogs</a><br>
+	<a href="${pageContext.request.contextPath}/Pet/petList?category=reptiles">Reptiles</a><br>
+	<a href="${pageContext.request.contextPath}/Pet/petList?category=cats">Cats</a><br>
+	<a href="${pageContext.request.contextPath}/Pet/petList?category=birds">Birds</a><br>
 </div>
 
 </body>

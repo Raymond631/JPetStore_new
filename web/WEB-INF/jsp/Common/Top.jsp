@@ -60,11 +60,11 @@
 	</div>
 
 	<div id="QuickLinks">
-		<a href="/catalog/categories/FISH">Fish</a>
-		<a href="/catalog/categories/DOGS">Dogs</a>
-		<a href="/catalog/categories/REPTILES">Reptiles</a>
-		<a href="/catalog/categories/CATS">Cats</a>
-		<a href="/catalog/categories/BIRDS">Birds</a>
+		<a href="${pageContext.request.contextPath}/Pet/petList?category=fish">Fish</a>
+		<a href="${pageContext.request.contextPath}/Pet/petList?category=dogs">Dogs</a>
+		<a href="${pageContext.request.contextPath}/Pet/petList?category=reptiles">Reptiles</a>
+		<a href="${pageContext.request.contextPath}/Pet/petList?category=cats">Cats</a>
+		<a href="${pageContext.request.contextPath}/Pet/petList?category=birds">Birds</a>
 	</div>
 </div>
 

@@ -48,6 +48,9 @@ public class PetServlet extends HttpServlet
             case "/searchPet":
                 searchPet(req, resp);
                 break;
+            case "/petList":
+                petList(req, resp);
+                break;
         }
     }
 
@@ -66,5 +69,22 @@ public class PetServlet extends HttpServlet
             System.out.println(pet.getIntroduce());
             System.out.println();
         }
+    }
+
+    /**
+     * get请求
+     * 参数/petList?category=
+     */
+
+    public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        String category = req.getQueryString().substring(9);
+        List<Pet> petList = petService.getPetCategory(category);
+        List<String> nameList = petService.getNameList(petList);
+        req.getSession().setAttribute("category", category);
+        req.getSession().setAttribute("nameList", nameList);
+        req.getSession().setAttribute("petList", petList);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
     }
 }

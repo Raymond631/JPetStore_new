@@ -5,6 +5,8 @@ import cn.tdsmy.JPetStore.Dao.impl.PetDaoImpl;
 import cn.tdsmy.JPetStore.Entity.Pet;
 import cn.tdsmy.JPetStore.Service.PetService;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -34,5 +36,26 @@ public class PetServiceImpl implements PetService
             petDao = new PetDaoImpl();
         }
         return petDao.searchPet(key);
+    }
+
+    @Override
+    public List<Pet> getPetCategory(String category)
+    {
+        if (petDao == null)
+        {
+            petDao = new PetDaoImpl();
+        }
+        return petDao.getPetCategory(category);
+    }
+
+    @Override
+    public List<String> getNameList(List<Pet> petList)
+    {
+        List<String> nameList = new ArrayList<>();
+        for (Pet pet : petList)
+        {
+            nameList.add(pet.getName());
+        }
+        return new ArrayList<>(new HashSet<>(nameList));
     }
 }
