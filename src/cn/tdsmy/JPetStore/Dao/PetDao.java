@@ -1,6 +1,6 @@
 package cn.tdsmy.JPetStore.Dao;
 
-import cn.tdsmy.JPetStore.Entity.Pet;
+import cn.tdsmy.JPetStore.Entity.Product;
 
 import java.util.List;
 
@@ -11,9 +11,7 @@ import java.util.List;
  */
 public interface PetDao
 {
-    public Pet getPet(String itemID);//通过id检索某个宠物的信息
+    public List<Product> searchPet(String key);//通过关键字搜索宠物列表
 
-    public List<Pet> searchPet(String key);//通过关键字搜索宠物列表
-
-    public List<Pet> getPetCategory(String category);
+    public List<Product> getProductList(String category);
 }

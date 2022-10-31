@@ -2,7 +2,8 @@ package cn.tdsmy.JPetStore.Dao.impl;
 
 import cn.tdsmy.JPetStore.Dao.PetDao;
 import cn.tdsmy.JPetStore.Dao.Utils.DBUtils;
-import cn.tdsmy.JPetStore.Entity.Pet;
+import cn.tdsmy.JPetStore.Entity.Item;
+import cn.tdsmy.JPetStore.Entity.Product;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -20,65 +21,39 @@ import java.util.List;
 public class PetDaoImpl implements PetDao
 {
     @Override
-    public Pet getPet(String itemID)
+    public List<Product> searchPet(String key)//SQL模糊查询
     {
-        Pet pet = null;//如果没查到，则返回null
-        String sql = "select * from pet where itemID ='" + itemID + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
-        {
-            if (res.next())
-            {
-                String category = res.getString("category");
-                String productID = res.getString("productID");
-                String name = res.getString("name");
-                String introduce = res.getString("introduce");
-                String description = res.getString("description");
-                int stock = res.getInt("stock");
-                BigDecimal listPrice = res.getBigDecimal("listPrice");
-                pet = new Pet(category, productID, name, introduce, itemID, description, stock, listPrice);
-            }
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return pet;
+        List<Product> productList = new ArrayList<>();
+//        String sql = "select * from pet where category like '%" + key + "%' or productID like '%" + key + "%' or name like '%" + key
+//                + "%' or introduce like '%" + key + "%' or itemID like '%" + key + "%' or description like '%" + key + "%'";
+//        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
+//        {
+//            while (res.next())
+//            {
+//                String productID = res.getString("productID");//品种ID
+//                String name = res.getString("name");//品种名
+//                String introduce = res.getString("introduce");//品种简介
+//
+//                Pet pet = new Pet();
+//                pet.setProductID(productID);
+//                pet.setName(name);
+//                pet.setIntroduce(introduce);
+//
+//                petList.add(pet);
+//            }
+//        }
+//        catch (SQLException e)
+//        {
+//            throw new RuntimeException(e);
+//        }
+        return productList;
     }
 
     @Override
-    public List<Pet> searchPet(String key)//SQL模糊查询
+    public List<Product> getProductList(String category)
     {
-        List<Pet> petList = new ArrayList<>();
-        String sql = "select * from pet where category like '%" + key + "%' or productID like '%" + key + "%' or name like '%" + key
-                + "%' or introduce like '%" + key + "%' or itemID like '%" + key + "%' or description like '%" + key + "%'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
-        {
-            while (res.next())
-            {
-                String productID = res.getString("productID");//品种ID
-                String name = res.getString("name");//品种名
-                String introduce = res.getString("introduce");//品种简介
-
-                Pet pet = new Pet();
-                pet.setProductID(productID);
-                pet.setName(name);
-                pet.setIntroduce(introduce);
-
-                petList.add(pet);
-            }
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return petList;
-    }
-
-    @Override
-    public List<Pet> getPetCategory(String category)
-    {
-        List<Pet> petList = new ArrayList<>();
-        String sql = "select * from pet where category = '" + category + "'";
+        List<Product> productList = new ArrayList<>();
+        String sql = "select * from product where category = '" + category + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
             while (res.next())
@@ -86,19 +61,37 @@ public class PetDaoImpl implements PetDao
                 String productID = res.getString("productID");
                 String name = res.getString("name");
                 String introduce = res.getString("introduce");
-                String itemID = res.getString("itemID");
-                String description = res.getString("description");
-                int stock = res.getInt("stock");
-                BigDecimal listPrice = res.getBigDecimal("listPrice");
 
-                Pet pet = new Pet(category, productID, name, introduce, itemID, description, stock, listPrice);
-                petList.add(pet);
+                Product product = new Product();
+                product.setProductID(productID);
+                product.setName(name);
+                product.setIntroduce(introduce);
+
+                productList.add(product);
+            }
+
+            for (Product product : productList)
+            {
+                String sql2 = "select * from item where productID = '" + product.getProductID() + "'";
+                try (PreparedStatement statement2 = connection.prepareStatement(sql2); ResultSet res2 = statement2.executeQuery(sql2))
+                {
+                    while (res2.next())
+                    {
+                        String itemID = res2.getString("itemID");
+                        String description = res2.getString("description");
+                        int stock = res2.getInt("stock");
+                        BigDecimal listPrice = res2.getBigDecimal("listPrice");
+
+                        Item item = new Item(itemID, description, stock, listPrice);
+                        product.getItemList().add(item);
+                    }
+                }
             }
         }
         catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
-        return petList;
+        return productList;
     }
 }

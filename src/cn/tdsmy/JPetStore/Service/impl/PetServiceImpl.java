@@ -2,11 +2,9 @@ package cn.tdsmy.JPetStore.Service.impl;
 
 import cn.tdsmy.JPetStore.Dao.PetDao;
 import cn.tdsmy.JPetStore.Dao.impl.PetDaoImpl;
-import cn.tdsmy.JPetStore.Entity.Pet;
+import cn.tdsmy.JPetStore.Entity.Product;
 import cn.tdsmy.JPetStore.Service.PetService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -19,17 +17,7 @@ public class PetServiceImpl implements PetService
     private PetDao petDao;
 
     @Override
-    public Pet getPet(String itemID)
-    {
-        if (petDao == null)
-        {
-            petDao = new PetDaoImpl();
-        }
-        return petDao.getPet(itemID);
-    }
-
-    @Override
-    public List<Pet> searchPet(String key)
+    public List<Product> searchPet(String key)
     {
         if (petDao == null)
         {
@@ -39,23 +27,12 @@ public class PetServiceImpl implements PetService
     }
 
     @Override
-    public List<Pet> getPetCategory(String category)
+    public List<Product> getProductList(String category)
     {
         if (petDao == null)
         {
             petDao = new PetDaoImpl();
         }
-        return petDao.getPetCategory(category);
-    }
-
-    @Override
-    public List<String> getNameList(List<Pet> petList)
-    {
-        List<String> nameList = new ArrayList<>();
-        for (Pet pet : petList)
-        {
-            nameList.add(pet.getName());
-        }
-        return new ArrayList<>(new HashSet<>(nameList));
+        return petDao.getProductList(category);
     }
 }

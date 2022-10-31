@@ -1,6 +1,6 @@
 package cn.tdsmy.JPetStore.Controller;
 
-import cn.tdsmy.JPetStore.Entity.Pet;
+import cn.tdsmy.JPetStore.Entity.Product;
 import cn.tdsmy.JPetStore.Service.PetService;
 import cn.tdsmy.JPetStore.Service.impl.PetServiceImpl;
 
@@ -60,30 +60,20 @@ public class PetServlet extends HttpServlet
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         String key = req.getParameter("keyword");
-        List<Pet> petList = petService.searchPet(key);
-        for (Pet pet : petList)
-        {
-            System.out.println();
-            System.out.println(pet.getProductID());
-            System.out.println(pet.getName());
-            System.out.println(pet.getIntroduce());
-            System.out.println();
-        }
+        System.out.println(key);
     }
 
     /**
      * get请求
      * 参数/petList?category=
      */
-
     public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         String category = req.getQueryString().substring(9);
-        List<Pet> petList = petService.getPetCategory(category);
-        List<String> nameList = petService.getNameList(petList);
+        List<Product> productList = petService.getProductList(category);
+
         req.getSession().setAttribute("category", category);
-        req.getSession().setAttribute("nameList", nameList);
-        req.getSession().setAttribute("petList", petList);
+        req.getSession().setAttribute("productList", productList);
 
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
     }
