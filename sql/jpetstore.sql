@@ -11,7 +11,7 @@
  Target Server Version : 50739 (5.7.39-log)
  File Encoding         : 65001
 
- Date: 31/10/2022 11:20:14
+ Date: 01/11/2022 07:43:01
 */
 
 SET NAMES utf8mb4;
@@ -34,6 +34,51 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 INSERT INTO `cart` VALUES (1, 'j2ee', 'EST-1', 1);
 INSERT INTO `cart` VALUES (2, 'j2ee', 'EST-2', 1);
+
+-- ----------------------------
+-- Table structure for item
+-- ----------------------------
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE `item`  (
+  `productID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `itemID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `stock` int(11) NOT NULL,
+  `listPrice` decimal(10, 2) NOT NULL,
+  PRIMARY KEY (`itemID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of item
+-- ----------------------------
+INSERT INTO `item` VALUES ('FI-SW-01', 'EST-1', 'Large Angelfish', 9998, 16.50);
+INSERT INTO `item` VALUES ('K9-DL-01', 'EST-10', 'Spotted Adult Female Dalmation', 9971, 18.50);
+INSERT INTO `item` VALUES ('RP-SN-01', 'EST-11', 'Venomless Rattlesnake', 9670, 18.50);
+INSERT INTO `item` VALUES ('RP-SN-01', 'EST-12', 'Rattleless Rattlesnake', 9989, 18.50);
+INSERT INTO `item` VALUES ('RP-LI-02', 'EST-13', 'Green Adult Iguana', 9906, 18.50);
+INSERT INTO `item` VALUES ('FL-DSH-01', 'EST-14', 'Tailless Manx', 8926, 58.50);
+INSERT INTO `item` VALUES ('FL-DSH-01', 'EST-15', 'With tail Manx', 9972, 23.50);
+INSERT INTO `item` VALUES ('FL-DLH-02', 'EST-16', 'Adult Female Persian', 9893, 93.50);
+INSERT INTO `item` VALUES ('FL-DLH-02', 'EST-17', 'Adult Male Persian', 9918, 93.50);
+INSERT INTO `item` VALUES ('AV-CB-01', 'EST-18', 'Adult Male Amazon Parrot', 7921, 193.50);
+INSERT INTO `item` VALUES ('AV-SB-02', 'EST-19', 'Adult Male Finch', 9793, 15.50);
+INSERT INTO `item` VALUES ('FI-SW-01', 'EST-2', 'Small Angelfish', 9946, 16.50);
+INSERT INTO `item` VALUES ('FI-FW-02', 'EST-20', 'Adult Male Goldfish', 7726, 5.50);
+INSERT INTO `item` VALUES ('FI-FW-02', 'EST-21', 'Adult Female Goldfish', 9848, 5.29);
+INSERT INTO `item` VALUES ('K9-RT-02', 'EST-22', 'Adult Male Labrador Retriever', 9925, 135.50);
+INSERT INTO `item` VALUES ('K9-RT-02', 'EST-23', 'Adult Female Labrador Retriever', 9979, 145.49);
+INSERT INTO `item` VALUES ('K9-RT-02', 'EST-24', 'Adult Male Labrador Retriever', 9975, 255.50);
+INSERT INTO `item` VALUES ('K9-RT-02', 'EST-25', 'Adult Female Labrador Retriever', 9976, 325.29);
+INSERT INTO `item` VALUES ('K9-CW-01', 'EST-26', 'Adult Male Chihuahua', 9978, 125.50);
+INSERT INTO `item` VALUES ('K9-CW-01', 'EST-27', 'Adult Female Chihuahua', 9983, 155.29);
+INSERT INTO `item` VALUES ('K9-RT-01', 'EST-28', 'Adult Female Golden Retriever', 6290, 155.29);
+INSERT INTO `item` VALUES ('FI-SW-02', 'EST-3', 'Toothless Tiger Shark', 9345, 18.50);
+INSERT INTO `item` VALUES ('FI-FW-01', 'EST-4', 'Spotted Koi', 9720, 18.50);
+INSERT INTO `item` VALUES ('FI-FW-01', 'EST-5', 'Spotless Koi', 9965, 18.50);
+INSERT INTO `item` VALUES ('K9-BD-01', 'EST-6', 'Male Adult Bulldog', 8471, 18.50);
+INSERT INTO `item` VALUES ('K9-BD-01', 'EST-7', 'Female Puppy Bulldog', 9920, 18.50);
+INSERT INTO `item` VALUES ('K9-PO-02', 'EST-8', 'Male Puppy Poodle', 9668, 18.50);
+INSERT INTO `item` VALUES ('K9-DL-01', 'EST-9', 'Spotless Male Puppy Dalmation', 9772, 18.50);
 
 -- ----------------------------
 -- Table structure for orderlist
@@ -68,52 +113,36 @@ CREATE TABLE `orderlist`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pet
+-- Table structure for product
 -- ----------------------------
-DROP TABLE IF EXISTS `pet`;
-CREATE TABLE `pet`  (
-  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '一级分类',
-  `productID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '品种id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '品种名，对应ProductID',
-  `introduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '品种介绍，对应ProductID',
-  `itemID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '宠物id',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '宠物介绍，对应ItemID',
-  `stock` int(11) NOT NULL COMMENT '库存',
-  `listPrice` decimal(10, 2) NOT NULL COMMENT '价格',
-  PRIMARY KEY (`itemID`) USING BTREE
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product`  (
+  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `productID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `introduce` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`productID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of pet
+-- Records of product
 -- ----------------------------
-INSERT INTO `pet` VALUES ('Fish', 'FI-SW-01', 'Angelfish', 'Salt Water fish from Australia', 'EST-1', 'Large Angelfish', 9998, 16.50);
-INSERT INTO `pet` VALUES ('Dogs', '	K9-DL-01', 'Dalmation', 'Great dog for a Fire Station', 'EST-10', 'Spotted Adult Female Dalmation	', 9971, 18.50);
-INSERT INTO `pet` VALUES ('Reptiles', 'RP-SN-01', 'Rattlesnake', '\r\nDoubles as a watch dog', 'EST-11', 'Venomless Rattlesnake', 9670, 18.50);
-INSERT INTO `pet` VALUES ('Reptiles', 'RP-SN-01', 'Rattlesnake', 'Doubles as a watch dog', 'EST-12', 'Rattleless Rattlesnake', 9989, 18.50);
-INSERT INTO `pet` VALUES ('Reptiles', 'RP-LI-02', 'Iguana', 'Friendly green friend', 'EST-13', 'Green Adult Iguana', 9906, 18.50);
-INSERT INTO `pet` VALUES ('Cats', 'FL-DSH-01', 'Manx', 'Great for reducing mouse populations', 'EST-14', 'Tailless Manx', 8926, 58.50);
-INSERT INTO `pet` VALUES ('Cats', 'FL-DSH-01', 'Manx', 'Great for reducing mouse populations', 'EST-15', 'With tail Manx', 9972, 23.50);
-INSERT INTO `pet` VALUES ('Cats', 'FL-DLH-02', 'Persian', 'Friendly house cat, doubles as a princess', 'EST-16', 'Adult Female Persian', 9893, 93.50);
-INSERT INTO `pet` VALUES ('Cats', 'FL-DLH-02', 'Persian', 'Friendly house cat, doubles as a princess', 'EST-17', 'Adult Male Persian', 9918, 93.50);
-INSERT INTO `pet` VALUES ('Birds', 'AV-CB-01', 'Amazon Parrot', 'Great companion for up to 75 years', 'EST-18', 'Adult Male Amazon Parrot', 7921, 193.50);
-INSERT INTO `pet` VALUES ('Birds', 'AV-SB-02', 'Finch', 'Great stress reliever', 'EST-19', 'Adult Male Finch', 9793, 15.50);
-INSERT INTO `pet` VALUES ('Fish', 'FI-SW-01', 'Angelfish', 'Salt Water fish from Australia', 'EST-2', 'Small Angelfish', 9946, 16.50);
-INSERT INTO `pet` VALUES ('Fish', 'FI-FW-02', 'Goldfish', 'Fresh Water fish from China', 'EST-20', 'Adult Male Goldfish', 7726, 5.50);
-INSERT INTO `pet` VALUES ('Fish', 'FI-FW-02', 'Goldfish', 'Fresh Water fish from China', 'EST-21', 'Adult Female Goldfish', 9848, 5.29);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-RT-02', 'Labrador Retriever', 'Great hunting dog', 'EST-22', 'Adult Male Labrador Retriever', 9925, 135.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-RT-02', 'Labrador Retriever', 'Great hunting dog', 'EST-23', 'Adult Female Labrador Retriever', 9979, 145.49);
-INSERT INTO `pet` VALUES ('Dogs', '	K9-RT-02', 'Labrador Retriever', 'Great hunting dog', 'EST-24', 'Adult Male Labrador Retriever', 9975, 255.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-RT-02', 'Labrador Retriever', 'Great hunting dog', 'EST-25', 'Adult Female Labrador Retriever', 9976, 325.29);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-CW-01', 'Chihuahua', 'Great companion dog', 'EST-26', 'Adult Male Chihuahua', 9978, 125.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-CW-01', 'Chihuahua', 'Great companion dog', 'EST-27', 'Adult Female Chihuahua', 9983, 155.29);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-RT-01', 'Golden Retriever', 'Great family dog', 'EST-28', 'Adult Female Golden Retriever', 6290, 155.29);
-INSERT INTO `pet` VALUES ('Fish', 'FI-SW-02', 'Tiger Shark', 'Salt Water fish from Australia', 'EST-3', 'Toothless Tiger Shark', 9345, 18.50);
-INSERT INTO `pet` VALUES ('Fish', 'FI-FW-01', 'Koi', 'Fresh Water fish from Japan', 'EST-4', 'Spotted Koi', 9720, 18.50);
-INSERT INTO `pet` VALUES ('Fish', 'FI-FW-01', 'Koi', 'Fresh Water fish from Japan', 'EST-5', 'Spotless Koi	', 9965, 18.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-BD-01', 'Bulldog', 'Friendly dog from England', 'EST-6', 'Male Adult Bulldog', 8471, 18.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-BD-01', 'Bulldog', 'Friendly dog from England', 'EST-7', 'Female Puppy Bulldog', 9920, 18.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-PO-02', 'Poodle', 'Cute dog from France', 'EST-8', 'Male Puppy Poodle', 9668, 18.50);
-INSERT INTO `pet` VALUES ('Dogs', 'K9-DL-01', 'Dalmation', 'Great dog for a Fire Station', 'EST-9', 'Spotless Male Puppy Dalmation', 9772, 18.50);
+INSERT INTO `product` VALUES ('Birds', 'AV-CB-01', 'Amazon Parrot', 'Great companion for up to 75 years');
+INSERT INTO `product` VALUES ('Birds', 'AV-SB-02', 'Finch', 'Great stress reliever');
+INSERT INTO `product` VALUES ('Fish', 'FI-FW-01', 'Koi', 'Fresh Water fish from Japan');
+INSERT INTO `product` VALUES ('Fish', 'FI-FW-02', 'Goldfish', 'Fresh Water fish from China');
+INSERT INTO `product` VALUES ('Fish', 'FI-SW-01', 'Angelfish', 'Salt Water fish from Australia');
+INSERT INTO `product` VALUES ('Fish', 'FI-SW-02', 'Tiger Shark', 'Salt Water fish from Australia');
+INSERT INTO `product` VALUES ('Cats', 'FL-DLH-02', 'Persian', 'Friendly house cat, doubles as a princess');
+INSERT INTO `product` VALUES ('Cats', 'FL-DSH-01', 'Manx', 'Great for reducing mouse populations');
+INSERT INTO `product` VALUES ('Dogs', 'K9-BD-01', 'Bulldog', 'Friendly dog from England');
+INSERT INTO `product` VALUES ('Dogs', 'K9-CW-01', 'Chihuahua', 'Great companion dog');
+INSERT INTO `product` VALUES ('Dogs', 'K9-DL-01', 'Dalmation', 'Great dog for a Fire Station');
+INSERT INTO `product` VALUES ('Dogs', 'K9-PO-02', 'Poodle', 'Cute dog from France');
+INSERT INTO `product` VALUES ('Dogs', 'K9-RT-01', 'Golden Retriever', 'Great family dog');
+INSERT INTO `product` VALUES ('Dogs', 'K9-RT-02', 'Labrador Retriever', 'Great hunting dog');
+INSERT INTO `product` VALUES ('Reptiles', 'RP-LI-02', 'Iguana', 'Friendly green friend');
+INSERT INTO `product` VALUES ('Reptiles', 'RP-SN-01', 'Rattlesnake', '\r\nDoubles as a watch dog');
 
 -- ----------------------------
 -- Table structure for user
