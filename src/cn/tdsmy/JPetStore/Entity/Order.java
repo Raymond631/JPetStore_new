@@ -13,59 +13,58 @@ import java.util.List;
 public class Order implements Serializable
 {
     private static final long serialVersionUID = 7632942823786187032L;
-
-    private String OrderID;
-    private String OrderTime;
-    private String PayTime;
+    private String orderID;
+    private String orderTime;
+    private String payTime;
     private User receiver;
+    private BigDecimal totalPrice;
+    private String payMethod;
     private List<CartItem> cartItemList;
-    private BigDecimal TotalPrice;
-    private String PayMethod;
 
     public Order(String orderID, String orderTime, String payTime, User receiver, List<CartItem> cartItemList, BigDecimal totalPrice, String payMethod)
     {
-        OrderID = orderID;
-        OrderTime = orderTime;
-        PayTime = payTime;
+        this.orderID = orderID;
+        this.orderTime = orderTime;
+        this.payTime = payTime;
         this.receiver = receiver;
         this.cartItemList = cartItemList;
-        TotalPrice = totalPrice;
-        PayMethod = payMethod;
+        this.totalPrice = totalPrice;
+        this.payMethod = payMethod;
     }
 
     public Order()
     {
-        this.cartItemList = new ArrayList<>();
+        cartItemList = new ArrayList<>();
     }
 
     public String getOrderID()
     {
-        return OrderID;
+        return orderID;
     }
 
     public void setOrderID(String orderID)
     {
-        OrderID = orderID;
+        this.orderID = orderID;
     }
 
     public String getOrderTime()
     {
-        return OrderTime;
+        return orderTime;
     }
 
     public void setOrderTime(String orderTime)
     {
-        OrderTime = orderTime;
+        this.orderTime = orderTime;
     }
 
     public String getPayTime()
     {
-        return PayTime;
+        return payTime;
     }
 
     public void setPayTime(String payTime)
     {
-        PayTime = payTime;
+        this.payTime = payTime;
     }
 
     public User getReceiver()
@@ -90,21 +89,21 @@ public class Order implements Serializable
 
     public BigDecimal getTotalPrice()
     {
-        return TotalPrice;
+        return totalPrice;
     }
 
     public void setTotalPrice(BigDecimal totalPrice)
     {
-        TotalPrice = totalPrice;
+        this.totalPrice = totalPrice;
     }
 
     public String getPayMethod()
     {
-        return PayMethod;
+        return payMethod;
     }
 
     public void setPayMethod(String payMethod)
     {
-        PayMethod = payMethod;
+        this.payMethod = payMethod;
     }
 }

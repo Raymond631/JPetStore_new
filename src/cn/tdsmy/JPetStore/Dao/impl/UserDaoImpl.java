@@ -52,11 +52,6 @@ public class UserDaoImpl implements UserDao
 
     }
 
-    @Override
-    public void deleteUser(String username)
-    {
-
-    }
 
     @Override
     public void updateUser(User user)

@@ -18,31 +18,41 @@ public class CartServiceImpl implements CartService
     private CartDao cartDao;
 
     @Override
-    public void removeCartItem(String username, String item)
+    public void addCartItem(String username, String itemID, int quantity)
+    {
+        if (cartDao == null)
+        {
+            cartDao = new CartDaoImpl();
+        }
+        cartDao.addCartItem(username, itemID, quantity);
+    }
+
+    @Override
+    public void removeCartItem(String username, String itemID)
     {
         if (cartDao == null)
         {
             cartDao = new CartDaoImpl();
         }
 
-        if (item.equals("0"))//删除全部
+        if (itemID.equals("0"))//删除全部
         {
             cartDao.clearCart(username);
         }
         else//删除一项
         {
-            cartDao.removeCartItem(username, item);
+            cartDao.removeCartItem(username, itemID);
         }
     }
 
     @Override
-    public void updateCart(String username, String item, String quantity)
+    public void updateCart(String username, String itemID, int quantity)
     {
         if (cartDao == null)
         {
             cartDao = new CartDaoImpl();
         }
-        cartDao.updateCart(username, item, quantity);
+        cartDao.updateCart(username, itemID, quantity);
     }
 
     @Override
@@ -56,13 +66,15 @@ public class CartServiceImpl implements CartService
     }
 
     @Override
-    public BigDecimal calculateAllCost(List<CartItem> cartItemList)
+    public BigDecimal getAllCost(List<CartItem> cartItemList)
     {
         BigDecimal allCost = BigDecimal.valueOf(0);
         for (CartItem c : cartItemList)
         {
-            allCost = allCost.add(c.getTotalCost());
+            BigDecimal temp = c.getListPrice().multiply(new BigDecimal(c.getQuantity()));
+            allCost = allCost.add(temp);
         }
         return allCost;
     }
+
 }

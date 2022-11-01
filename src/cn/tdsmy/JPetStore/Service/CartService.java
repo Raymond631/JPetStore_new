@@ -12,11 +12,13 @@ import java.util.List;
  */
 public interface CartService
 {
-    public void removeCartItem(String username, String item);//删
+    public void addCartItem(String username, String itemID, int quantity);//增
 
-    public void updateCart(String username, String item, String quantity);//改
+    public void removeCartItem(String username, String itemID);//删
+
+    public void updateCart(String username, String itemID, int quantity);//改
 
     public List<CartItem> selectCartList(String username);//查
 
-    public BigDecimal calculateAllCost(List<CartItem> cartItemList);//计算总金额
+    public BigDecimal getAllCost(List<CartItem> cartItemList);
 }

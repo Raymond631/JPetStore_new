@@ -12,11 +12,9 @@ public interface UserDao
 
     public void addUser(User user);//增
 
-    public void deleteUser(String username);//删
-
     public void updateUser(User user);//改
 
-    public User selectUser(String user);//查
+    public User selectUser(String username);//查
 
     public User selectReceiver(String username);//查收件人
 }

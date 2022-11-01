@@ -16,6 +16,12 @@
 
 <div id="Content">
 
+	<c:if test="${requestScope.newOrder}">
+		<div id="MessageBar">
+			<p>Thank you, your order has been submitted.</p>
+		</div>
+	</c:if>
+
 	<div id="BackLink">
 		<a href="${pageContext.request.contextPath}">Return to Main Menu</a>
 	</div>
@@ -72,7 +78,7 @@
 				<th><b>Item ID</b></th>
 				<th><b>Product ID</b></th>
 				<th><b>Description</b></th>
-				<th><b>In Stock?</b></th>
+				<th><b>Stock on OrderTime</b></th>
 				<th><b>Quantity</b></th>
 				<th><b>List Price</b></th>
 				<th><b>Total Cost</b></th>
@@ -82,10 +88,10 @@
 					<td>${cartItem.itemID}</td>
 					<td>${cartItem.productID}</td>
 					<td style="text-align: left">${cartItem.description}</td>
-					<td>${cartItem.inStock}</td>
+					<td>${cartItem.stock}</td>
 					<td>${cartItem.quantity}</td>
 					<td>$${cartItem.listPrice}</td>
-					<td>$${cartItem.totalCost}</td>
+					<td>$${(cartItem.listPrice)*(cartItem.quantity)}</td>
 				</tr>
 			</c:forEach>
 			<tr>
@@ -96,7 +102,7 @@
 		</table>
 
 		<div class="button-bar">
-			<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Order/deleteOrder?${requestScope.order.getOrderID()}'">Delete Order</button>
+			<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Order/deleteOrder?orderID=${requestScope.order.getOrderID()}'">Delete Order</button>
 		</div>
 	</div>
 </div>

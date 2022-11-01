@@ -26,33 +26,45 @@ public class OrderDaoImpl implements OrderDao
     {
         try (Connection connection = DBUtils.getConnection())
         {
+            String value = "'" + username + "','"
+                    + order.getOrderID() + "','"
+                    + order.getOrderTime() + "','"
+                    + order.getPayTime() + "','"
+                    + order.getReceiver().getReceiverName() + "','"
+                    + order.getReceiver().getPhoneNumber() + "','"
+                    + order.getReceiver().getCountry() + "','"
+                    + order.getReceiver().getProvince() + "','"
+                    + order.getReceiver().getCity() + "','"
+                    + order.getReceiver().getDistrict() + "','"
+                    + order.getReceiver().getDetailedAddress() + "','"
+                    + order.getTotalPrice() + "','"
+                    + order.getPayMethod() + "'";
+            String sql = "insert into orderlist (username,orderID,orderTime,payTime,receiverName,phoneNumber,country," +
+                    "province,city,district,detailedAddress,totalPrice,payMethod) values (" + value + ")";
+            try (PreparedStatement statement = connection.prepareStatement(sql))
+            {
+                statement.executeUpdate();
+            }
+
             for (CartItem cartItem : order.getCartItemList())
             {
-                String value = "'" + username + "','"
-                        + order.getOrderID() + "','"
-                        + order.getOrderTime() + "','"
-                        + order.getPayTime() + "','"
-                        + order.getReceiver().getReceiverName() + "','"
-                        + order.getReceiver().getPhoneNumber() + "','"
-                        + order.getReceiver().getCountry() + "','"
-                        + order.getReceiver().getProvince() + "','"
-                        + order.getReceiver().getCity() + "','"
-                        + order.getReceiver().getDistrict() + "','"
-                        + order.getReceiver().getDetailedAddress() + "','"
+                String value2 = "'" + order.getOrderID() + "','"
                         + cartItem.getItemID() + "','"
                         + cartItem.getProductID() + "','"
                         + cartItem.getDescription() + "','"
-                        + cartItem.getInStock() + "','"
+                        + cartItem.getStock() + "','"
                         + cartItem.getQuantity() + "','"
-                        + cartItem.getListPrice() + "','"
-                        + order.getTotalPrice() + "','"
-                        + order.getPayMethod() + "'";
+                        + cartItem.getListPrice() + "'";
+                String sql2 = "insert into orderitem (orderID,itemID,productID,description,stock,quantity,listPrice) values (" + value2 + ")";
+                try (PreparedStatement statement = connection.prepareStatement(sql2))
+                {
+                    statement.executeUpdate();
+                }
 
-                //注意: order是mysql关键字，不可用作表名
-                String sql = "insert into orderlist (username,OrderID,OrderTime,PayTime,ReceiverName,PhoneNumber,Country,Province," +
-                        "City,District,DetailedAddress,ItemID,ProductID,Description,InStock,Quantity,ListPrice,TotalPrice,PayMethod) values (" + value + ")";
-
-                try (PreparedStatement statement = connection.prepareStatement(sql))
+                //更新库存
+                int newStock = cartItem.getStock() - cartItem.getQuantity();
+                String sql3 = "update item set stock = '" + newStock + "' where itemID ='" + cartItem.getItemID() + "'";
+                try (PreparedStatement statement = connection.prepareStatement(sql3))
                 {
                     statement.executeUpdate();
                 }
@@ -65,12 +77,20 @@ public class OrderDaoImpl implements OrderDao
     }
 
     @Override
-    public void deleteOrder(String OrderID)
+    public void deleteOrder(String orderID)//为了方便，"删除订单"时默认订单已完成，不再复原库存
     {
-        String sql = "delete from orderlist where OrderID ='" + OrderID + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
+        try (Connection connection = DBUtils.getConnection())
         {
-            statement.executeUpdate();
+            String sql = "delete from orderlist where orderID ='" + orderID + "'";
+            try (PreparedStatement statement = connection.prepareStatement(sql))
+            {
+                statement.executeUpdate();
+            }
+            String sql2 = "delete from orderitem where orderID ='" + orderID + "'";
+            try (PreparedStatement statement = connection.prepareStatement(sql2))
+            {
+                statement.executeUpdate();
+            }
         }
         catch (SQLException e)
         {
@@ -79,62 +99,64 @@ public class OrderDaoImpl implements OrderDao
     }
 
     @Override
-    public Order selectOrder(String OrderID)
+    public Order selectOrder(String orderID)
     {
         Order order = new Order();
-        String sql = "select * from orderlist where OrderID ='" + OrderID + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
+        try (Connection connection = DBUtils.getConnection())
         {
-            if (res.next())
+            String sql = "select * from orderlist where orderID ='" + orderID + "'";
+            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
             {
-                String orderID = res.getString("orderID");
-                String orderTime = res.getString("orderTime");
-                String payTime = res.getString("payTime");
-                BigDecimal TotalPrice = res.getBigDecimal("TotalPrice");
-                String PayMethod = res.getString("PayMethod");
+                if (res.next())
+                {
+                    String orderTime = res.getString("orderTime");
+                    String payTime = res.getString("payTime");
 
-                String ReceiverName = res.getString("ReceiverName");
-                String PhoneNumber = res.getString("PhoneNumber");
-                String Country = res.getString("Country");
-                String Province = res.getString("Province");
-                String City = res.getString("City");
-                String District = res.getString("District");
-                String DetailedAddress = res.getString("DetailedAddress");
-                User receiver = new User();
-                receiver.setReceiverName(ReceiverName);
-                receiver.setPhoneNumber(PhoneNumber);
-                receiver.setCountry(Country);
-                receiver.setProvince(Province);
-                receiver.setCity(City);
-                receiver.setDistrict(District);
-                receiver.setDetailedAddress(DetailedAddress);
+                    String receiverName = res.getString("receiverName");
+                    String phoneNumber = res.getString("phoneNumber");
+                    String country = res.getString("country");
+                    String province = res.getString("province");
+                    String city = res.getString("city");
+                    String district = res.getString("district");
+                    String detailedAddress = res.getString("detailedAddress");
 
-                order.setOrderID(orderID);
-                order.setOrderTime(orderTime);
-                order.setPayTime(payTime);
-                order.setReceiver(receiver);
-                order.setTotalPrice(TotalPrice);
-                order.setPayMethod(PayMethod);
+                    BigDecimal totalPrice = res.getBigDecimal("totalPrice");
+                    String payMethod = res.getString("payMethod");
 
-                String ItemID = res.getString("ItemID");
-                String ProductID = res.getString("ProductID");
-                String Description = res.getString("Description");
-                String InStock = res.getString("InStock");
-                String Quantity = res.getString("Quantity");
-                BigDecimal ListPrice = res.getBigDecimal("ListPrice");
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, InStock, Quantity, ListPrice);
-                order.getCartItemList().add(cartItem);
+                    User receiver = new User();
+                    receiver.setReceiverName(receiverName);
+                    receiver.setPhoneNumber(phoneNumber);
+                    receiver.setCountry(country);
+                    receiver.setProvince(province);
+                    receiver.setCity(city);
+                    receiver.setDistrict(district);
+                    receiver.setDetailedAddress(detailedAddress);
+
+                    order.setOrderID(orderID);
+                    order.setOrderTime(orderTime);
+                    order.setPayTime(payTime);
+                    order.setReceiver(receiver);
+                    order.setTotalPrice(totalPrice);
+                    order.setPayMethod(payMethod);
+                }
+
             }
-            while (res.next())
+
+            String sql2 = "select * from orderitem where orderID ='" + orderID + "'";
+            try (PreparedStatement statement = connection.prepareStatement(sql2); ResultSet res = statement.executeQuery(sql2))
             {
-                String ItemID = res.getString("ItemID");
-                String ProductID = res.getString("ProductID");
-                String Description = res.getString("Description");
-                String InStock = res.getString("InStock");
-                String Quantity = res.getString("Quantity");
-                BigDecimal ListPrice = res.getBigDecimal("ListPrice");
-                CartItem cartItem = new CartItem(ItemID, ProductID, Description, InStock, Quantity, ListPrice);
-                order.getCartItemList().add(cartItem);
+                while (res.next())
+                {
+                    String itemID = res.getString("itemID");
+                    String productID = res.getString("productID");
+                    String description = res.getString("description");
+                    int stock = res.getInt("stock");
+                    int quantity = res.getInt("quantity");
+                    BigDecimal listPrice = res.getBigDecimal("listPrice");
+
+                    CartItem cartItem = new CartItem(itemID, productID, description, stock, quantity, listPrice);
+                    order.getCartItemList().add(cartItem);
+                }
             }
         }
         catch (SQLException e)
@@ -151,22 +173,17 @@ public class OrderDaoImpl implements OrderDao
         String sql = "select * from orderlist where username ='" + username + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
-            String orderID = "";
             while (res.next())
             {
                 String nextOrderID = res.getString("orderID");
-                if (!nextOrderID.equals(orderID))
-                {
-                    String orderTime = res.getString("orderTime");
-                    BigDecimal TotalPrice = res.getBigDecimal("TotalPrice");
+                String orderTime = res.getString("orderTime");
+                BigDecimal totalPrice = res.getBigDecimal("totalPrice");
 
-                    Order order = new Order();
-                    order.setOrderID(orderID);
-                    order.setOrderTime(orderTime);
-                    order.setTotalPrice(TotalPrice);
-                    orderList.add(order);
-                }
-                orderID = nextOrderID;
+                Order order = new Order();
+                order.setOrderID(nextOrderID);
+                order.setOrderTime(orderTime);
+                order.setTotalPrice(totalPrice);
+                orderList.add(order);
             }
         }
         catch (SQLException e)

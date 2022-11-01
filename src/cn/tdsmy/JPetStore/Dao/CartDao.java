@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface CartDao
 {
-    public void addCartItem(String username, CartItem cartItem);//增
+    public void addCartItem(String username, String itemID, int quantity);//增
 
-    public void removeCartItem(String username, String item);//删
+    public void removeCartItem(String username, String itemID);//删
 
     public void clearCart(String username);//清空
 
-    public void updateCart(String username, String item, String quantity);//改
+    public void updateCart(String username, String itemID, int quantity);//改
 
     public List<CartItem> selectCartList(String username);//查
 }

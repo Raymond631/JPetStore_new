@@ -79,7 +79,7 @@
 					<th><b>Item ID</b></th>
 					<th><b>Product ID</b></th>
 					<th><b>Description</b></th>
-					<th><b>In Stock?</b></th>
+					<th><b>Stock</b></th>
 					<th><b>Quantity</b></th>
 					<th><b>List Price</b></th>
 					<th><b>Total Cost</b></th>
@@ -89,10 +89,10 @@
 						<td>${cartItem.itemID}</td>
 						<td>${cartItem.productID}</td>
 						<td style="text-align: left">${cartItem.description}</td>
-						<td>${cartItem.inStock}</td>
+						<td>${cartItem.stock}</td>
 						<td>${cartItem.quantity}</td>
 						<td>$${cartItem.listPrice}</td>
-						<td>$${cartItem.totalCost}</td>
+						<td>$${(cartItem.listPrice)*(cartItem.quantity)}</td>
 					</tr>
 				</c:forEach>
 				<tr>
@@ -104,7 +104,7 @@
 
 			<div class="button-bar">
 				<button type="submit" class="button">Submit</button>
-				<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Cart';">Cancel</button>
+				<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Cart/cartList';">Cancel</button>
 			</div>
 
 		</form>

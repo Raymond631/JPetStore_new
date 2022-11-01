@@ -54,7 +54,7 @@
 				<th><b>Item ID</b></th>
 				<th><b>Product ID</b></th>
 				<th><b>Description</b></th>
-				<th><b>In Stock?</b></th>
+				<th><b>Stock</b></th>
 				<th><b>Quantity</b></th>
 				<th><b>List Price</b></th>
 				<th><b>Total Cost</b></th>
@@ -64,10 +64,10 @@
 					<td>${cartItem.itemID}</td>
 					<td>${cartItem.productID}</td>
 					<td style="text-align: left">${cartItem.description}</td>
-					<td>${cartItem.inStock}</td>
+					<td>${cartItem.stock}</td>
 					<td>${cartItem.quantity}</td>
 					<td>$${cartItem.listPrice}</td>
-					<td>$${cartItem.totalCost}</td>
+					<td>$${(cartItem.listPrice)*(cartItem.quantity)}</td>
 				</tr>
 			</c:forEach>
 			<tr>
@@ -78,14 +78,14 @@
 		</table>
 
 		<h3>Order Details</h3>
-		<form id="PayForm" method="post" action="${pageContext.request.contextPath}/Order/orderItem?newOrder">
+		<form id="PayForm" method="post" action="${pageContext.request.contextPath}/Order/newOrder">
 			<table>
 				<colgroup>
 					<col style="width: 25%"/>
 					<col/>
 				</colgroup>
 				<tr>
-					<td>Order Date</td>
+					<td>Order Time</td>
 					<td>
 						<%
 							Date date = new Date();

@@ -30,7 +30,7 @@
 						<th><b>Item ID</b></th>
 						<th><b>Product ID</b></th>
 						<th><b>Description</b></th>
-						<th><b>In Stock?</b></th>
+						<th><b>Stock</b></th>
 						<th><b>Quantity</b></th>
 						<th><b>List Price</b></th>
 						<th><b>Total Cost</b></th>
@@ -56,11 +56,11 @@
 								<td><a href="catalog/items/EST-1">${cartItem.itemID}</a></td>
 								<td>${cartItem.productID}</td>
 								<td style="text-align: left">${cartItem.description}</td>
-								<td>${cartItem.inStock}</td>
+								<td>${cartItem.stock}</td>
 								<td><input type="number" name="${cartItem.itemID}" size="3" maxlength="3" value="${cartItem.quantity}"/></td>
 								<td>$${cartItem.listPrice}</td>
-								<td>$${cartItem.totalCost}</td>
-								<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?cartItem=${cartItem.itemID}">Remove</a></td>
+								<td>$${(cartItem.listPrice)*(cartItem.quantity)}</td>
+								<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a></td>
 							</tr>
 						</c:forEach>
 						<tr>
@@ -70,12 +70,14 @@
 							</td>
 							<td><strong>Sub Total:</strong></td>
 							<td><strong>$${sessionScope.allCost}</strong></td>
-							<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?cartItem=0">Remove All</a></td>
+							<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=0">Remove All</a></td>
 						</tr>
 					</c:if>
 
 				</table>
 			</form>
+
+			<%--此处应添加js判断库存是否满足需求--%>
 			<c:if test="${!sessionScope.cartItemList.isEmpty()}">
 				<a class="button" href="${pageContext.request.contextPath}/Order/orderSubmit">Proceed to Checkout</a>
 			</c:if>
