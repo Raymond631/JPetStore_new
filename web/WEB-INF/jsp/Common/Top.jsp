@@ -10,7 +10,7 @@
 <html>
 <head>
 	<title>Top</title>
-	<link rel="stylesheet" type="text/css" href="css/jpetstore.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jpetstore.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/aspectran.css"/>
 </head>
 <body>
@@ -19,7 +19,7 @@
 
 	<div id="Logo">
 		<div id="LogoContent">
-			<a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/images/logo-topbar.gif"/></a>
+			<a href="${pageContext.request.contextPath}/Pet/homePage"><img src="${pageContext.request.contextPath}/images/logo-topbar.gif"/></a>
 		</div>
 	</div>
 

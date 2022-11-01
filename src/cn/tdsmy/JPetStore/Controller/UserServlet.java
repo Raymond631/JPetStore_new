@@ -14,11 +14,11 @@ import java.io.IOException;
 
 /**
  * @Author:liliyyyyy
- * @Date: 2022/10/28 18:08
+ * @Date: 2022/10/28 13:04
  * @Version 1.0
  */
-@WebServlet("/editAccountForm")
-public class UserEditServlet extends HttpServlet
+@WebServlet("/Login/*")
+public class UserServlet extends HttpServlet
 {
     private UserService userService;
 
@@ -44,6 +44,15 @@ public class UserEditServlet extends HttpServlet
         String url = req.getPathInfo();
         switch (url)
         {
+            case "/Login":
+                Login(req, resp);
+                break;
+            case "/signonForm":
+                signonForm(req, resp);
+                break;
+            case "/signoff":
+                signoff(req, resp);
+                break;
             case "/editAccountForm":
                 editAccountForm(req, resp);
                 break;
@@ -59,16 +68,71 @@ public class UserEditServlet extends HttpServlet
         }
     }
 
+    public void Login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        User user = userService.getUser(username);
+
+        req.getSession().setAttribute("user", user);
+
+        //获得输入的验证码值
+        String value1 = req.getParameter("vCode");
+        /*获取图片的值*/
+        String value2 = (String) req.getSession().getAttribute("checkcode");
+        Boolean isSame = false;
+        /*对比两个值（字母不区分大小写）*/
+        if (value2.equalsIgnoreCase(value1))
+        {
+            isSame = true;
+        }
+
+
+        if (user == null || !isSame)//
+        {
+            if (!isSame)
+            {
+                req.getSession().setAttribute("messageSignOn", "Invalid Verification Code.   Signon failed.");
+            }
+            else
+            {
+                req.getSession().setAttribute("messageSignOn", "Invalid username or password.  Signon failed.");
+            }
+            req.getSession().setAttribute("user", null);
+            req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
+        }
+        else
+        {
+            user.setPassword(null);
+            req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
+        }
+    }
+
+    public void signonForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
+    }
+
+    public void signoff(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        user = null;
+        session.setAttribute("user", user);
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
+    }
+
     public void editAccountForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        req.getRequestDispatcher("/WEB-INF/jsp/User/UserEdit.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/User/PersonalCenter.jsp").forward(req, resp);
     }
 
     public void newAccountForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        req.getRequestDispatcher("/WEB-INF/jsp/User/user.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
     }
 
     public void newUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -117,13 +181,13 @@ public class UserEditServlet extends HttpServlet
         {
             userService = new UserServiceImpl();
             userService.insertUser(user1);
-            req.getRequestDispatcher("/WEB-INF/jsp/Main/Main.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
 
         }
         else
         {
             session.setAttribute("messageAccount", "Invalid Verification Code.");
-            req.getRequestDispatcher("/WEB-INF/jsp/User/user.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
         }
     }
 
@@ -159,7 +223,6 @@ public class UserEditServlet extends HttpServlet
         user.setDistrict(district);
         user.setDetailedAddress(detailedAddress);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/User/UserEdit.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/User/PersonalCenter.jsp").forward(req, resp);
     }
-
 }
