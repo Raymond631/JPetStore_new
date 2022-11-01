@@ -11,7 +11,7 @@
  Target Server Version : 50739 (5.7.39-log)
  File Encoding         : 65001
 
- Date: 01/11/2022 07:43:01
+ Date: 01/11/2022 15:26:38
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `item`  (
 -- ----------------------------
 -- Records of item
 -- ----------------------------
-INSERT INTO `item` VALUES ('FI-SW-01', 'EST-1', 'Large Angelfish', 9998, 16.50);
+INSERT INTO `item` VALUES ('FI-SW-01', 'EST-1', 'Large Angelfish', 9976, 16.50);
 INSERT INTO `item` VALUES ('K9-DL-01', 'EST-10', 'Spotted Adult Female Dalmation', 9971, 18.50);
 INSERT INTO `item` VALUES ('RP-SN-01', 'EST-11', 'Venomless Rattlesnake', 9670, 18.50);
 INSERT INTO `item` VALUES ('RP-SN-01', 'EST-12', 'Rattleless Rattlesnake', 9989, 18.50);
@@ -62,7 +62,7 @@ INSERT INTO `item` VALUES ('FL-DLH-02', 'EST-16', 'Adult Female Persian', 9893, 
 INSERT INTO `item` VALUES ('FL-DLH-02', 'EST-17', 'Adult Male Persian', 9918, 93.50);
 INSERT INTO `item` VALUES ('AV-CB-01', 'EST-18', 'Adult Male Amazon Parrot', 7921, 193.50);
 INSERT INTO `item` VALUES ('AV-SB-02', 'EST-19', 'Adult Male Finch', 9793, 15.50);
-INSERT INTO `item` VALUES ('FI-SW-01', 'EST-2', 'Small Angelfish', 9946, 16.50);
+INSERT INTO `item` VALUES ('FI-SW-01', 'EST-2', 'Small Angelfish', 9924, 16.50);
 INSERT INTO `item` VALUES ('FI-FW-02', 'EST-20', 'Adult Male Goldfish', 7726, 5.50);
 INSERT INTO `item` VALUES ('FI-FW-02', 'EST-21', 'Adult Female Goldfish', 9848, 5.29);
 INSERT INTO `item` VALUES ('K9-RT-02', 'EST-22', 'Adult Male Labrador Retriever', 9925, 135.50);
@@ -81,13 +81,34 @@ INSERT INTO `item` VALUES ('K9-PO-02', 'EST-8', 'Male Puppy Poodle', 9668, 18.50
 INSERT INTO `item` VALUES ('K9-DL-01', 'EST-9', 'Spotless Male Puppy Dalmation', 9772, 18.50);
 
 -- ----------------------------
+-- Table structure for orderitem
+-- ----------------------------
+DROP TABLE IF EXISTS `orderitem`;
+CREATE TABLE `orderitem`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `orderID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `itemID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `productID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `stock` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `listPrice` decimal(10, 2) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of orderitem
+-- ----------------------------
+INSERT INTO `orderitem` VALUES (7, '202211011524191003', 'EST-1', 'FI-SW-01', 'Large Angelfish', 9977, 1, 16.50);
+INSERT INTO `orderitem` VALUES (8, '202211011524191003', 'EST-2', 'FI-SW-01', 'Small Angelfish', 9925, 1, 16.50);
+
+-- ----------------------------
 -- Table structure for orderlist
 -- ----------------------------
 DROP TABLE IF EXISTS `orderlist`;
 CREATE TABLE `orderlist`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `orderID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `orderID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '注意: order是mysql关键字，不可用作表名',
   `orderTime` datetime NOT NULL,
   `payTime` datetime NOT NULL,
   `receiverName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -97,20 +118,15 @@ CREATE TABLE `orderlist`  (
   `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `district` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `detailedAddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `itemID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `productID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `stock` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `listPrice` decimal(10, 2) NOT NULL,
   `totalPrice` decimal(10, 2) NOT NULL,
   `payMethod` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`orderID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderlist
 -- ----------------------------
+INSERT INTO `orderlist` VALUES ('j2ee', '202211011524191003', '2022-11-01 15:24:16', '2022-11-01 15:24:19', '李四', '15800000000', '中国', '湖南省', '长沙市', '天心区', '铁道学院', 33.00, 'Alipay');
 
 -- ----------------------------
 -- Table structure for product

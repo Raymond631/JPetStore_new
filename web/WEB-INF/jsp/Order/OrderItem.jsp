@@ -78,7 +78,7 @@
 				<th><b>Item ID</b></th>
 				<th><b>Product ID</b></th>
 				<th><b>Description</b></th>
-				<th><b>Stock</b></th>
+				<th><b>Stock on OrderTime</b></th>
 				<th><b>Quantity</b></th>
 				<th><b>List Price</b></th>
 				<th><b>Total Cost</b></th>

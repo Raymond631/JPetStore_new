@@ -53,34 +53,37 @@ public class PetDaoImpl implements PetDao
     public List<Product> getProductList(String category)
     {
         List<Product> productList = new ArrayList<>();
-        String sql = "select * from product where category = '" + category + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
+        try (Connection connection = DBUtils.getConnection())
         {
-            while (res.next())
+            String sql = "select * from product where category = '" + category + "'";
+            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
             {
-                String productID = res.getString("productID");
-                String name = res.getString("name");
-                String introduce = res.getString("introduce");
+                while (res.next())
+                {
+                    String productID = res.getString("productID");
+                    String name = res.getString("name");
+                    String introduce = res.getString("introduce");
 
-                Product product = new Product();
-                product.setProductID(productID);
-                product.setName(name);
-                product.setIntroduce(introduce);
+                    Product product = new Product();
+                    product.setProductID(productID);
+                    product.setName(name);
+                    product.setIntroduce(introduce);
 
-                productList.add(product);
+                    productList.add(product);
+                }
             }
 
             for (Product product : productList)
             {
                 String sql2 = "select * from item where productID = '" + product.getProductID() + "'";
-                try (PreparedStatement statement2 = connection.prepareStatement(sql2); ResultSet res2 = statement2.executeQuery(sql2))
+                try (PreparedStatement statement = connection.prepareStatement(sql2); ResultSet res = statement.executeQuery(sql2))
                 {
-                    while (res2.next())
+                    while (res.next())
                     {
-                        String itemID = res2.getString("itemID");
-                        String description = res2.getString("description");
-                        int stock = res2.getInt("stock");
-                        BigDecimal listPrice = res2.getBigDecimal("listPrice");
+                        String itemID = res.getString("itemID");
+                        String description = res.getString("description");
+                        int stock = res.getInt("stock");
+                        BigDecimal listPrice = res.getBigDecimal("listPrice");
 
                         Item item = new Item(itemID, description, stock, listPrice);
                         product.getItemList().add(item);

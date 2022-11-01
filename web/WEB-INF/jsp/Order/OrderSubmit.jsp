@@ -104,7 +104,7 @@
 
 			<div class="button-bar">
 				<button type="submit" class="button">Submit</button>
-				<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Cart';">Cancel</button>
+				<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Cart/cartList';">Cancel</button>
 			</div>
 
 		</form>

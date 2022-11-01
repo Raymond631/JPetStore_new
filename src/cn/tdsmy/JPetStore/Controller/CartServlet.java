@@ -100,7 +100,7 @@ public class CartServlet extends HttpServlet
      */
     public void removeCartItem(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
-        String itemID = req.getQueryString().substring(7);
+        String itemID = req.getParameter("itemID");
         cartService.removeCartItem("j2ee", itemID);
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }

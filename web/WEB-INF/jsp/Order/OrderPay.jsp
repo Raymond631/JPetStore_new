@@ -78,7 +78,7 @@
 		</table>
 
 		<h3>Order Details</h3>
-		<form id="PayForm" method="post" action="${pageContext.request.contextPath}/Order/orderItem?newOrder">
+		<form id="PayForm" method="post" action="${pageContext.request.contextPath}/Order/newOrder">
 			<table>
 				<colgroup>
 					<col style="width: 25%"/>

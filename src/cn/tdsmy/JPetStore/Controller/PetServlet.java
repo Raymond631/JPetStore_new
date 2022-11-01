@@ -69,7 +69,7 @@ public class PetServlet extends HttpServlet
      */
     public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        String category = req.getQueryString().substring(9);
+        String category = req.getParameter("category");
         List<Product> productList = petService.getProductList(category);
 
         req.getSession().setAttribute("category", category);

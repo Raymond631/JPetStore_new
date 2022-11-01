@@ -2,6 +2,7 @@ package cn.tdsmy.JPetStore.Entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +17,9 @@ public class Order implements Serializable
     private String orderTime;
     private String payTime;
     private User receiver;
-    private List<CartItem> cartItemList;
     private BigDecimal totalPrice;
     private String payMethod;
+    private List<CartItem> cartItemList;
 
     public Order(String orderID, String orderTime, String payTime, User receiver, List<CartItem> cartItemList, BigDecimal totalPrice, String payMethod)
     {
@@ -33,6 +34,7 @@ public class Order implements Serializable
 
     public Order()
     {
+        cartItemList = new ArrayList<>();
     }
 
     public String getOrderID()

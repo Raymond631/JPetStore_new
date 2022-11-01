@@ -48,33 +48,25 @@ public class OrderServlet extends HttpServlet
         String url = req.getPathInfo();
         switch (url)
         {
-            case "/orderList":
-                orderList(req, resp);
-                break;
             case "/orderSubmit":
                 orderSubmit(req, resp);
                 break;
             case "/orderPay":
                 orderPay(req, resp);
                 break;
-            case "/orderItem":
-                orderItem(req, resp);
+            case "/newOrder":
+                newOrder(req, resp);
                 break;
             case "/deleteOrder":
                 deleteOrder(req, resp);
                 break;
+            case "/orderList":
+                orderList(req, resp);
+                break;
+            case "/orderItem":
+                orderItem(req, resp);
+                break;
         }
-    }
-
-    /**
-     * get请求
-     */
-    public void orderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
-        List<Order> orderList = orderService.selectOrderList("j2ee");
-        req.setAttribute("orderList", orderList);
-
-        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderList.jsp").forward(req, resp);
     }
 
     /**
@@ -115,35 +107,25 @@ public class OrderServlet extends HttpServlet
     }
 
     /**
-     * newOrder为post请求
-     * 查看订单详情为get请求,参数/orderItem?orderID=
+     * post请求
      */
-    public void orderItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    public void newOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        if (req.getMethod().equals("POST"))//新订单
-        {
-            Order order = new Order();
-            order.setOrderID(orderService.createOrderID());
-            order.setOrderTime((String) req.getSession().getAttribute("OrderTime"));
-            order.setPayTime(orderService.getTimeNow());
-            order.setReceiver((User) req.getSession().getAttribute("receiver"));
-            order.setCartItemList((List<CartItem>) req.getSession().getAttribute("cartItemList"));
+        Order order = new Order();
+        order.setOrderID(orderService.createOrderID());
+        order.setOrderTime((String) req.getSession().getAttribute("OrderTime"));
+        order.setPayTime(orderService.getTimeNow());
+        order.setReceiver((User) req.getSession().getAttribute("receiver"));
+        order.setCartItemList((List<CartItem>) req.getSession().getAttribute("cartItemList"));
 
-            order.setTotalPrice((BigDecimal) req.getSession().getAttribute("allCost"));
-            order.setPayMethod(req.getParameter("payMethod"));
+        order.setTotalPrice((BigDecimal) req.getSession().getAttribute("allCost"));
+        order.setPayMethod(req.getParameter("payMethod"));
 
-            orderService.addOrder("j2ee", order);//插入数据库
+        orderService.addOrder("j2ee", order);//插入数据库
 
-            req.setAttribute("order", order);
-            req.setAttribute("newOrder", true);
-        }
-        else
-        {
-            String param = req.getQueryString().substring(8);
-            Order order = orderService.selectOrder(param);
-            req.setAttribute("order", order);
-            req.setAttribute("newOrder", false);
-        }
+        req.setAttribute("order", order);
+        req.setAttribute("newOrder", true);
+
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderItem.jsp").forward(req, resp);
     }
 
@@ -153,9 +135,34 @@ public class OrderServlet extends HttpServlet
      */
     public void deleteOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        String OrderID = req.getQueryString().substring(8);
+        String OrderID = req.getParameter("orderID");
         orderService.deleteOrder(OrderID);
 
         resp.sendRedirect(req.getContextPath() + "/Order/orderList");
+    }
+
+    /**
+     * get请求
+     */
+    public void orderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        List<Order> orderList = orderService.selectOrderList("j2ee");
+        req.setAttribute("orderList", orderList);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderList.jsp").forward(req, resp);
+    }
+
+    /**
+     * 查看订单详情为get请求,参数/orderItem?orderID=
+     */
+    public void orderItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        String param = req.getParameter("orderID");
+        System.out.println(param);
+        Order order = orderService.selectOrder(param);
+        req.setAttribute("order", order);
+        req.setAttribute("newOrder", false);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderItem.jsp").forward(req, resp);
     }
 }

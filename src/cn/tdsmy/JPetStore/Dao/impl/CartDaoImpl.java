@@ -26,7 +26,6 @@ public class CartDaoImpl implements CartDao
         String sql = "insert into cart (username,itemID,quantity) values (" + value + ")";
 
         //下面用到了try-with-resources语法: 执行完{}后，自动关闭()内的resources,不需要再写finally子句去手动关闭connection等资源
-        //"增删改"括号内写2项，"查"括号内写3项
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
         {
             statement.executeUpdate();
@@ -83,19 +82,19 @@ public class CartDaoImpl implements CartDao
     public List<CartItem> selectCartList(String username)
     {
         List<CartItem> cartItemList = new ArrayList<>();
-        String sql1 = "select * from cart where username ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement1 = connection.prepareStatement(sql1); ResultSet res1 = statement1.executeQuery(sql1))
+        String sql = "select * from cart where username ='" + username + "'";
+        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
-            while (res1.next())
+            while (res.next())
             {
                 CartItem cartItem = new CartItem();
 
-                String itemID = res1.getString("itemID");
-                int quantity = res1.getInt("quantity");
+                String itemID = res.getString("itemID");
+                int quantity = res.getInt("quantity");
                 cartItem.setItemID(itemID);
                 cartItem.setQuantity(quantity);
 
-                String sql2 = "select * from pet where itemID = '" + itemID + "'";
+                String sql2 = "select * from item where itemID = '" + itemID + "'";
                 try (PreparedStatement statement2 = connection.prepareStatement(sql2); ResultSet res2 = statement2.executeQuery(sql2))
                 {
                     while (res2.next())
