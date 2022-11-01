@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -70,10 +70,10 @@ public class PetServlet extends HttpServlet
     public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         String category = req.getParameter("category");
-        List<Product> productList = petService.getProductList(category);
+        Map<String, Product> productMap = petService.getProductList(category);
 
         req.getSession().setAttribute("category", category);
-        req.getSession().setAttribute("productList", productList);
+        req.getSession().setAttribute("productMap", productMap);
 
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
     }

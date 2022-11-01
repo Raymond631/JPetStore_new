@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -50,9 +52,9 @@ public class PetDaoImpl implements PetDao
     }
 
     @Override
-    public List<Product> getProductList(String category)
+    public Map<String, Product> getProductList(String category)
     {
-        List<Product> productList = new ArrayList<>();
+        Map<String, Product> productMap = new HashMap<>();//key:productID,value:product
         try (Connection connection = DBUtils.getConnection())
         {
             String sql = "select * from product where category = '" + category + "'";
@@ -69,11 +71,11 @@ public class PetDaoImpl implements PetDao
                     product.setName(name);
                     product.setIntroduce(introduce);
 
-                    productList.add(product);
+                    productMap.put(productID, product);
                 }
             }
 
-            for (Product product : productList)
+            productMap.forEach((productID, product) ->
             {
                 String sql2 = "select * from item where productID = '" + product.getProductID() + "'";
                 try (PreparedStatement statement = connection.prepareStatement(sql2); ResultSet res = statement.executeQuery(sql2))
@@ -86,15 +88,19 @@ public class PetDaoImpl implements PetDao
                         BigDecimal listPrice = res.getBigDecimal("listPrice");
 
                         Item item = new Item(itemID, description, stock, listPrice);
-                        product.getItemList().add(item);
+                        product.getItemMap().put(itemID, item);
                     }
                 }
-            }
+                catch (SQLException e)
+                {
+                    throw new RuntimeException(e);
+                }
+            });
         }
         catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
-        return productList;
+        return productMap;
     }
 }

@@ -3,6 +3,7 @@ package cn.tdsmy.JPetStore.Service;
 import cn.tdsmy.JPetStore.Entity.Product;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -13,5 +14,5 @@ public interface PetService
 {
     public List<Product> searchPet(String key);//通过关键字搜索宠物列表
 
-    public List<Product> getProductList(String category);
+    public Map<String, Product> getProductList(String category);
 }

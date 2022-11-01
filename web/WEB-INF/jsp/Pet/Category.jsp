@@ -64,51 +64,15 @@
 
 <div class="mainbox">
 
-	<!--左侧部分 -->
-	<div class="left">
-		<div>
-			<h2 class="bigcate"> ${sessionScope.category}</h2>
-			<div class="together">
-				<c:forEach items="${sessionScope.productList}" var="product">
-					<div class="cate" id="cateDefault">${product.name}</div>
-				</c:forEach>
-			</div>
-		</div>
-	</div>
-
-	<%--中间部分--%>
 	<div class="center" id="content">
-		<div>
-			<div class="smallCate" style=" background: url(${pageContext.request.contextPath}/images/show1.jpg) no-repeat; background-size: cover;" onclick="onClicked()">
+		<c:forEach items="${productMap}" var="product">
+			<div class="smallCate" style=" background: url(${pageContext.request.contextPath}/images/show1.jpg) no-repeat; background-size: cover;">
 				<div class="briefIntroduction">
-					<div class="nameAndPrice" id="name"></div>
-					<div class="nameAndPrice">Price</div>
+					<div class="nameAndPrice" id="name">${product.value.getName()}</div>
+					<div class="nameAndPrice">${product.value.getIntroduce()}</div>
 				</div>
 			</div>
-			<div class="smallCate" style=" background: url(${pageContext.request.contextPath}/images/show2.jpg) no-repeat; background-size: cover;">
-				<div class="briefIntroduction">
-					<div class="nameAndPrice">Name</div>
-					<div class="nameAndPrice">Price</div>
-				</div>
-			</div>
-			<div class="smallCate">
-
-			</div>
-		</div>
-
-		<div>
-			<div class="smallCate"></div>
-			<div class="smallCate"></div>
-			<div class="smallCate"></div>
-		</div>
-	</div>
-
-	<%--右边部分--%>
-	<div class="right">
-		<div><img class="picture" id="specificImg" src="${pageContext.request.contextPath}/images/show1.jpg"/></div>
-		<div id="specificName">name</div>
-		<div id="specificPrice">price</div>
-		<div id="description">description</div>
+		</c:forEach>
 	</div>
 </div>
 

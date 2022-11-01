@@ -1,7 +1,7 @@
 package cn.tdsmy.JPetStore.Entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -13,19 +13,19 @@ public class Product
     private String productID;
     private String name;
     private String introduce;
-    private List<Item> itemList;
+    private Map<String, Item> itemMap;//key:itemID,value:item
 
-    public Product(String productID, String name, String introduce, List<Item> itemList)
+    public Product(String productID, String name, String introduce, Map<String, Item> itemMap)
     {
         this.productID = productID;
         this.name = name;
         this.introduce = introduce;
-        this.itemList = itemList;
+        this.itemMap = itemMap;
     }
 
     public Product()
     {
-        itemList = new ArrayList<>();
+        itemMap = new HashMap<>();
     }
 
     public String getProductID()
@@ -58,13 +58,13 @@ public class Product
         this.introduce = introduce;
     }
 
-    public List<Item> getItemList()
+    public Map<String, Item> getItemMap()
     {
-        return itemList;
+        return itemMap;
     }
 
-    public void setItemList(List<Item> itemList)
+    public void setItemMap(Map<String, Item> itemMap)
     {
-        this.itemList = itemList;
+        this.itemMap = itemMap;
     }
 }

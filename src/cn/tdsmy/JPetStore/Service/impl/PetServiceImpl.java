@@ -6,6 +6,7 @@ import cn.tdsmy.JPetStore.Entity.Product;
 import cn.tdsmy.JPetStore.Service.PetService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -27,7 +28,7 @@ public class PetServiceImpl implements PetService
     }
 
     @Override
-    public List<Product> getProductList(String category)
+    public Map<String, Product> getProductList(String category)
     {
         if (petDao == null)
         {
