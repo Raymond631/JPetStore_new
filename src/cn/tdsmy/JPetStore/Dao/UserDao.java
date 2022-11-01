@@ -9,6 +9,7 @@ import cn.tdsmy.JPetStore.Entity.User;
  */
 public interface UserDao
 {
+
     public void addUser(User user);//增
 
     public void deleteUser(String username);//删

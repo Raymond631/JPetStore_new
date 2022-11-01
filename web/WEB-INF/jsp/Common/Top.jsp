@@ -10,7 +10,7 @@
 <html>
 <head>
 	<title>Top</title>
-	<link rel="StyleSheet" type="text/css" href="${pageContext.request.contextPath}/css/jpetstore.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="css/jpetstore.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/aspectran.css"/>
 </head>
 <body>
@@ -29,16 +29,16 @@
 			<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
 
 			<c:if test="${sessionScope.accountBean == null}">
-				<a href="/account/signonForm">Sign In</a>
+				<a href="signonForm">Sign In</a>
 				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-				<a href="/account/newAccountForm">Sign Up</a>
+				<a href="newAccountForm">Sign Up</a>
 			</c:if>
 			<c:if test="${sessionScope.accountBean != null}">
 				<a href="/order/listOrders">My Orders</a>
 				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-				<a href="/account/editAccountForm">My Account</a>
+				<a href="editAccountForm">My Account</a>
 				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-				<a href="/account/signoff">Sign Out</a>
+				<a href="signoff">Sign Out</a>
 			</c:if>
 
 			<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>

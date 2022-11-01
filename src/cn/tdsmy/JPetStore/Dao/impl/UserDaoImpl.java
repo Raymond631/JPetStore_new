@@ -16,9 +16,39 @@ import java.sql.SQLException;
  */
 public class UserDaoImpl implements UserDao
 {
+
+    private static final String updateAccountString = "UPDATE user SET" +
+            "      ReceiverName = ?," +
+            "      Email = ?," +
+            "      PhoneNumber = ?," +
+            "      Country = ?," +
+            "      Province = ?," +
+            "      City = ?," +
+            "      District = ?," +
+            "      DetailedAddress = ?" ;
+
     @Override
-    public void addUser(User user)
-    {
+    public void addUser(User user) {
+
+        String values = "'" + user.getUsername() + ","
+                + user.getPassword()+","
+                + user.getReceiverName()+","
+                + user.getEmail()+","
+                + user.getPhoneNumber()+","
+                + user.getCountry()+","
+                + user.getProvince()+","
+                + user.getCity()+","
+                + user.getDistrict()+","
+                + user.getDetailedAddress()+"'";
+        String sql = "insert into User (username,password,ReceiverName,Email,PhoneNumber,Country,Province,City,District,DetailedAddress) values (" + values + ")";
+        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
+        {
+            statement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -31,7 +61,23 @@ public class UserDaoImpl implements UserDao
     @Override
     public void updateUser(User user)
     {
+        try {
+            Connection connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateAccountString);
+            preparedStatement.setString(1, user.getReceiverName());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPhoneNumber());
+            preparedStatement.setString(4, user.getCountry());
+            preparedStatement.setString(5, user.getProvince());
+            preparedStatement.setString(6, user.getCity());
+            preparedStatement.setString(7, user.getDistrict());
+            preparedStatement.setString(8, user.getDetailedAddress());
+            preparedStatement.executeUpdate();
 
+            preparedStatement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -13,6 +13,10 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+#entrance {
+    background-color: #3E3E3E;
+}
+
 #Header {
     background-color: #333;
     color: #eaac00;
