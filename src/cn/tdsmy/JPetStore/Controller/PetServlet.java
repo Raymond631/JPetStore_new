@@ -51,6 +51,9 @@ public class PetServlet extends HttpServlet
             case "/petList":
                 petList(req, resp);
                 break;
+            case "/main":
+                main(req, resp);
+                break;
         }
     }
 
@@ -76,5 +79,10 @@ public class PetServlet extends HttpServlet
         req.getSession().setAttribute("productMap", productMap);
 
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
+    }
+
+    public void main(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        req.getRequestDispatcher("/WEB-INF/jsp/Main/Main.jsp").forward(req, resp);
     }
 }

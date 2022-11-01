@@ -7,76 +7,55 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+
 <html>
 <head>
 	<title>Category</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/category.css"/>
+	<!-- 引入jquery -->
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 	<script>
-        function load()
-        {
-            // 这个地方应该是写一个默认选中的函数
-        }
+        // function toSmallCategory(e) {
+        //     let cate = $(e).text();
+        //     console.log(cate);
+        // }
 
-        $(function ()
-        {
-            $('.together').on('click', 'div', function ()
-            {
-                var allList = '<%= session.getAttribute("CategoryList") %>';
+        <%--$(function () {--%>
+        <%--    $('.center').on('click', 'div', function () {--%>
+        <%--        &lt;%&ndash;var allList = '<%= session.getAttribute("CategoryList") %>';&ndash;%&gt;--%>
 
-                $(this).addClass('cateClick');
-                $(this).siblings().removeClass('cateClick');
-                var category = $(this).text();
-                let name = document.getElementById("name");
-                name.innerText = category;
-                console.log(category);
-                console.log("...");
-                console.log(allList);
-            })
-        })
+        <%--        //                $(this).addClass('cateClick');--%>
+        <%--        //                $(this).siblings().removeClass('cateClick');--%>
+        <%--        var category = $(this).getElementById();--%>
+        <%--        console.log(category);--%>
+        <%--    })--%>
+        <%--})--%>
 
-        window.load();
-
-        function onClicked()
-        {
-            let name = document.getElementById("specificName");
-            name.innerText = "SpecificName";
-            WhichSpecificImg();
-        }
-
-        function WhichSpecificImg()
-        {
-            document.getElementById('specificImg').src = "${pageContext.request.contextPath}/images/show2.jpg";
-            <%--var myselect = document.getElementById("Payment");--%>
-            <%--var index = myselect.selectedIndex; // selectedIndex代表的是你所选中项的index--%>
-            <%--var name = myselect.options[index].value;--%>
-            <%--if (name == "Alipay") {--%>
-            <%--    document.getElementById('SpecificImg').src = "${pageContext.request.contextPath}/images/show1.jpg";--%>
-            <%--} else {--%>
-            <%--    document.getElementById('SpecificImg').src = "${pageContext.request.contextPath}/images/show2.png";--%>
-            <%--}--%>
-        }
 	</script>
 </head>
-
 <body>
-
 <%@include file="../Common/Top.jsp" %>
-
 <div class="mainbox">
 
+	<%--中间部分--%>
 	<div class="center" id="content">
-		<c:forEach items="${productMap}" var="product">
-			<div class="smallCate" style=" background: url(${pageContext.request.contextPath}/images/show1.jpg) no-repeat; background-size: cover;">
+
+		<c:forEach items="${sessionScope.category}" var="pet" varStatus="line">
+			<%--            <c:if test="${line.count%3==0}"><br></c:if>--%>
+			<%--            <a herf="${pageContext.request.contextPath}">--%>
+			<div class="smallCate"
+			     style=" background: url(${pageContext.request.contextPath}/images/show1.jpg) no-repeat; background-size: cover;"
+			     id=${pet} onclick="window.location.href='${pageContext.request.contextPath}/Pet/petProduction?production=${pet}'">
 				<div class="briefIntroduction">
-					<div class="nameAndPrice" id="name">${product.value.getName()}</div>
-					<div class="nameAndPrice">${product.value.getIntroduce()}</div>
+					<div class="nameAndPrice">${pet}</div>
+					<span class="nameAndPrice">ID</span>
 				</div>
 			</div>
+			<%--            </a>--%>
 		</c:forEach>
 	</div>
+
 </div>
-
 <%@include file="../Common/Bottom.jsp" %>
-
 </body>
 </html>

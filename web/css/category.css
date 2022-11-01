@@ -1,4 +1,4 @@
-.mainbox {
+.mainBox {
     display: flex;
     width: 100%;
     height: 100%;
@@ -7,14 +7,6 @@
     color: black;
     background-color: pink;
     border-radius: 50px;
-}
-
-.left {
-    left: 50px;
-    width: 15%;
-    height: 100%;
-    text-align: center;
-    background-color: #bbded6;
 }
 
 .bigcate {
@@ -41,12 +33,6 @@
     background-color: #a9f1df;
 }
 
-.right {
-    width: 40%;
-    height: 100%;
-    background-color: #7dd1ed;
-}
-
 .smallCate {
     margin-top: 30px;
     margin-left: 40px;
@@ -59,12 +45,12 @@
 }
 
 .picture {
-    height: 50%;
-    width: 70%;
+    height: 90%;
+    width: 45%;
     border: 2px solid black;
     border-radius: 80px;
     margin-top: 20px;
-    margin-left: 60px;
+    margin-left: 26%;
     alignment: center;
     text-align: center;
     background-size: cover;
@@ -85,4 +71,51 @@
     font-size: 25px;
     margin-bottom: 5px;
     color: white;
+}
+
+.left {
+    width: 40%;
+    height: 100%;
+    background-color: #bbded6;
+}
+
+.right {
+    width: 60%;
+    height: 100%;
+    background-color: #7dd1ed;
+}
+
+.left-top {
+    height: 60%;
+    width: 100%;
+    background-color: #00aaff;
+    border: 2px solid black;
+    border-radius: 80px;
+}
+
+.left-bottom {
+    height: 40%;
+    width: 100%;
+    background-color: greenyellow;
+    border: 2px solid black;
+    border-radius: 80px;
+}
+
+.information {
+    height: 60%;
+    width: 70%;
+    background-color: pink;
+    border: 2px solid black;
+    border-radius: 80px;
+    margin-top: 10%;
+    margin-left: 15%;
+    text-align: center;
+}
+
+.smallCateTable {
+    width: 90%;
+    height: 90%;
+    margin-top: 40px;
+    margin-right: 50px;
+    margin-left: 50px;
 }

@@ -18,51 +18,97 @@ import java.io.IOException;
  * @Version 1.0
  */
 @WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
-
-    private static final String LOGINFORM = "/WEB-INF/jsp/User/LoginForm.jsp";
-    private static final String MAIN = "/WEB-INF/jsp/Main/Main.jsp";
-
-    private User user;
+public class LoginServlet extends HttpServlet
+{
     private UserService userService;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        urlDistribute(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        urlDistribute(req, resp);
+    }
+
+    public void urlDistribute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        if (userService == null)
+        {
+            userService = new UserServiceImpl();
+        }
+
+        String url = req.getPathInfo();
+        switch (url)
+        {
+            case "/Login":
+                Login(req, resp);
+                break;
+            case "/signonForm":
+                signonForm(req, resp);
+                break;
+            case "/signoff":
+                signoff(req, resp);
+                break;
+        }
+    }
+
+    public void Login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         userService = new UserServiceImpl();
-        user = userService.getUser(username);
+        User user = userService.getUser(username);
 
         HttpSession session = req.getSession();
-        session.setAttribute("user",user);
+        session.setAttribute("user", user);
 
         //获得输入的验证码值
-        String value1=req.getParameter("vCode");
+        String value1 = req.getParameter("vCode");
         /*获取图片的值*/
-        String value2=(String)session.getAttribute("checkcode");
+        String value2 = (String) session.getAttribute("checkcode");
         Boolean isSame = false;
         /*对比两个值（字母不区分大小写）*/
-        if(value2.equalsIgnoreCase(value1)){
+        if (value2.equalsIgnoreCase(value1))
+        {
             isSame = true;
         }
 
 
-        if (user == null || !isSame){
-            if(!isSame){
+        if (user == null || !isSame)
+        {
+            if (!isSame)
+            {
                 session.setAttribute("messageSignOn", "Invalid Verification Code.   Signon failed.");
-            }else{
+            }
+            else
+            {
                 session.setAttribute("messageSignOn", "Invalid username or password.  Signon failed.");
             }
             session.setAttribute("user", null);
-            req.getRequestDispatcher(LOGINFORM).forward(req, resp);
-        }else {
-            user.setPassword(null);
-            req.getRequestDispatcher(MAIN).forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/User/LoginForm.jsp").forward(req, resp);
         }
+        else
+        {
+            user.setPassword(null);
+            req.getRequestDispatcher("/WEB-INF/jsp/Main/Main.jsp").forward(req, resp);
+        }
+    }
+
+    public void signonForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        req.getRequestDispatcher("/WEB-INF/jsp/User/LoginForm.jsp").forward(req, resp);
+    }
+
+    public void signoff(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        user = null;
+        session.setAttribute("user", user);
+        req.getRequestDispatcher("/WEB-INF/jsp/Main/Main.jsp").forward(req, resp);
     }
 }
