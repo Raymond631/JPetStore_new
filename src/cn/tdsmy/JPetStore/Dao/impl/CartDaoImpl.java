@@ -23,7 +23,7 @@ public class CartDaoImpl implements CartDao
     public void addCartItem(String username, String itemID, int quantity)
     {
         String value = "'" + username + "','" + itemID + "','" + quantity + "'";
-        String sql = "insert into cart (username,itemID,quantity) values (" + value + ")";
+        String sql = "insert into cart (username,itemID,quantity) values ('" + value + "')";
 
         //下面用到了try-with-resources语法: 执行完{}后，自动关闭()内的resources,不需要再写finally子句去手动关闭connection等资源
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))

@@ -5,7 +5,7 @@ import cn.tdsmy.JPetStore.Dao.UserDao;
 import cn.tdsmy.JPetStore.Dao.impl.OrderDaoImpl;
 import cn.tdsmy.JPetStore.Dao.impl.UserDaoImpl;
 import cn.tdsmy.JPetStore.Entity.Order;
-import cn.tdsmy.JPetStore.Entity.User;
+import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Service.OrderService;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService
     private static int num = 1000;//用于生成订单号
 
     @Override
-    public User selectReceiver(String username)
+    public Receiver selectReceiver(String username)
     {
         if (userDao == null)
         {

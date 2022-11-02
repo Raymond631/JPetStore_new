@@ -16,12 +16,12 @@ public class Order implements Serializable
     private String orderID;
     private String orderTime;
     private String payTime;
-    private User receiver;
+    private Receiver receiver;
     private BigDecimal totalPrice;
     private String payMethod;
     private List<CartItem> cartItemList;
 
-    public Order(String orderID, String orderTime, String payTime, User receiver, List<CartItem> cartItemList, BigDecimal totalPrice, String payMethod)
+    public Order(String orderID, String orderTime, String payTime, Receiver receiver, List<CartItem> cartItemList, BigDecimal totalPrice, String payMethod)
     {
         this.orderID = orderID;
         this.orderTime = orderTime;
@@ -67,12 +67,12 @@ public class Order implements Serializable
         this.payTime = payTime;
     }
 
-    public User getReceiver()
+    public Receiver getReceiver()
     {
         return receiver;
     }
 
-    public void setReceiver(User receiver)
+    public void setReceiver(Receiver receiver)
     {
         this.receiver = receiver;
     }

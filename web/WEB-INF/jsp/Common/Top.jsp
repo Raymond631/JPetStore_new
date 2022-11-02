@@ -10,8 +10,8 @@
 <html>
 <head>
 	<title>Top</title>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jpetstore.css" media="screen"/>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/aspectran.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/jpetstore.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="../css/aspectran.css"/>
 </head>
 <body>
 
@@ -19,36 +19,36 @@
 
 	<div id="Logo">
 		<div id="LogoContent">
-			<a href="${pageContext.request.contextPath}/Pet/homePage"><img src="${pageContext.request.contextPath}/images/logo-topbar.gif"/></a>
+			<a href="../Pet/homePage"><img src="../images/logo-topbar.gif"/></a>
 		</div>
 	</div>
 
 	<div id="Menu">
 		<div id="MenuContent">
-			<a href="${pageContext.request.contextPath}/Cart/cartList"><img align="middle" name="img_cart" src="${pageContext.request.contextPath}/images/cart.gif"/></a>
-			<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
+			<a href="../Cart/cartList"><img align="middle" name="img_cart" src="../images/cart.gif"/></a>
+			<img align="middle" src="../images/separator.gif"/>
 
-			<c:if test="${sessionScope.accountBean == null}">
-				<a href="signonForm">Sign In</a>
-				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-				<a href="newAccountForm">Sign Up</a>
+			<c:if test="${sessionScope.user == null}">
+				<a href="../User/showLogin">Sign In</a>
+				<img align="middle" src="../images/separator.gif"/>
+				<a href="../User/showRegister">Sign Up</a>
 			</c:if>
-			<c:if test="${sessionScope.accountBean != null}">
-				<a href="${pageContext.request.contextPath}/Order/orderList">My Orders</a>
-				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-				<a href="editAccountForm">My Account</a>
-				<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-				<a href="signoff">Sign Out</a>
+			<c:if test="${sessionScope.user != null}">
+				<a href="../Order/orderList">My Orders</a>
+				<img align="middle" src="../images/separator.gif"/>
+				<a href="../User/personalCenter">My Account</a>
+				<img align="middle" src="../images/separator.gif"/>
+				<a href="../User/signOut">Sign Out</a>
 			</c:if>
 
-			<img align="middle" src="${pageContext.request.contextPath}/images/separator.gif"/>
-			<a href="${pageContext.request.contextPath}/help.html">?</a>
+			<img align="middle" src="../images/separator.gif"/>
+			<a href="../help.html">?</a>
 		</div>
 	</div>
 
 	<div id="Search" data-hide-for="large">
 		<div id="SearchContent">
-			<form action="${pageContext.request.contextPath}/Pet/searchPet">
+			<form action="../Pet/searchPet">
 				<div class="input-group">
 					<input class="input-group-field" type="text" name="keyword" placeholder="Product Search">
 					<div class="input-group-button">
@@ -60,11 +60,11 @@
 	</div>
 
 	<div id="QuickLinks">
-		<a href="${pageContext.request.contextPath}/Pet/petList?category=fish">Fish</a>
-		<a href="${pageContext.request.contextPath}/Pet/petList?category=dogs">Dogs</a>
-		<a href="${pageContext.request.contextPath}/Pet/petList?category=reptiles">Reptiles</a>
-		<a href="${pageContext.request.contextPath}/Pet/petList?category=cats">Cats</a>
-		<a href="${pageContext.request.contextPath}/Pet/petList?category=birds">Birds</a>
+		<a href="../Pet/petList?category=fish">Fish</a>
+		<a href="../Pet/petList?category=dogs">Dogs</a>
+		<a href="../Pet/petList?category=reptiles">Reptiles</a>
+		<a href="../Pet/petList?category=cats">Cats</a>
+		<a href="../Pet/petList?category=birds">Birds</a>
 	</div>
 </div>
 

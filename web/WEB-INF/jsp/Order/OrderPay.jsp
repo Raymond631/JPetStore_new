@@ -23,7 +23,7 @@
 	</div>
 
 	<div id="BackLink">
-		<a href="${pageContext.request.contextPath}">Return to Main Menu</a>
+		<a href="../Pet/homePage">Return to Main Menu</a>
 	</div>
 
 	<div id="CenterForm">
@@ -78,7 +78,7 @@
 		</table>
 
 		<h3>Order Details</h3>
-		<form id="PayForm" method="post" action="${pageContext.request.contextPath}/Order/newOrder">
+		<form id="PayForm" method="post" action="../Order/newOrder">
 			<table>
 				<colgroup>
 					<col style="width: 25%"/>
@@ -112,7 +112,7 @@
 			<%--打开弹窗--%>
 			<button class="button" id="pay"> Pay</button>
 			<%--返回订单提交页面--%>
-			<button class="button" onclick="location.href='${pageContext.request.contextPath}/Order/orderSubmit'">Back</button>
+			<button class="button" onclick="location.href='../Order/orderSubmit'">Back</button>
 		</div>
 
 		<%--弹窗--%>
@@ -120,7 +120,7 @@
 			<div class="modal-content">
 				<div class="modal-body">
 					<div class="mb_revise">模拟支付</div>
-					<img id="Pic" src="${pageContext.request.contextPath}/images/Alipay.jpg" width="300"/>
+					<img id="Pic" src="../images/Alipay.jpg" width="300"/>
 					<div>
 						<%--跳往下一个界面--%>
 						<button class="determine">支付成功</button>
@@ -165,10 +165,10 @@
                 var name = myselect.options[index].value;
                 if (name == "Alipay")
                 {
-                    document.getElementById('Pic').src = "${pageContext.request.contextPath}/images/Alipay.jpg";
+                    document.getElementById('Pic').src = "../images/Alipay.jpg";
                 } else
                 {
-                    document.getElementById('Pic').src = "${pageContext.request.contextPath}/images/WeChatPay.png";
+                    document.getElementById('Pic').src = "../images/WeChatPay.png";
                 }
             }
 		</script>

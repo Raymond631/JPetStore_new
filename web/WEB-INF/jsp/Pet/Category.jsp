@@ -11,7 +11,7 @@
 <html>
 <head>
 	<title>Category</title>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/category.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/category.css"/>
 	<!-- 引入jquery -->
 	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 	<script>
@@ -44,8 +44,8 @@
 			<%--            <c:if test="${line.count%3==0}"><br></c:if>--%>
 			<%--            <a herf="${pageContext.request.contextPath}">--%>
 			<div class="smallCate"
-			     style=" background: url(${pageContext.request.contextPath}/images/show1.jpg) no-repeat; background-size: cover;"
-			     id=${pet} onclick="window.location.href='${pageContext.request.contextPath}/Pet/petProduction?production=${pet}'">
+			     style=" background: url(../images/show1.jpg) no-repeat; background-size: cover;"
+			     id=${pet} onclick="window.location.href='../Pet/petProduction?production=${pet}'">
 				<div class="briefIntroduction">
 					<div class="nameAndPrice">${pet}</div>
 					<span class="nameAndPrice">ID</span>
