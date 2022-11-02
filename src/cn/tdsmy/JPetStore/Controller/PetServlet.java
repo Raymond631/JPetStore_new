@@ -45,16 +45,28 @@ public class PetServlet extends HttpServlet
         String url = req.getPathInfo();
         switch (url)
         {
+            case "/homePage":
+                homePage(req, resp);
+                break;
             case "/searchPet":
                 searchPet(req, resp);
                 break;
             case "/petList":
                 petList(req, resp);
                 break;
-            case "/homePage":
-                homePage(req, resp);
+            case "/petProduct":
+                petProduct(req, resp);
                 break;
         }
+    }
+
+
+    /**
+     * get请求
+     */
+    public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
     }
 
     /**
@@ -73,7 +85,7 @@ public class PetServlet extends HttpServlet
     public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         String category = req.getParameter("category");
-        Map<String, Product> productMap = petService.getProductList(category);
+        Map<String, Product> productMap = petService.getProductMap(category);
 
         req.getSession().setAttribute("category", category);
         req.getSession().setAttribute("productMap", productMap);
@@ -83,9 +95,14 @@ public class PetServlet extends HttpServlet
 
     /**
      * get请求
+     * 参数/petProduct?productID=
      */
-    public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    public void petProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
+        Map<String, Product> productMap = (Map<String, Product>) req.getSession().getAttribute("productMap");
+        Product product = productMap.get(req.getParameter("productID"));
+        req.setAttribute("product", product);
+
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduction.jsp").forward(req, resp);
     }
 }

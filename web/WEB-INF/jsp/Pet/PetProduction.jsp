@@ -22,9 +22,9 @@
 		</div>
 		<div class="left-bottom">
 			<div class="information">
-				<div id="specificName" class="nameAndPrice">${requestScope.production}</div>
-				<div id="specificPrice" class="nameAndPrice">price</div>
-				<div id="description" class="nameAndPrice">description</div>
+				<div id="specificName" class="nameAndPrice">${requestScope.product.getProductID()}</div>
+				<div id="specificPrice" class="nameAndPrice">${requestScope.product.getName()}</div>
+				<div id="description" class="nameAndPrice">${requestScope.product.getIntroduce()}</div>
 			</div>
 		</div>
 	</div>
@@ -35,27 +35,22 @@
 			<table style="text-align: center">
 				<tr>
 					<th><b>Item ID</b></th>
-					<th><b>Product ID</b></th>
 					<th><b>Description</b></th>
 					<th><b>Stock</b></th>
-					<th><b>Quantity</b></th>
 					<th><b>List Price</b></th>
-					<th><b>Total Cost</b></th>
+					<th><b>Quantity</b></th>
 					<th>&nbsp;</th>
 				</tr>
 
-				<c:forEach items="${sessionScope.cartItemList}" var="cartItem">
+				<c:forEach items="${requestScope.product.getItemMap()}" var="item">
 					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td>${item.key}</td>
+						<td>${item.value.getDescription()}</td>
+						<td>${item.value.getStock()}</td>
+						<td>${item.value.getListPrice()}</td>
+						<td><input type="number" name="${item.key}" size="3" maxlength="3" value="1"/></td>
 						<td>
-							<a class="button"
-							   href="../Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a>
+							<a class="button" href="../Cart/addCartItem?itemID=${item.key}">Add to cart</a>
 						</td>
 					</tr>
 				</c:forEach>

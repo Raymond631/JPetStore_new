@@ -48,6 +48,7 @@
 
 	<div id="Search" data-hide-for="large">
 		<div id="SearchContent">
+
 			<form action="../Pet/searchPet">
 				<div class="input-group">
 					<input class="input-group-field" type="text" name="keyword" placeholder="Product Search">
@@ -56,6 +57,7 @@
 					</div>
 				</div>
 			</form>
+
 		</div>
 	</div>
 

@@ -52,7 +52,7 @@ public class PetDaoImpl implements PetDao
     }
 
     @Override
-    public Map<String, Product> getProductList(String category)
+    public Map<String, Product> getProductMap(String category)
     {
         Map<String, Product> productMap = new HashMap<>();//key:productID,value:product
         try (Connection connection = DBUtils.getConnection())

@@ -126,6 +126,7 @@ public class UserServlet extends HttpServlet
         if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
         {
             req.setAttribute("messageBox", "Invalid Verification Code.");
+            req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
         }
         else
         {
@@ -166,6 +167,10 @@ public class UserServlet extends HttpServlet
     {
         User user = (User) req.getSession().getAttribute("user");
         String password = req.getParameter("newPassword");
+        if (password.equals(""))
+        {
+            password = user.getPassword();
+        }
         String receiverName = req.getParameter("receiverName");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");

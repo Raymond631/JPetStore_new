@@ -57,6 +57,9 @@ public class CartServlet extends HttpServlet
             case "/cartList":
                 cartList(req, resp);
                 break;
+            case "/addCartItem":
+                addCartItem(req, resp);
+                break;
             case "/updateCart":
                 updateCart(req, resp);
                 break;
@@ -76,6 +79,15 @@ public class CartServlet extends HttpServlet
         req.getSession().setAttribute("cartItemList", cartItemList);
         req.getSession().setAttribute("allCost", allCost);
 
+        req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
+    }
+
+    /**
+     * get请求
+     * 参数
+     */
+    public void addCartItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
         req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
     }
 

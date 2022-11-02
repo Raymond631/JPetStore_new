@@ -12,50 +12,28 @@
 <head>
 	<title>Category</title>
 	<link rel="stylesheet" type="text/css" href="../css/category.css"/>
-	<!-- 引入jquery -->
-	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-	<script>
-        // function toSmallCategory(e) {
-        //     let cate = $(e).text();
-        //     console.log(cate);
-        // }
-
-        <%--$(function () {--%>
-        <%--    $('.center').on('click', 'div', function () {--%>
-        <%--        &lt;%&ndash;var allList = '<%= session.getAttribute("CategoryList") %>';&ndash;%&gt;--%>
-
-        <%--        //                $(this).addClass('cateClick');--%>
-        <%--        //                $(this).siblings().removeClass('cateClick');--%>
-        <%--        var category = $(this).getElementById();--%>
-        <%--        console.log(category);--%>
-        <%--    })--%>
-        <%--})--%>
-
-	</script>
 </head>
 <body>
 <%@include file="../Common/Top.jsp" %>
-<div class="mainbox">
 
-	<%--中间部分--%>
+<div class="mainbox">
 	<div class="center" id="content">
 
-		<c:forEach items="${sessionScope.category}" var="pet" varStatus="line">
-			<%--            <c:if test="${line.count%3==0}"><br></c:if>--%>
-			<%--            <a herf="${pageContext.request.contextPath}">--%>
-			<div class="smallCate"
-			     style=" background: url(../images/show1.jpg) no-repeat; background-size: cover;"
-			     id=${pet} onclick="window.location.href='../Pet/petProduction?production=${pet}'">
+		<div>${sessionScope.category}</div>
+
+		<c:forEach items="${sessionScope.productMap}" var="product" varStatus="line">
+			<div class="smallCate" style=" background: url(../images/show1.jpg) no-repeat; background-size: cover;"
+			     id=${product.key} onclick="window.location.href='../Pet/petProduct?productID=${product.key}'">
 				<div class="briefIntroduction">
-					<div class="nameAndPrice">${pet}</div>
-					<span class="nameAndPrice">ID</span>
+					<div class="nameAndPrice">${product.value.getName()}</div>
+					<span class="nameAndPrice">${product.value.getIntroduce()}</span>
 				</div>
 			</div>
-			<%--            </a>--%>
 		</c:forEach>
-	</div>
 
+	</div>
 </div>
+
 <%@include file="../Common/Bottom.jsp" %>
 </body>
 </html>

@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService
         {
             userDao = new UserDaoImpl();
         }
-        return userDao.selectReceiver(username);
+        return userDao.getReceiver(username);
     }
 
     @Override

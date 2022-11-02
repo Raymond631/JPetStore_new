@@ -14,5 +14,5 @@ public interface PetService
 {
     public List<Product> searchPet(String key);//通过关键字搜索宠物列表
 
-    public Map<String, Product> getProductList(String category);
+    public Map<String, Product> getProductMap(String category);
 }
