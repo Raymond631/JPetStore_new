@@ -2,7 +2,7 @@ package cn.tdsmy.JPetStore.Controller;
 
 import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Order;
-import cn.tdsmy.JPetStore.Entity.User;
+import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Service.OrderService;
 import cn.tdsmy.JPetStore.Service.impl.OrderServiceImpl;
 
@@ -74,7 +74,7 @@ public class OrderServlet extends HttpServlet
      */
     public void orderSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        User receiver = orderService.selectReceiver("j2ee");
+        Receiver receiver = orderService.selectReceiver("j2ee");
         req.setAttribute("receiver", receiver);
 
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderSubmit.jsp").forward(req, resp);
@@ -93,7 +93,7 @@ public class OrderServlet extends HttpServlet
         String District = req.getParameter("District");
         String Address = req.getParameter("Address");
 
-        User receiver = new User();
+        Receiver receiver = new Receiver();
         receiver.setReceiverName(Name);
         receiver.setPhoneNumber(Phone);
         receiver.setCountry(Country);
@@ -115,7 +115,7 @@ public class OrderServlet extends HttpServlet
         order.setOrderID(orderService.createOrderID());
         order.setOrderTime((String) req.getSession().getAttribute("OrderTime"));
         order.setPayTime(orderService.getTimeNow());
-        order.setReceiver((User) req.getSession().getAttribute("receiver"));
+        order.setReceiver((Receiver) req.getSession().getAttribute("receiver"));
         order.setCartItemList((List<CartItem>) req.getSession().getAttribute("cartItemList"));
 
         order.setTotalPrice((BigDecimal) req.getSession().getAttribute("allCost"));

@@ -4,7 +4,7 @@ import cn.tdsmy.JPetStore.Dao.OrderDao;
 import cn.tdsmy.JPetStore.Dao.Utils.DBUtils;
 import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Order;
-import cn.tdsmy.JPetStore.Entity.User;
+import cn.tdsmy.JPetStore.Entity.Receiver;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -123,7 +123,7 @@ public class OrderDaoImpl implements OrderDao
                     BigDecimal totalPrice = res.getBigDecimal("totalPrice");
                     String payMethod = res.getString("payMethod");
 
-                    User receiver = new User();
+                    Receiver receiver = new Receiver();
                     receiver.setReceiverName(receiverName);
                     receiver.setPhoneNumber(phoneNumber);
                     receiver.setCountry(country);

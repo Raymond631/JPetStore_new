@@ -35,7 +35,7 @@
 			<td></td>
 			<td>
 				<a class="button"
-				   href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a>
+				   href="../Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a>
 			</td>
 		</tr>
 	</c:forEach>

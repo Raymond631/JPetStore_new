@@ -102,7 +102,7 @@
 		</table>
 
 		<div class="button-bar">
-			<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Order/deleteOrder?orderID=${requestScope.order.getOrderID()}'">Delete Order</button>
+			<button type="button" class="button" onclick="location.href='../Order/deleteOrder?orderID=${requestScope.order.getOrderID()}'">Delete Order</button>
 		</div>
 	</div>
 </div>

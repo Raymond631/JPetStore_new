@@ -1,5 +1,6 @@
 package cn.tdsmy.JPetStore.Dao;
 
+import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
 
 /**
@@ -9,12 +10,14 @@ import cn.tdsmy.JPetStore.Entity.User;
  */
 public interface UserDao
 {
+    public boolean register(User user);
 
-    public void addUser(User user);//增
+    public boolean login(User user);
+
+    public Receiver getReceiver(String username);
 
     public void updateUser(User user);//改
+    
 
-    public User selectUser(String username);//查
-
-    public User selectReceiver(String username);//查收件人
+    public Receiver selectReceiver(String username);//查收件人
 }

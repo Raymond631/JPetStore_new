@@ -22,7 +22,7 @@
 	</c:if>
 	<c:if test="${sessionScope.accountBean != null}">
 		<div id="Banner">
-			<img src="${pageContext.request.contextPath}/images/banner_dogs.gif">
+			<img src="../images/banner_dogs.gif">
 		</div>
 	</c:if>
 

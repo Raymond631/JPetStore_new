@@ -9,7 +9,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/Login.css">
+	<link rel="stylesheet" type="text/css" href="../css/Login.css">
 	<title>登录界面</title>
 </head>
 
@@ -19,20 +19,30 @@
 <div class="all">
 	<div class="login">
 		<div class="box">
+
 			<p class="table">Login</p>
-			<form action="sigonForm">
-				<input type="text" placeholder="ID">
-				<input type="password" placeholder="Password">
+
+			<form action="../User/login" method="post">
+				<div>
+					<input type="text" name="username" placeholder="Username">
+				</div>
+				<div>
+					<input type="password" name="password" placeholder="Password">
+				</div>
 				<div class="vf">
 					<input type="text" name="vCode" placeholder="verificationCode"/>
-					<a href="Login"><img border="0" src="verificationCode" name="checkcode"></a>
+					<a href="../User/verificationCode"><img border="0" src="../User/verificationCode" name="checkcode"></a>
 				</div>
+
 				<input class="submit" type="submit" value="Login">
-				<div class="Tbottom">
-					Need a username and password?
-					<a href="newAccountForm">Register Now!</a>
-				</div>
 			</form>
+
+			<div>${requestScope.messageBox}</div>
+
+			<div class="Tbottom">
+				Need an account?<a href="../User/showRegister">Register Now!</a>
+			</div>
+
 		</div>
 	</div>
 </div>
@@ -40,4 +50,3 @@
 <%@include file="../Common/Bottom.jsp" %>
 </body>
 </html>
-

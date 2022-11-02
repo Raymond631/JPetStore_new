@@ -18,6 +18,9 @@ html::before {
 }
 
 .box {
+    height: 700px;
+    width: 1000px;
+
     display: flex;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 60%);

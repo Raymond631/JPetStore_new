@@ -1,7 +1,7 @@
 package cn.tdsmy.JPetStore.Service;
 
 import cn.tdsmy.JPetStore.Entity.Order;
-import cn.tdsmy.JPetStore.Entity.User;
+import cn.tdsmy.JPetStore.Entity.Receiver;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface OrderService
 {
-    public User selectReceiver(String username);//查询默认收件人信息
+    public Receiver selectReceiver(String username);//查询默认收件人信息
 
     public void addOrder(String username, Order order);//提交订单
 

@@ -9,7 +9,7 @@
 <html>
 <head>
 	<title>Title</title>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/category.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/category.css"/>
 </head>
 <body>
 <%@include file="../Common/Top.jsp" %>
@@ -17,7 +17,7 @@
 <div class="mainBox">
 	<div class="left">
 		<div class="left-top">
-			<div><img class="picture" id="picture" src="${pageContext.request.contextPath}/images/show1.jpg"/>
+			<div><img class="picture" id="picture" src="../images/show1.jpg"/>
 			</div>
 		</div>
 		<div class="left-bottom">
@@ -55,7 +55,7 @@
 						<td></td>
 						<td>
 							<a class="button"
-							   href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a>
+							   href="../Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a>
 						</td>
 					</tr>
 				</c:forEach>

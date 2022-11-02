@@ -17,7 +17,7 @@
 <div id="Content">
 	<div id="CenterForm">
 
-		<form method="post" action="${pageContext.request.contextPath}/Order/orderPay">
+		<form method="post" action="../Order/orderPay">
 			<h3>Shipping Address</h3>
 			<table>
 				<colgroup>
@@ -104,7 +104,7 @@
 
 			<div class="button-bar">
 				<button type="submit" class="button">Submit</button>
-				<button type="button" class="button" onclick="location.href='${pageContext.request.contextPath}/Cart/cartList';">Cancel</button>
+				<button type="button" class="button" onclick="location.href='../Cart/cartList';">Cancel</button>
 			</div>
 
 		</form>

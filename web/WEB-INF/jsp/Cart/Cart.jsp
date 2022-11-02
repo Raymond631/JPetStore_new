@@ -17,14 +17,14 @@
 <div id="Content">
 
 	<div id="BackLink">
-		<a href="${pageContext.request.contextPath}">Return to Main Menu</a>
+		<a href="../Pet/homePage">Return to Main Menu</a>
 	</div>
 
 	<div id="Catalog">
 		<div id="Cart">
 			<h3>Shopping Cart</h3>
 
-			<form method="post" action="${pageContext.request.contextPath}/Cart/updateCart">
+			<form method="post" action="../Cart/updateCart">
 				<table style="text-align: center">
 					<tr>
 						<th><b>Item ID</b></th>
@@ -60,7 +60,7 @@
 								<td><input type="number" name="${cartItem.itemID}" size="3" maxlength="3" value="${cartItem.quantity}"/></td>
 								<td>$${cartItem.listPrice}</td>
 								<td>$${(cartItem.listPrice)*(cartItem.quantity)}</td>
-								<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a></td>
+								<td><a class="button" href="../Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a></td>
 							</tr>
 						</c:forEach>
 						<tr>
@@ -70,7 +70,7 @@
 							</td>
 							<td><strong>Sub Total:</strong></td>
 							<td><strong>$${sessionScope.allCost}</strong></td>
-							<td><a class="button" href="${pageContext.request.contextPath}/Cart/removeCartItem?itemID=0">Remove All</a></td>
+							<td><a class="button" href="../Cart/removeCartItem?itemID=0">Remove All</a></td>
 						</tr>
 					</c:if>
 
@@ -79,7 +79,7 @@
 
 			<%--此处应添加js判断库存是否满足需求--%>
 			<c:if test="${!sessionScope.cartItemList.isEmpty()}">
-				<a class="button" href="${pageContext.request.contextPath}/Order/orderSubmit">Proceed to Checkout</a>
+				<a class="button" href="../Order/orderSubmit">Proceed to Checkout</a>
 			</c:if>
 		</div>
 
