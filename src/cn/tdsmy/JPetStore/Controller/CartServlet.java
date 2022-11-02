@@ -1,6 +1,7 @@
 package cn.tdsmy.JPetStore.Controller;
 
 import cn.tdsmy.JPetStore.Entity.CartItem;
+import cn.tdsmy.JPetStore.Entity.User;
 import cn.tdsmy.JPetStore.Service.CartService;
 import cn.tdsmy.JPetStore.Service.impl.CartServiceImpl;
 
@@ -74,7 +75,8 @@ public class CartServlet extends HttpServlet
      */
     public void cartList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        List<CartItem> cartItemList = cartService.selectCartList("j2ee");
+        User user = (User) req.getSession().getAttribute("user");
+        List<CartItem> cartItemList = cartService.selectCartList(user.getUsername());
         BigDecimal allCost = cartService.getAllCost(cartItemList);
         req.getSession().setAttribute("cartItemList", cartItemList);
         req.getSession().setAttribute("allCost", allCost);
@@ -84,11 +86,17 @@ public class CartServlet extends HttpServlet
 
     /**
      * get请求
-     * 参数
+     * 参数/addCartItem?itemID
      */
     public void addCartItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
+        User user = (User) req.getSession().getAttribute("user");
+        String itemID = req.getParameter("itemID");
+        int quantity = Integer.parseInt(req.getParameter("quantity"));//有bug，无法获取数据
+
+        cartService.addCartItem(user.getUsername(), itemID, quantity);
+
+        resp.sendRedirect("/WEB-INF/jsp/Cart/Cart.jsp");
     }
 
     /**

@@ -32,6 +32,7 @@
 	<%--    这里面放一个table吧--%>
 	<div class="right">
 		<div class="smallCateTable">
+
 			<table style="text-align: center">
 				<tr>
 					<th><b>Item ID</b></th>
@@ -48,7 +49,7 @@
 						<td>${item.value.getDescription()}</td>
 						<td>${item.value.getStock()}</td>
 						<td>${item.value.getListPrice()}</td>
-						<td><input type="number" name="${item.key}" size="3" maxlength="3" value="1"/></td>
+						<td><input type="number" name="quantity" size="3" maxlength="3" value="1"/></td>
 						<td>
 							<a class="button" href="../Cart/addCartItem?itemID=${item.key}">Add to cart</a>
 						</td>
