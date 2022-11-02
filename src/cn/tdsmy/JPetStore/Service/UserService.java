@@ -17,4 +17,6 @@ public interface UserService
     public Receiver getReceiver(String username);
 
     public void updateUser(User user);
+
+    public Receiver getUser(String username);
 }
