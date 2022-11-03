@@ -74,8 +74,9 @@ public class PetServlet extends HttpServlet
      */
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        String key = req.getParameter("keyword");
-        System.out.println(key);
+//        String key = req.getParameter("keyword");
+//        System.out.println(key);
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp").forward(req, resp);
     }
 
     /**

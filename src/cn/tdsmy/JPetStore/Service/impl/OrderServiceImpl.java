@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService
     private static int num = 1000;//用于生成订单号
 
     @Override
-    public Receiver selectReceiver(String username)
+    public Receiver getReceiver(String username)
     {
         if (userDao == null)
         {

@@ -104,7 +104,7 @@ public class UserServlet extends HttpServlet
             if (userService.register(user))//注册成功
             {
                 req.getSession().setAttribute("user", user);
-                req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
+                resp.sendRedirect(req.getContextPath() + "/Pet/homePage");//请求重定向，避免刷新时重复提交表单
             }
             else//用户名已存在
             {
@@ -152,7 +152,7 @@ public class UserServlet extends HttpServlet
     public void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         req.getSession().setAttribute("user", null);
-        req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/Pet/homePage");
     }
 
     public void personalCenter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException

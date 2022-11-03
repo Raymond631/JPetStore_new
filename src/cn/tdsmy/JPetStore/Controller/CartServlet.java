@@ -71,7 +71,7 @@ public class CartServlet extends HttpServlet
     }
 
     /**
-     * get请求
+     * get请求;  注意：“增删改”用请求重定向，防止用户重复提交表单
      */
     public void cartList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
@@ -104,12 +104,13 @@ public class CartServlet extends HttpServlet
      */
     public void updateCart(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
+        User user = (User) req.getSession().getAttribute("user");
         Enumeration<String> itemList = req.getParameterNames();
         while (itemList.hasMoreElements())
         {
             String itemID = itemList.nextElement();
             int quantity = Integer.parseInt(req.getParameter(itemID));
-            cartService.updateCart("j2ee", itemID, quantity);
+            cartService.updateCart(user.getUsername(), itemID, quantity);
         }
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
@@ -120,8 +121,9 @@ public class CartServlet extends HttpServlet
      */
     public void removeCartItem(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
+        User user = (User) req.getSession().getAttribute("user");
         String itemID = req.getParameter("itemID");
-        cartService.removeCartItem("j2ee", itemID);
+        cartService.removeCartItem(user.getUsername(), itemID);
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
 }

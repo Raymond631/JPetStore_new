@@ -3,6 +3,7 @@ package cn.tdsmy.JPetStore.Controller;
 import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Order;
 import cn.tdsmy.JPetStore.Entity.Receiver;
+import cn.tdsmy.JPetStore.Entity.User;
 import cn.tdsmy.JPetStore.Service.OrderService;
 import cn.tdsmy.JPetStore.Service.impl.OrderServiceImpl;
 
@@ -74,7 +75,8 @@ public class OrderServlet extends HttpServlet
      */
     public void orderSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        Receiver receiver = orderService.selectReceiver("j2ee");
+        User user = (User) req.getSession().getAttribute("user");
+        Receiver receiver = orderService.getReceiver(user.getUsername());
         req.setAttribute("receiver", receiver);
 
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderSubmit.jsp").forward(req, resp);
@@ -111,8 +113,10 @@ public class OrderServlet extends HttpServlet
      */
     public void newOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        User user = (User) req.getSession().getAttribute("user");
         Order order = new Order();
-        order.setOrderID(orderService.createOrderID());
+        String orderID = orderService.createOrderID();
+        order.setOrderID(orderID);
         order.setOrderTime((String) req.getSession().getAttribute("OrderTime"));
         order.setPayTime(orderService.getTimeNow());
         order.setReceiver((Receiver) req.getSession().getAttribute("receiver"));
@@ -121,12 +125,14 @@ public class OrderServlet extends HttpServlet
         order.setTotalPrice((BigDecimal) req.getSession().getAttribute("allCost"));
         order.setPayMethod(req.getParameter("payMethod"));
 
-        orderService.addOrder("j2ee", order);//插入数据库
+        orderService.addOrder(user.getUsername(), order);//插入数据库
 
-        req.setAttribute("order", order);
-        req.setAttribute("newOrder", true);
+//        req.setAttribute("order", order);
+//        req.setAttribute("newOrder", true);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderItem.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/Order/orderItem?orderID=" + orderID + "&newOrder=true");
+
+//        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderItem.jsp").forward(req, resp);
     }
 
     /**
@@ -146,22 +152,32 @@ public class OrderServlet extends HttpServlet
      */
     public void orderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        List<Order> orderList = orderService.selectOrderList("j2ee");
+        User user = (User) req.getSession().getAttribute("user");
+        List<Order> orderList = orderService.selectOrderList(user.getUsername());
         req.setAttribute("orderList", orderList);
 
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderList.jsp").forward(req, resp);
     }
 
     /**
-     * 查看订单详情为get请求,参数/orderItem?orderID=
+     * get请求
+     * 参数/orderItem?orderID=
      */
     public void orderItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         String param = req.getParameter("orderID");
-        System.out.println(param);
+        String newOrder = req.getParameter("newOrder");
+
         Order order = orderService.selectOrder(param);
         req.setAttribute("order", order);
-        req.setAttribute("newOrder", false);
+        if (newOrder.equals("true"))
+        {
+            req.setAttribute("newOrder", true);
+        }
+        else
+        {
+            req.setAttribute("newOrder", false);
+        }
 
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderItem.jsp").forward(req, resp);
     }
