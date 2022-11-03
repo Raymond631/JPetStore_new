@@ -34,7 +34,7 @@
 				<c:forEach items="${requestScope.orderList}" var="orderItem">
 					<tr>
 						<td>
-							<a href="../Order/orderItem?orderID=${orderItem.getOrderID()}">${orderItem.getOrderID()}</a>
+							<a href="../Order/orderItem?orderID=${orderItem.getOrderID()}&newOrder=false">${orderItem.getOrderID()}</a>
 						</td>
 						<td>${orderItem.getOrderTime()}</td>
 						<td>${orderItem.getTotalPrice()}</td>

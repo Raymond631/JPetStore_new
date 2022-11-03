@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface OrderService
 {
-    public Receiver selectReceiver(String username);//查询默认收件人信息
+    public Receiver getReceiver(String username);//查询默认收件人信息
 
     public void addOrder(String username, Order order);//提交订单
 
