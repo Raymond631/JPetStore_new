@@ -23,7 +23,7 @@
 
 		<c:forEach items="${sessionScope.productMap}" var="product" varStatus="line">
 			<div class="smallCate" style=" background: url(../images/show1.jpg) no-repeat; background-size: cover;"
-			     id=${product.key} onclick="window.location.href='../Pet/petProduct?productID=${product.key}'">
+			     id=${product.key} onclick="window.location.href='../Pet/petProduct?productID=${product.key}&search=false'">
 				<div class="briefIntroduction">
 					<div class="nameAndPrice">${product.value.getName()}</div>
 					<span class="nameAndPrice">${product.value.getIntroduce()}</span>

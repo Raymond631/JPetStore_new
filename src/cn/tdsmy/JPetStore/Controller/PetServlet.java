@@ -74,8 +74,10 @@ public class PetServlet extends HttpServlet
      */
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-//        String key = req.getParameter("keyword");
-//        System.out.println(key);
+        String key = req.getParameter("keyword");
+        Map<String, Product> productMap = petService.searchPet(key);
+        req.setAttribute("productMap", productMap);
+
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp").forward(req, resp);
     }
 
@@ -100,10 +102,20 @@ public class PetServlet extends HttpServlet
      */
     public void petProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        Map<String, Product> productMap = (Map<String, Product>) req.getSession().getAttribute("productMap");
-        Product product = productMap.get(req.getParameter("productID"));
-        req.setAttribute("product", product);
+        String search = req.getParameter("search");
+        String productID = req.getParameter("productID");
+        if (search.equals("false"))
+        {
+            Map<String, Product> productMap = (Map<String, Product>) req.getSession().getAttribute("productMap");
+            Product product = productMap.get(productID);
+            req.setAttribute("product", product);
+        }
+        else if (search.equals("true"))
+        {
+            Product product = petService.getProduct(productID);
+            req.setAttribute("product", product);
+        }
 
-        req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduction.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduct.jsp").forward(req, resp);
     }
 }

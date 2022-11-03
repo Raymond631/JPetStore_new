@@ -5,7 +5,6 @@ import cn.tdsmy.JPetStore.Dao.impl.PetDaoImpl;
 import cn.tdsmy.JPetStore.Entity.Product;
 import cn.tdsmy.JPetStore.Service.PetService;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +17,7 @@ public class PetServiceImpl implements PetService
     private PetDao petDao;
 
     @Override
-    public List<Product> searchPet(String key)
+    public Map<String, Product> searchPet(String key)
     {
         if (petDao == null)
         {
@@ -35,5 +34,15 @@ public class PetServiceImpl implements PetService
             petDao = new PetDaoImpl();
         }
         return petDao.getProductMap(category);
+    }
+
+    @Override
+    public Product getProduct(String productID)
+    {
+        if (petDao == null)
+        {
+            petDao = new PetDaoImpl();
+        }
+        return petDao.getProduct(productID);
     }
 }
