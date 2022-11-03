@@ -8,55 +8,90 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-	<title>Title</title>
-	<link rel="stylesheet" type="text/css" href="../css/category.css"/>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../css/category.css"/>
+    <script>
+        $("box").on("click", ".add", function (m) {
+            var obj = $(this).closest("ul").find(".count");
+            if (obj.val() <= 0) {
+                obj.val(0);
+            } else {
+                obj.val(parseInt(obj.val()) - 1);
+            }
+            obj.change();
+        });
+        $("box").on("click", ".sub", function (m) {
+            var obj = $(this).closest("").find(".count");
+            obj.val(parseInt(obj.val()) + 1);
+            obj.change();
+        });
+    </script>
 </head>
 <body>
 <%@include file="../Common/Top.jsp" %>
 
 <div class="mainBox">
-	<div class="left">
-		<div class="left-top">
-			<div><img class="picture" id="picture" src="../images/show1.jpg"/>
-			</div>
-		</div>
-		<div class="left-bottom">
-			<div class="information">
-				<div id="specificName" class="nameAndPrice">${requestScope.product.getProductID()}</div>
-				<div id="specificPrice" class="nameAndPrice">${requestScope.product.getName()}</div>
-				<div id="description" class="nameAndPrice">${requestScope.product.getIntroduce()}</div>
-			</div>
-		</div>
-	</div>
+    <div class="left">
+        <div class="left-top">
+            <div><img class="picture" id="picture" src="../images/product1.jpg"/>
+            </div>
+        </div>
+        <div class="left-bottom">
+            <div id="specificName" class="nameInfo">${requestScope.product.getProductID()}</div>
+            <div id="specificPrice" class="priceInfo">${requestScope.product.getName()}</div>
+            <div id="description" class="description">${requestScope.product.getIntroduce()}</div>
+        </div>
+    </div>
 
-	<%--    这里面放一个table吧--%>
-	<div class="right">
-		<div class="smallCateTable">
-			<table style="text-align: center">
-				<tr>
-					<th><b>Item ID</b></th>
-					<th><b>Description</b></th>
-					<th><b>Stock</b></th>
-					<th><b>List Price</b></th>
-					<th><b>Quantity</b></th>
-					<th>&nbsp;</th>
-				</tr>
+    <%--    这里面放一个table吧--%>
+    <div class="right">
+        <%--        <div class="smallCateTable">--%>
+        <%--            <table class="table">--%>
+        <%--                <tr>--%>
+        <%--                    <th class="th"><b>Item ID</b></th>--%>
+        <%--                    <th class="th"><b>Description</b></th>--%>
+        <%--                    <th class="th"><b>Stock</b></th>--%>
+        <%--                    <th class="th"><b>List Price</b></th>--%>
+        <%--                    <th class="th"><b>Quantity</b></th>--%>
+        <%--                    <th class="th">&nbsp;</th>--%>
+        <%--                </tr>--%>
 
-				<c:forEach items="${requestScope.product.getItemMap()}" var="item">
-					<tr>
-						<td>${item.key}</td>
-						<td>${item.value.getDescription()}</td>
-						<td>${item.value.getStock()}</td>
-						<td>${item.value.getListPrice()}</td>
-						<td><input type="number" name="${item.key}" size="3" maxlength="3" value="1"/></td>
-						<td>
-							<a class="button" href="../Cart/addCartItem?itemID=${item.key}">Add to cart</a>
-						</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
-	</div>
+        <%--                <c:forEach items="${requestScope.product.getItemMap()}" var="item">--%>
+        <%--                    <tr>--%>
+        <%--                        <td><p>${item.key}</p></td>--%>
+        <%--                        <td><p>${item.value.getDescription()}</p></td>--%>
+        <%--                        <td><p>${item.value.getStock()}</p></td>--%>
+        <%--                        <td><p>${item.value.getListPrice()}</p></td>--%>
+        <%--                        <td><p><input type="number" name="${item.key}" size="3" maxlength="3" value="1"/></p></td>--%>
+        <%--                        <td>--%>
+        <%--                            <p><a class="button">Add to cart</a></p>--%>
+        <%--                                &lt;%&ndash;                            href="../Cart/addCartItem?itemID=${item.key}"&ndash;%&gt;--%>
+        <%--                        </td>--%>
+        <%--                    </tr>--%>
+        <%--                </c:forEach>--%>
+        <%--            </table>--%>
+        <%--    </div>--%>
+        <c:forEach items="${requestScope.product.getItemMap()}" var="item">
+            <div class="box">
+                <div class="boxLeft">
+                    <div>
+                            ${item.value.getDescription()}
+                    </div>
+                </div>
+                <div class="boxMiddle">
+                    <div class="ID">${item.key}</div>
+                    <div>${item.value.getStock()}</div>
+                    <div>${item.value.getListPrice()}</div>
+                </div>
+                <div class="boxRight">
+                    <div>
+                        <input class="count" style="margin:0 0 0 0;" type="number" name="${item.key}" size="3"
+                               maxlength="3" value="1"/>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
 </div>
 <%@include file="../Common/Bottom.jsp" %>
 </body>
