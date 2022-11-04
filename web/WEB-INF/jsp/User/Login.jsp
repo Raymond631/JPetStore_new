@@ -20,7 +20,6 @@
                 findNodes.innerText = "用户名不能为空";
                 return false;
             } else {//输入了内容后清除节点内容
-                console.log("right");
                 document.getElementById("name").textContent = "";
             }
 
