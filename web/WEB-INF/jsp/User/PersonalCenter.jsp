@@ -1,4 +1,3 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: tender
@@ -116,27 +115,6 @@
 				</tr>
 			</table>
 
-			<%--			<h3>Profile Information</h3>--%>
-			<%--			Language Preference:--%>
-			<%--			<select name="languagePreference">--%>
-			<%--				<option value="english" selected="selected">english</option>--%>
-			<%--				<option value="japanese">japanese</option>--%>
-			<%--			</select>--%>
-
-			<%--			Favourite Category:--%>
-			<%--			<select name="favouriteCategoryId">--%>
-			<%--				<option value="FISH">FISH</option>--%>
-			<%--				<option selected="selected" value="DOGS">DOGS</option>--%>
-			<%--				<option value="REPTILES">REPTILES</option>--%>
-			<%--				<option value="CATS">CATS</option>--%>
-			<%--				<option value="BIRDS">BIRDS</option>--%>
-			<%--			</select>--%>
-
-			<%--			Enable MyList--%>
-			<%--			<input type="checkbox" name="listOption" value="${sessionScope.User.listOption}"/>--%>
-			<%--			Enable MyBanner--%>
-			<%--			<input type="checkbox" name="bannerOption" value="${sessionScope.User.bannerOption}"/>--%>
-
 			<h3>Profile Information</h3>
 			<table>
 				<colgroup>
@@ -188,7 +166,7 @@
 			</div>
 		</form>
 
-		<a href="viewListOrder?username=${sessionScope.user.username}">My Orders</a>
+		<a href="../Order/orderList?username=${sessionScope.user.username}">My Orders</a>
 	</div>
 </div>
 

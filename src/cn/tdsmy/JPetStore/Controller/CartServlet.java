@@ -76,12 +76,19 @@ public class CartServlet extends HttpServlet
     public void cartList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         User user = (User) req.getSession().getAttribute("user");
-        List<CartItem> cartItemList = cartService.selectCartList(user.getUsername());
-        BigDecimal allCost = cartService.getAllCost(cartItemList);
-        req.getSession().setAttribute("cartItemList", cartItemList);
-        req.getSession().setAttribute("allCost", allCost);
+        if (user == null)
+        {
+            resp.sendRedirect(req.getContextPath() + "/User/showLogin");
+        }
+        else
+        {
+            List<CartItem> cartItemList = cartService.selectCartList(user.getUsername());
+            BigDecimal allCost = cartService.getAllCost(cartItemList);
+            req.getSession().setAttribute("cartItemList", cartItemList);
+            req.getSession().setAttribute("allCost", allCost);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
+        }
     }
 
     /**
@@ -91,12 +98,18 @@ public class CartServlet extends HttpServlet
     public void addCartItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         User user = (User) req.getSession().getAttribute("user");
-        String itemID = req.getParameter("itemID");
-        int quantity = Integer.parseInt(req.getParameter("quantity"));//有bug，无法获取数据
+        if (user == null)
+        {
+            resp.sendRedirect(req.getContextPath() + "/User/showLogin");
+        }
+        else
+        {
+            String itemID = req.getParameter("itemID");
+            int quantity = 1;//默认加入购物车时数量为1
 
-        cartService.addCartItem(user.getUsername(), itemID, quantity);
-
-        resp.sendRedirect("/WEB-INF/jsp/Cart/Cart.jsp");
+            cartService.addCartItem(user.getUsername(), itemID, quantity);
+            resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
+        }
     }
 
     /**
@@ -118,6 +131,7 @@ public class CartServlet extends HttpServlet
     /**
      * get请求
      * url带参数 /removeCartItem?itemID=
+     * itemID=0时,清空购物车
      */
     public void removeCartItem(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {

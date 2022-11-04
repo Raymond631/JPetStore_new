@@ -39,7 +39,6 @@
 					<th><b>Description</b></th>
 					<th><b>Stock</b></th>
 					<th><b>List Price</b></th>
-					<th><b>Quantity</b></th>
 					<th>&nbsp;</th>
 				</tr>
 
@@ -49,10 +48,7 @@
 						<td>${item.value.getDescription()}</td>
 						<td>${item.value.getStock()}</td>
 						<td>${item.value.getListPrice()}</td>
-						<td><input type="number" name="quantity" size="3" maxlength="3" value="1"/></td>
-						<td>
-							<a class="button" href="../Cart/addCartItem?itemID=${item.key}">Add to cart</a>
-						</td>
+						<td><a class="button" href="../Cart/addCartItem?itemID=${item.key}">Add to cart</a></td>
 					</tr>
 				</c:forEach>
 			</table>
