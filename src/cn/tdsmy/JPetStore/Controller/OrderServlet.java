@@ -126,13 +126,8 @@ public class OrderServlet extends HttpServlet
         order.setPayMethod(req.getParameter("payMethod"));
 
         orderService.addOrder(user.getUsername(), order);//插入数据库
-
-//        req.setAttribute("order", order);
-//        req.setAttribute("newOrder", true);
-
+        orderService.clearCart(user.getUsername());//清空购物车
         resp.sendRedirect(req.getContextPath() + "/Order/orderItem?orderID=" + orderID + "&newOrder=true");
-
-//        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderItem.jsp").forward(req, resp);
     }
 
     /**
@@ -153,10 +148,17 @@ public class OrderServlet extends HttpServlet
     public void orderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         User user = (User) req.getSession().getAttribute("user");
-        List<Order> orderList = orderService.selectOrderList(user.getUsername());
-        req.setAttribute("orderList", orderList);
+        if (user == null)
+        {
+            resp.sendRedirect(req.getContextPath() + "/User/showLogin");
+        }
+        else
+        {
+            List<Order> orderList = orderService.selectOrderList(user.getUsername());
+            req.setAttribute("orderList", orderList);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderList.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderList.jsp").forward(req, resp);
+        }
     }
 
     /**

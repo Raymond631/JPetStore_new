@@ -11,32 +11,20 @@
 	<title>Title</title>
 </head>
 <body>
+
 <%@include file="../Common/Top.jsp" %>
 <table style="text-align: center">
 	<tr>
-		<th><b>Item ID</b></th>
-		<th><b>Product ID</b></th>
-		<th><b>Description</b></th>
-		<th><b>Stock</b></th>
-		<th><b>Quantity</b></th>
-		<th><b>List Price</b></th>
-		<th><b>Total Cost</b></th>
-		<th>&nbsp;</th>
+		<th><b>ProductID</b></th>
+		<th><b>Name</b></th>
+		<th><b>Introduce</b></th>
 	</tr>
 
-	<c:forEach items="${sessionScope.cartItemList}" var="cartItem">
+	<c:forEach items="${requestScope.productMap}" var="product">
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>
-				<a class="button"
-				   href="../Cart/removeCartItem?itemID=${cartItem.itemID}">Remove</a>
-			</td>
+			<td><a href="../Pet/petProduct?productID=${product.key}&search=true">${product.key}</a></td>
+			<td>${product.value.getName()}</td>
+			<td>${product.value.getIntroduce()}</td>
 		</tr>
 	</c:forEach>
 </table>

@@ -55,7 +55,7 @@
 									<%--下面的href需要修改--%>
 								<td><a href="catalog/items/EST-1">${cartItem.itemID}</a></td>
 								<td>${cartItem.productID}</td>
-								<td style="text-align: left">${cartItem.description}</td>
+								<td>${cartItem.description}</td>
 								<td>${cartItem.stock}</td>
 								<td><input type="number" name="${cartItem.itemID}" size="3" maxlength="3" value="${cartItem.quantity}"/></td>
 								<td>$${cartItem.listPrice}</td>
