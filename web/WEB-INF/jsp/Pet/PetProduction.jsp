@@ -11,20 +11,6 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="../css/category.css"/>
     <script>
-        $("box").on("click", ".add", function (m) {
-            var obj = $(this).closest("ul").find(".count");
-            if (obj.val() <= 0) {
-                obj.val(0);
-            } else {
-                obj.val(parseInt(obj.val()) - 1);
-            }
-            obj.change();
-        });
-        $("box").on("click", ".sub", function (m) {
-            var obj = $(this).closest("").find(".count");
-            obj.val(parseInt(obj.val()) + 1);
-            obj.change();
-        });
     </script>
 </head>
 <body>
@@ -80,14 +66,13 @@
                 </div>
                 <div class="boxMiddle">
                     <div class="ID">${item.key}</div>
-                    <div>${item.value.getStock()}</div>
-                    <div>${item.value.getListPrice()}</div>
+                    <div class="stock">${item.value.getStock()}</div>
+                    <span style="padding-left: -120px">￥</span>
+                    <span class="itemPrice">${item.value.getListPrice()}</span>
                 </div>
                 <div class="boxRight">
-                    <div>
-                        <input class="count" style="margin:0 0 0 0;" type="number" name="${item.key}" size="3"
-                               maxlength="3" value="1"/>
-                    </div>
+                    <a class="toCart" href="../Cart/addCartItem?itemID=${item.key}"> Add to cart</a>
+                        <%--                        href="../Cart/addCartItem?itemID=${item.key}"--%>
                 </div>
             </div>
         </c:forEach>

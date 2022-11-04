@@ -27,9 +27,45 @@
     border-radius: 10px;
     position: relative;
     float: left;
+    box-shadow: 0 30px 30px rgba(0, 0, 0, .5);
+}
+
+.smallCate .imgBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.smallCate .imgBox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.smallCate:hover .imgBox img {
+    opacity: 60%;
 }
 
 .smallCate .briefIntroduction {
+    width: 100%;
+    background-color: #3d494f;
+    /*opacity: 70%;*/
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 0;
+    border: 1px solid black;
+    position: absolute;
+    bottom: 0;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.smallCate:hover .briefIntroduction {
     width: 100%;
     background-color: #3d494f;
     /*opacity: 70%;*/
@@ -38,6 +74,8 @@
     border: 1px solid black;
     position: absolute;
     bottom: 0;
+    transition: 0.5s;
+    overflow: hidden;
 }
 
 .smallCate .productID {
@@ -92,7 +130,7 @@
     height: 40%;
     width: 100%;
     /*background-color: greenyellow;*/
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     /*border-radius: 80px;*/
     position: relative;
 }
@@ -174,26 +212,29 @@
 }
 
 .box {
-    /*margin-top: 10px;*/
-    /*margin-right: 70px;*/
-    margin-left: 100px;
-    height: 150px;
-    width: 500px;
+    top: 20px;
+    margin-right: 70px;
+    margin-left: 15px;
+    margin-top: 10px;
+    height: 100px;
+    width: 700px;
     border: 1px solid black;
     border-radius: 20px;
     position: relative;
-    background-color: black;
+    background-color: #39454b;
+
     color: white;
 }
 
 .box .boxLeft {
+    padding-top: 10px;
     text-align: center;
     margin-left: 15px;
     margin-top: 10px;
     /*padding-bottom: 10px;*/
     left: 0;
     font-size: 20px;
-    width: 30%;
+    width: 20%;
     height: 80%;
     border: 1px solid black;
     border-radius: 15px;
@@ -202,26 +243,52 @@
 }
 
 .box .boxMiddle {
+    margin-left: 20px;
     /*margin-left: 40%;*/
-    text-align: center;
+    /*text-align: center;*/
+    font-size: 25px;
     height: 100%;
-    width: 45%;
-    font-size: 30px;
+    width: 60%;
     border: 1px solid black;
     border-radius: 10px;
     float: left;
     background-color: #00aaff;
+    padding-left: 10px;
 }
 
 .box .boxMiddle .ID {
-    /*margin-left: 40%;*/
     text-align: left;
     height: 30%;
     width: 45%;
-    font-size: 30px;
-    /*border: 1px solid black;*/
-    /*border-radius: 10px;*/
-    /*float: left;*/
+    font-size: 25px;
+    position: relative;
+}
+
+.box .boxMiddle .stock {
+    margin-left: 10px;
+    text-align: left;
+    height: 30%;
+    width: 30%;
+    font-size: 20px;
+    margin-top: 10px;
+    float: left;
+}
+
+.box .boxMiddle .count {
+    margin-top: 5px;
+    height: 34%;
+    width: 50%;
+    font-size: 25px;
+    margin-left: 40%;
+    text-align: center;
+}
+
+.box .boxMiddle .itemPrice {
+    height: 20%;
+    width: 60%;
+    font-size: 25px;
+    text-align: left;
+    margin-top: 25px;
 }
 
 .box .boxRight {
@@ -229,40 +296,17 @@
     margin-left: 87%;
     height: 85%;
     width: 10%;
-    font-size: 30px;
+    padding-left: 7px;
+    padding-top: 3px;
+    font-size: 25px;
     border: 1px solid black;
     border-radius: 20px;
     background-color: #3d494f;
     position: relative;
 }
 
-.box .boxRight .add {
-    margin-top: 1px;
-    display: inline-block;
-    width: 100%;
-    height: 40px;
-    line-height: 28px;
+.box .boxRight .toCart {
+    margin-top: 5px;
+    font-size: 18px;
     text-align: center;
-    font-size: 25px;
-    color: white;
-    cursor: pointer;
-    /*border: 1px solid #e6e6e6;*/
-}
-
-.box .right .count {
-    /*overflow: hidden;*/
-    /*margin-top: 50%;*/
-}
-
-.box .boxRight .sub {
-    bottom: -5px;
-    display: inline-block;
-    width: 100%;
-    height: 40px;
-    line-height: 10px;
-    text-align: center;
-    font-size: 25px;
-    color: white;
-    cursor: pointer;
-    /*border: 1px solid #e6e6e6;*/
 }

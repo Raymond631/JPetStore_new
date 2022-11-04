@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
 <html>
 <head>
     <title>Category</title>
@@ -23,8 +22,11 @@
     <div class="center" id="content">
 
         <c:forEach items="${sessionScope.productMap}" var="product" varStatus="line">
-            <div class="smallCate" style=" background: url(../images/show1.jpg) no-repeat; background-size: cover;"
+            <div class="smallCate"
                  id=${product.key} onclick="window.location.href='../Pet/petProduct?productID=${product.key}'">
+                <div class="imgBox">
+                    <img src="../images/show1.jpg">
+                </div>
                 <div class="productID">
                         ${product.value.getProductID()}
                 </div>
@@ -34,7 +36,6 @@
                 </div>
             </div>
         </c:forEach>
-
     </div>
 </div>
 
