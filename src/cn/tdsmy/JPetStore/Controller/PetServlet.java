@@ -74,7 +74,7 @@ public class PetServlet extends HttpServlet
     public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
-        myLog.setLog("其他", "查看首页", "true");
+        myLog.setLog("Other", "查看首页", "true");
         logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
     }
@@ -89,7 +89,7 @@ public class PetServlet extends HttpServlet
         Map<String, Product> productMap = petService.searchPet(key);
         req.setAttribute("productMap", productMap);
 
-        myLog.setLog("查", "搜索动物", "true");
+        myLog.setLog("Read", "搜索宠物,keyword=" + key, "true");
         logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp").forward(req, resp);
     }
@@ -107,7 +107,7 @@ public class PetServlet extends HttpServlet
         req.getSession().setAttribute("category", category);
         req.getSession().setAttribute("productMap", productMap);
 
-        myLog.setLog("查", "查看宠物大类列表", "true");
+        myLog.setLog("Read", "查看宠物列表,category=" + category, "true");
         logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
     }
@@ -133,7 +133,7 @@ public class PetServlet extends HttpServlet
             req.setAttribute("product", product);
         }
 
-        myLog.setLog("查", "查看动物详情", "true");
+        myLog.setLog("Read", "查看宠物详情,productID=" + productID, "true");
         logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduct.jsp").forward(req, resp);
     }

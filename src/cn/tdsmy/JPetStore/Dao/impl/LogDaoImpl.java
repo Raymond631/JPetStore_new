@@ -21,9 +21,9 @@ public class LogDaoImpl implements LogDao
     @Override
     public void addLog(MyLog myLog)
     {
-        String value = "'" + myLog.getUsername() + "','" + myLog.getTime() + "','" + myLog.getIp() + "','"
-                + myLog.getOperationType() + "','" + myLog.getOperationContent() + "','" + myLog.getStatus() + "'";
-        String sql = "insert into userlogs (username,time,ip,url,operationType,operationContent,status) values (" + value + ")";
+        String value = "'" + myLog.getUsername() + "','" + myLog.getTime() + "','" + myLog.getIp() + "','" + myLog.getUrl() + "','"
+                + myLog.getSqlType() + "','" + myLog.getOperationContent() + "','" + myLog.getStatus() + "'";
+        String sql = "insert into userlogs (username,time,ip,url,sqlType,operationContent,status) values (" + value + ")";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
         {
             statement.executeUpdate();

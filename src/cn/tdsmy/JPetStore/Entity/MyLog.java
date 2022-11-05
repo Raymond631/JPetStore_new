@@ -15,17 +15,17 @@ public class MyLog implements Serializable
     private String time;
     private String ip;
     private String url;
-    private String operationType;
+    private String sqlType;
     private String operationContent;
     private String status;
 
-    public MyLog(String username, String time, String ip, String url, String operationType, String operationContent, String status)
+    public MyLog(String username, String time, String ip, String url, String sqlType, String operationContent, String status)
     {
         this.username = username;
         this.time = time;
         this.ip = ip;
         this.url = url;
-        this.operationType = operationType;
+        this.sqlType = sqlType;
         this.operationContent = operationContent;
         this.status = status;
     }
@@ -34,9 +34,9 @@ public class MyLog implements Serializable
     {
     }
 
-    public void setLog(String operationType, String operationContent, String status)
+    public void setLog(String sqlType, String operationContent, String status)
     {
-        this.operationType = operationType;
+        this.sqlType = sqlType;
         this.operationContent = operationContent;
         this.status = status;
     }
@@ -82,14 +82,14 @@ public class MyLog implements Serializable
         this.url = url;
     }
 
-    public String getOperationType()
+    public String getSqlType()
     {
-        return operationType;
+        return sqlType;
     }
 
-    public void setOperationType(String operationType)
+    public void setSqlType(String sqlType)
     {
-        this.operationType = operationType;
+        this.sqlType = sqlType;
     }
 
     public String getOperationContent()

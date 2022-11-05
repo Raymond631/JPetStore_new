@@ -81,7 +81,7 @@ public class CartServlet extends HttpServlet
         User user = (User) req.getSession().getAttribute("user");
         if (user == null)
         {
-            myLog.setLog("查", "查看购物车", "false");
+            myLog.setLog("Read", "查看购物车", "false");
             logService.addLog(myLog);
             resp.sendRedirect(req.getContextPath() + "/User/showLogin");
         }
@@ -92,7 +92,7 @@ public class CartServlet extends HttpServlet
             req.getSession().setAttribute("cartItemList", cartItemList);
             req.getSession().setAttribute("allCost", allCost);
 
-            myLog.setLog("查", "查看购物车", "true");
+            myLog.setLog("Read", "查看购物车", "true");
             logService.addLog(myLog);
             req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
         }
@@ -108,7 +108,7 @@ public class CartServlet extends HttpServlet
         User user = (User) req.getSession().getAttribute("user");
         if (user == null)
         {
-            myLog.setLog("增", "加入购物车", "false");
+            myLog.setLog("Create", "加入购物车", "false");
             logService.addLog(myLog);
             resp.sendRedirect(req.getContextPath() + "/User/showLogin");
         }
@@ -117,7 +117,7 @@ public class CartServlet extends HttpServlet
             String itemID = req.getParameter("itemID");
             cartService.addCartItem(user.getUsername(), itemID, 1);
 
-            myLog.setLog("增", "加入购物车,itemID=" + itemID, "false");
+            myLog.setLog("Create", "加入购物车,itemID=" + itemID, "true");
             logService.addLog(myLog);
             resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
         }
@@ -137,7 +137,7 @@ public class CartServlet extends HttpServlet
             int quantity = Integer.parseInt(req.getParameter(itemID));
             cartService.updateCart(user.getUsername(), itemID, quantity);
         }
-        myLog.setLog("改", "修改购物车商品数量", "true");
+        myLog.setLog("Update", "修改购物车商品数量", "true");
         logService.addLog(myLog);
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
@@ -154,7 +154,7 @@ public class CartServlet extends HttpServlet
         String itemID = req.getParameter("itemID");
         cartService.removeCartItem(user.getUsername(), itemID);
 
-        myLog.setLog("删", itemID.equals("0") ? "清空购物车" : "移出购物车，itemID=" + itemID, "true");
+        myLog.setLog("Delete", itemID.equals("0") ? "清空购物车" : "移出购物车，itemID=" + itemID, "true");
         logService.addLog(myLog);
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }

@@ -51,14 +51,19 @@ public class LogFilter implements javax.servlet.Filter
         }
         String time = getTimeNow();//请求时间
         String ip = req.getRemoteAddr();//客户端IP
+        if (ip.equals("0:0:0:0:0:0:0:1"))//将localhost的IPv6地址转为IPv4地址
+        {
+            ip = "127.0.0.1";
+        }
         String url = req.getRequestURI();//请求路径
+
         MyLog myLog = new MyLog();
         myLog.setUsername(username);
         myLog.setTime(time);
         myLog.setIp(ip);
         myLog.setUrl(url);
-        req.setAttribute("myLog", myLog);
 
+        req.setAttribute("myLog", myLog);
         filterChain.doFilter(servletRequest, servletResponse);//传递过滤链
     }
 

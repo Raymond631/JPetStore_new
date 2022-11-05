@@ -89,7 +89,7 @@ public class UserServlet extends HttpServlet
     public void showRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
-        myLog.setLog("其他", "跳往注册界面", "true");
+        myLog.setLog("Other", "跳往注册界面", "true");
         logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
     }
@@ -102,7 +102,7 @@ public class UserServlet extends HttpServlet
         if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
         {
             req.setAttribute("messageBox", "Invalid Verification Code.");
-            myLog.setLog("其他", "注册验证码错误", "false");
+            myLog.setLog("Other", "注册验证码错误", "false");
             logService.addLog(myLog);
             req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
         }
@@ -118,14 +118,14 @@ public class UserServlet extends HttpServlet
             if (userService.register(user))//注册成功
             {
                 req.getSession().setAttribute("user", user);
-                myLog.setLog("增", "注册新用户", "true");
+                myLog.setLog("Create", "注册新用户,username=" + username, "true");
                 logService.addLog(myLog);
                 resp.sendRedirect(req.getContextPath() + "/Pet/homePage");//请求重定向，避免刷新时重复提交表单
             }
             else//用户名已存在
             {
                 req.setAttribute("messageBox", "Username already exists.");
-                myLog.setLog("其他", "用户名重复，无法注册", "false");
+                myLog.setLog("Read", "用户名重复，无法注册", "false");
                 logService.addLog(myLog);
                 req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
             }
@@ -135,7 +135,7 @@ public class UserServlet extends HttpServlet
     public void showLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
-        myLog.setLog("其他", "跳往登录界面", "true");
+        myLog.setLog("Other", "跳往登录界面", "true");
         logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
     }
@@ -148,7 +148,7 @@ public class UserServlet extends HttpServlet
         if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
         {
             req.setAttribute("messageBox", "Invalid Verification Code.");
-            myLog.setLog("其他", "登录验证码错误", "false");
+            myLog.setLog("Other", "登录验证码错误", "false");
             logService.addLog(myLog);
             req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
         }
@@ -163,14 +163,14 @@ public class UserServlet extends HttpServlet
             if (userService.login(user))//登录成功
             {
                 req.getSession().setAttribute("user", user);
-                myLog.setLog("查", "登录", "true");
+                myLog.setLog("Read", "登录,username=" + username, "true");
                 logService.addLog(myLog);
                 req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
             }
             else//用户名或密码错误
             {
                 req.setAttribute("messageBox", "Invalid username or password.");
-                myLog.setLog("其他", "用户名或密码错误，登录失败", "false");
+                myLog.setLog("Read", "用户名或密码错误，登录失败", "false");
                 logService.addLog(myLog);
                 req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
             }
@@ -181,7 +181,7 @@ public class UserServlet extends HttpServlet
     {
         MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
         req.getSession().setAttribute("user", null);
-        myLog.setLog("其他", "退出登录", "true");
+        myLog.setLog("Other", "退出登录", "true");
         logService.addLog(myLog);
         resp.sendRedirect(req.getContextPath() + "/Pet/homePage");
     }
@@ -193,7 +193,7 @@ public class UserServlet extends HttpServlet
         Receiver receiver = userService.getReceiver(user.getUsername());
         req.setAttribute("receiver", receiver);
 
-        myLog.setLog("查", "查看个人信息", "true");
+        myLog.setLog("Read", "查看个人中心", "true");
         logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/User/PersonalCenter.jsp").forward(req, resp);
     }
@@ -221,7 +221,7 @@ public class UserServlet extends HttpServlet
 
         userService.updateUser(user);
 
-        myLog.setLog("改", "修改个人信息", "true");
+        myLog.setLog("Update", "修改个人信息", "true");
         logService.addLog(myLog);
         resp.sendRedirect("../User/personalCenter");
     }
