@@ -40,10 +40,9 @@
 				<input type="text" name="vCode" size="5" maxlength="4"/>
 				<a href="newUser"><img border="0" src="../User/verificationCode" name="checkcode"></a>
 			</div>
-
+			<div style="color: red ;text-align: right">${requestScope.messageBox}</div>
 			<input type="submit" class="submit" value="Register"/>
 		</form>
-		<div>${requestScope.messageBox}</div>
 
 	</div>
 </div>

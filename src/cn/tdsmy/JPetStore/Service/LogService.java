@@ -1,6 +1,6 @@
 package cn.tdsmy.JPetStore.Service;
 
-import cn.tdsmy.JPetStore.Entity.MyLog;
+import cn.tdsmy.JPetStore.Entity.UserLog;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface LogService
 {
-    public void addLog(MyLog myLog);
+    public void addLog(UserLog userLog);
 
-    public List<MyLog> getLog();
+    public List<UserLog> getLog();
 }

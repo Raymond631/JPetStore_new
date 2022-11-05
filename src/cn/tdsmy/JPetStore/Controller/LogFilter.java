@@ -1,7 +1,7 @@
 package cn.tdsmy.JPetStore.Controller;
 
-import cn.tdsmy.JPetStore.Entity.MyLog;
 import cn.tdsmy.JPetStore.Entity.User;
+import cn.tdsmy.JPetStore.Entity.UserLog;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -57,13 +57,13 @@ public class LogFilter implements javax.servlet.Filter
         }
         String url = req.getRequestURI();//请求路径
 
-        MyLog myLog = new MyLog();
-        myLog.setUsername(username);
-        myLog.setTime(time);
-        myLog.setIp(ip);
-        myLog.setUrl(url);
+        UserLog userLog = new UserLog();
+        userLog.setUsername(username);
+        userLog.setTime(time);
+        userLog.setIp(ip);
+        userLog.setUrl(url);
 
-        req.setAttribute("myLog", myLog);
+        req.setAttribute("myLog", userLog);
         filterChain.doFilter(servletRequest, servletResponse);//传递过滤链
     }
 

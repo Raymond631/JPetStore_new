@@ -2,7 +2,7 @@ package cn.tdsmy.JPetStore.Service.impl;
 
 import cn.tdsmy.JPetStore.Dao.LogDao;
 import cn.tdsmy.JPetStore.Dao.impl.LogDaoImpl;
-import cn.tdsmy.JPetStore.Entity.MyLog;
+import cn.tdsmy.JPetStore.Entity.UserLog;
 import cn.tdsmy.JPetStore.Service.LogService;
 
 import java.util.List;
@@ -17,17 +17,17 @@ public class LogServiceImpl implements LogService
     private LogDao logDao;
 
     @Override
-    public void addLog(MyLog myLog)
+    public void addLog(UserLog userLog)
     {
         if (logDao == null)
         {
             logDao = new LogDaoImpl();
         }
-        logDao.addLog(myLog);
+        logDao.addLog(userLog);
     }
 
     @Override
-    public List<MyLog> getLog()
+    public List<UserLog> getLog()
     {
         if (logDao == null)
         {

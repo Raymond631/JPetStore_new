@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @Date: 2022/11/4 20:51
  * @Version 1.0
  */
-public class MyLog implements Serializable
+public class UserLog implements Serializable
 {
     private static final long serialVersionUID = -1708018176084977814L;
 
@@ -19,7 +19,14 @@ public class MyLog implements Serializable
     private String operationContent;
     private String status;
 
-    public MyLog(String username, String time, String ip, String url, String sqlType, String operationContent, String status)
+    public void setLog(String sqlType, String operationContent, String status)
+    {
+        this.sqlType = sqlType;
+        this.operationContent = operationContent;
+        this.status = status;
+    }
+
+    public UserLog(String username, String time, String ip, String url, String sqlType, String operationContent, String status)
     {
         this.username = username;
         this.time = time;
@@ -30,17 +37,9 @@ public class MyLog implements Serializable
         this.status = status;
     }
 
-    public MyLog()
+    public UserLog()
     {
     }
-
-    public void setLog(String sqlType, String operationContent, String status)
-    {
-        this.sqlType = sqlType;
-        this.operationContent = operationContent;
-        this.status = status;
-    }
-
 
     public String getUsername()
     {

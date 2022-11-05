@@ -2,7 +2,7 @@ package cn.tdsmy.JPetStore.Dao.impl;
 
 import cn.tdsmy.JPetStore.Dao.LogDao;
 import cn.tdsmy.JPetStore.Dao.Utils.DBUtils;
-import cn.tdsmy.JPetStore.Entity.MyLog;
+import cn.tdsmy.JPetStore.Entity.UserLog;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,10 +19,10 @@ import java.util.List;
 public class LogDaoImpl implements LogDao
 {
     @Override
-    public void addLog(MyLog myLog)
+    public void addLog(UserLog userLog)
     {
-        String value = "'" + myLog.getUsername() + "','" + myLog.getTime() + "','" + myLog.getIp() + "','" + myLog.getUrl() + "','"
-                + myLog.getSqlType() + "','" + myLog.getOperationContent() + "','" + myLog.getStatus() + "'";
+        String value = "'" + userLog.getUsername() + "','" + userLog.getTime() + "','" + userLog.getIp() + "','" + userLog.getUrl() + "','"
+                + userLog.getSqlType() + "','" + userLog.getOperationContent() + "','" + userLog.getStatus() + "'";
         String sql = "insert into userlogs (username,time,ip,url,sqlType,operationContent,status) values (" + value + ")";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
         {
@@ -35,9 +35,9 @@ public class LogDaoImpl implements LogDao
     }
 
     @Override
-    public List<MyLog> getLog()
+    public List<UserLog> getLog()
     {
-        List<MyLog> myLogList = new ArrayList<>();
+        List<UserLog> userLogList = new ArrayList<>();
         String sql = "select * from userlogs";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
         {
@@ -47,17 +47,17 @@ public class LogDaoImpl implements LogDao
                 String time = res.getString("time");
                 String ip = res.getString("ip");
                 String url = res.getString("url");
-                String operationType = res.getString("operationType");
+                String sqlType = res.getString("sqlType");
                 String operationContent = res.getString("operationContent");
                 String status = res.getString("status");
-                MyLog myLog = new MyLog(username, time, ip, url, operationType, operationContent, status);
-                myLogList.add(myLog);
+                UserLog userLog = new UserLog(username, time, ip, url, sqlType, operationContent, status);
+                userLogList.add(userLog);
             }
         }
         catch (SQLException e)
         {
             throw new RuntimeException(e);
         }
-        return myLogList;
+        return userLogList;
     }
 }
