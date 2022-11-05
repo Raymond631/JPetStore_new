@@ -1,18 +1,19 @@
-*{
+* {
     padding: 0;
     margin: 0;
     text-decoration: none;
 }
 
-.all{
+.all {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('../images/?.png');
+    /*background-image: url('../images/?.png');*/
     background-size: cover;
 }
-.login{
+
+.login {
     width: 600px;
     height: 400px;
     display: flex;
@@ -20,9 +21,9 @@
     align-items: center;
     background: linear-gradient(
             to right bottom,
-            rgba(255,255,255,.7),
-            rgba(255,255,255,.5),
-            rgba(255,255,255,.4)
+            rgba(255, 255, 255, .7),
+            rgba(255, 255, 255, .5),
+            rgba(255, 255, 255, .4)
     );
     /* 使背景模糊化 */
     backdrop-filter: blur(10px);
@@ -30,22 +31,24 @@
     border-radius: 15px;
 }
 
-.table{
+.table {
     font: 900 40px '';
     text-align: center;
     letter-spacing: 5px;
     color: #3d3d3d;
 }
 
-.box,form{
+.box, form {
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
-.box .vf input{
+
+.box .vf input {
     width: 150px;
 }
-.box input{
+
+.box input {
     width: 400px;
     height: 100%;
     margin-bottom: 15px;
@@ -57,7 +60,7 @@
     font: 900 16px '';
 }
 
-.submit{
+.submit {
     text-align: center;
     display: block;
     height: 24px;
@@ -68,8 +71,9 @@
     color: #fff;
     letter-spacing: 3px;
     background-image: linear-gradient(to left,
-    #fd79a8,#a29bf6);
+    #fd79a8, #a29bf6);
 }
-.Tbottom{
+
+.Tbottom {
     text-align: center;
 }

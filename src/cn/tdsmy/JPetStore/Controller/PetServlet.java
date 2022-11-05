@@ -1,7 +1,10 @@
 package cn.tdsmy.JPetStore.Controller;
 
+import cn.tdsmy.JPetStore.Entity.MyLog;
 import cn.tdsmy.JPetStore.Entity.Product;
+import cn.tdsmy.JPetStore.Service.LogService;
 import cn.tdsmy.JPetStore.Service.PetService;
+import cn.tdsmy.JPetStore.Service.impl.LogServiceImpl;
 import cn.tdsmy.JPetStore.Service.impl.PetServiceImpl;
 
 import javax.servlet.ServletException;
@@ -22,6 +25,7 @@ import java.util.Map;
 public class PetServlet extends HttpServlet
 {
     public PetService petService;
+    private LogService logService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -41,6 +45,10 @@ public class PetServlet extends HttpServlet
         {
             petService = new PetServiceImpl();
         }
+        if (logService == null)
+        {
+            logService = new LogServiceImpl();
+        }
 
         String url = req.getPathInfo();
         switch (url)
@@ -59,12 +67,15 @@ public class PetServlet extends HttpServlet
                 break;
         }
     }
-    
+
     /**
      * get请求
      */
     public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
+        myLog.setLog("其他", "查看首页", "true");
+        logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
     }
 
@@ -73,10 +84,13 @@ public class PetServlet extends HttpServlet
      */
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
         String key = req.getParameter("keyword");
         Map<String, Product> productMap = petService.searchPet(key);
         req.setAttribute("productMap", productMap);
 
+        myLog.setLog("查", "搜索动物", "true");
+        logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp").forward(req, resp);
     }
 
@@ -86,12 +100,15 @@ public class PetServlet extends HttpServlet
      */
     public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
         String category = req.getParameter("category");
         Map<String, Product> productMap = petService.getProductMap(category);
 
         req.getSession().setAttribute("category", category);
         req.getSession().setAttribute("productMap", productMap);
 
+        myLog.setLog("查", "查看宠物大类列表", "true");
+        logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
     }
 
@@ -101,6 +118,7 @@ public class PetServlet extends HttpServlet
      */
     public void petProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        MyLog myLog = (MyLog) req.getAttribute("myLog");//日志
         String search = req.getParameter("search");
         String productID = req.getParameter("productID");
         if (search.equals("false"))
@@ -115,6 +133,8 @@ public class PetServlet extends HttpServlet
             req.setAttribute("product", product);
         }
 
+        myLog.setLog("查", "查看动物详情", "true");
+        logService.addLog(myLog);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduct.jsp").forward(req, resp);
     }
 }
