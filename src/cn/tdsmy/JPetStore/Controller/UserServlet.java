@@ -80,7 +80,7 @@ public class UserServlet extends HttpServlet
 
     public void showRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
     }
 
     public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -90,7 +90,7 @@ public class UserServlet extends HttpServlet
         if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
         {
             req.setAttribute("messageBox", "Invalid Verification Code.");
-            req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
         }
         else
         {
@@ -109,7 +109,7 @@ public class UserServlet extends HttpServlet
             else//用户名已存在
             {
                 req.setAttribute("messageBox", "Username already exists.");
-                req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
             }
         }
     }
