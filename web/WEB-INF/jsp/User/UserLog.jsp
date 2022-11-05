@@ -18,25 +18,25 @@
 <div class="mainBox">
 	<div class="top">
 		<div class="topLeft">
-			<div>User Log</div>
+			<div>
+				<span>USER LOGS</span>
+				<span><a href="../Pet/homePage">Return to HomePage</a></span>
+			</div>
 		</div>
 	</div>
 	<div class="bottom">
 		<div class="container">
 			<table id="example" class="table table-hover responsive nowrap" style="width:100%;overflow-y: scroll">
-				<thead>
 				<tr>
-					<th>id</th>
-					<th>username</th>
-					<th>time</th>
-					<th>ip</th>
-					<th>url</th>
-					<th>sqlType</th>
-					<th>operationContent</th>
-					<th>status</th>
+					<th>ID</th>
+					<th>Username</th>
+					<th>Time</th>
+					<th>IP</th>
+					<th>URL</th>
+					<th>SqlType</th>
+					<th>OperationContent</th>
+					<th>Status</th>
 				</tr>
-				</thead>
-				<tbody>
 				<%
 					int id = 1;
 				%>
@@ -57,7 +57,6 @@
 						<td>${userLog.getStatus()}</td>
 					</tr>
 				</c:forEach>
-				</tbody>
 			</table>
 		</div>
 	</div>

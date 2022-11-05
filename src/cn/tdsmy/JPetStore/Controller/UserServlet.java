@@ -95,7 +95,7 @@ public class UserServlet extends HttpServlet
         UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
         userLog.setLog("Other", "跳往注册界面", "true");
         logService.addLog(userLog);
-        req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
     }
 
     public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -108,7 +108,7 @@ public class UserServlet extends HttpServlet
             req.setAttribute("messageBox", "Invalid Verification Code.");
             userLog.setLog("Other", "注册验证码错误", "false");
             logService.addLog(userLog);
-            req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
         }
         else
         {
@@ -131,7 +131,7 @@ public class UserServlet extends HttpServlet
                 req.setAttribute("messageBox", "Username already exists.");
                 userLog.setLog("Read", "用户名重复，无法注册", "false");
                 logService.addLog(userLog);
-                req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
             }
         }
     }
@@ -166,8 +166,6 @@ public class UserServlet extends HttpServlet
 
             if (userService.login(user))//登录成功
             {
-                req.getSession().setAttribute("user", user);
-
                 if (username.equals("root"))//超级管理员，登录后台界面
                 {
                     userLog.setLog("Read", "管理员查看用户日志" + username, "true");
@@ -176,6 +174,8 @@ public class UserServlet extends HttpServlet
                 }
                 else
                 {
+                    req.getSession().setAttribute("user", user);//通过session保持登录状态
+
                     userLog.setLog("Read", "登录,username=" + username, "true");
                     logService.addLog(userLog);
                     resp.sendRedirect(req.getContextPath() + "/Pet/homePage");
