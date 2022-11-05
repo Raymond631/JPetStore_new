@@ -71,17 +71,24 @@ public class CartServlet extends HttpServlet
     }
 
     /**
-     * get请求
+     * get请求;  注意：“增删改”用请求重定向，防止用户重复提交表单
      */
     public void cartList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         User user = (User) req.getSession().getAttribute("user");
-        List<CartItem> cartItemList = cartService.selectCartList(user.getUsername());
-        BigDecimal allCost = cartService.getAllCost(cartItemList);
-        req.getSession().setAttribute("cartItemList", cartItemList);
-        req.getSession().setAttribute("allCost", allCost);
+        if (user == null)
+        {
+            resp.sendRedirect(req.getContextPath() + "/User/showLogin");
+        }
+        else
+        {
+            List<CartItem> cartItemList = cartService.selectCartList(user.getUsername());
+            BigDecimal allCost = cartService.getAllCost(cartItemList);
+            req.getSession().setAttribute("cartItemList", cartItemList);
+            req.getSession().setAttribute("allCost", allCost);
 
-        req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/Cart/Cart.jsp").forward(req, resp);
+        }
     }
 
     /**
@@ -91,12 +98,18 @@ public class CartServlet extends HttpServlet
     public void addCartItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         User user = (User) req.getSession().getAttribute("user");
-        String itemID = req.getParameter("itemID");
-        int quantity = Integer.parseInt(req.getParameter("quantity"));//有bug，无法获取数据
+        if (user == null)
+        {
+            resp.sendRedirect(req.getContextPath() + "/User/showLogin");
+        }
+        else
+        {
+            String itemID = req.getParameter("itemID");
+            int quantity = 1;//默认加入购物车时数量为1
 
-        cartService.addCartItem(user.getUsername(), itemID, quantity);
-
-        resp.sendRedirect("/WEB-INF/jsp/Cart/Cart.jsp");
+            cartService.addCartItem(user.getUsername(), itemID, quantity);
+            resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
+        }
     }
 
     /**
@@ -104,12 +117,13 @@ public class CartServlet extends HttpServlet
      */
     public void updateCart(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
+        User user = (User) req.getSession().getAttribute("user");
         Enumeration<String> itemList = req.getParameterNames();
         while (itemList.hasMoreElements())
         {
             String itemID = itemList.nextElement();
             int quantity = Integer.parseInt(req.getParameter(itemID));
-            cartService.updateCart("j2ee", itemID, quantity);
+            cartService.updateCart(user.getUsername(), itemID, quantity);
         }
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
@@ -117,11 +131,13 @@ public class CartServlet extends HttpServlet
     /**
      * get请求
      * url带参数 /removeCartItem?itemID=
+     * itemID=0时,清空购物车
      */
     public void removeCartItem(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
+        User user = (User) req.getSession().getAttribute("user");
         String itemID = req.getParameter("itemID");
-        cartService.removeCartItem("j2ee", itemID);
+        cartService.removeCartItem(user.getUsername(), itemID);
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
 }

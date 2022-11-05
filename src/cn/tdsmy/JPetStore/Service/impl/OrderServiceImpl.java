@@ -1,7 +1,9 @@
 package cn.tdsmy.JPetStore.Service.impl;
 
+import cn.tdsmy.JPetStore.Dao.CartDao;
 import cn.tdsmy.JPetStore.Dao.OrderDao;
 import cn.tdsmy.JPetStore.Dao.UserDao;
+import cn.tdsmy.JPetStore.Dao.impl.CartDaoImpl;
 import cn.tdsmy.JPetStore.Dao.impl.OrderDaoImpl;
 import cn.tdsmy.JPetStore.Dao.impl.UserDaoImpl;
 import cn.tdsmy.JPetStore.Entity.Order;
@@ -21,10 +23,11 @@ public class OrderServiceImpl implements OrderService
 {
     private UserDao userDao;
     private OrderDao orderDao;
+    private CartDao cartDao;
     private static int num = 1000;//用于生成订单号
 
     @Override
-    public Receiver selectReceiver(String username)
+    public Receiver getReceiver(String username)
     {
         if (userDao == null)
         {
@@ -41,6 +44,16 @@ public class OrderServiceImpl implements OrderService
             orderDao = new OrderDaoImpl();
         }
         orderDao.addOrder(username, order);
+    }
+
+    @Override
+    public void clearCart(String username)
+    {
+        if (cartDao == null)
+        {
+            cartDao = new CartDaoImpl();
+        }
+        cartDao.clearCart(username);
     }
 
     @Override
