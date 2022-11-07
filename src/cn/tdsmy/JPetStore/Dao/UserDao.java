@@ -1,5 +1,6 @@
 package cn.tdsmy.JPetStore.Dao;
 
+import cn.tdsmy.JPetStore.Entity.Profile;
 import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
 
@@ -10,12 +11,27 @@ import cn.tdsmy.JPetStore.Entity.User;
  */
 public interface UserDao
 {
+    public boolean login(User user);
+
+
     public boolean register(User user);
 
-    public boolean login(User user);
+    public void addProfile(String username, Profile profile);
+
+    public void addReceiver(String username, Receiver receiver);
+
 
     public Receiver getReceiver(String username);
 
-    public void updateUser(User user);//改
-    
+    public Profile getProfile(String username);
+
+
+    public void changePassword(User user);
+
+    public void updateReceiver(String username, Receiver receiver);
+
+    public void updateProfile(String username, Profile profile);
+
+
+    public boolean isExist(String tableName, String username);//用于检查receiver和profile是否为空
 }

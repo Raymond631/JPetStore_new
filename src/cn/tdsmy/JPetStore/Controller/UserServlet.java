@@ -1,5 +1,6 @@
 package cn.tdsmy.JPetStore.Controller;
 
+import cn.tdsmy.JPetStore.Entity.Profile;
 import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
 import cn.tdsmy.JPetStore.Entity.UserLog;
@@ -59,13 +60,13 @@ public class UserServlet extends HttpServlet
         String url = req.getPathInfo();
         switch (url)
         {
-            case "/showRegister"://注册
+            case "/showRegister"://注册页面
                 showRegister(req, resp);
                 break;
             case "/register"://注册判断
                 register(req, resp);
                 break;
-            case "/showLogin"://登录
+            case "/showLogin"://登录页面
                 showLogin(req, resp);
                 break;
             case "/login"://登录判断
@@ -77,8 +78,14 @@ public class UserServlet extends HttpServlet
             case "/personalCenter"://个人中心
                 personalCenter(req, resp);
                 break;
-            case "/updateUser"://更新用户信息
-                updateUser(req, resp);
+            case "/changePassword"://修改密码
+                changePassword(req, resp);
+                break;
+            case "/updateReceiver"://更新收件人信息
+                updateReceiver(req, resp);
+                break;
+            case "/updateProfile"://更新偏好信息
+                updateProfile(req, resp);
                 break;
             case "/verificationCode"://验证码
                 verificationCode(req, resp);
@@ -212,15 +219,26 @@ public class UserServlet extends HttpServlet
         req.getRequestDispatcher("/WEB-INF/jsp/User/PersonalCenter.jsp").forward(req, resp);
     }
 
-    public void updateUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    public void changePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
+
+        User user = (User) req.getSession().getAttribute("user");
+        String password = req.getParameter("newPassword");
+        user.setPassword(password);
+
+        userService.changePassword(user);
+
+        userLog.setLog("Update", "修改密码", "true");
+        logService.addLog(userLog);
+        resp.sendRedirect("../User/personalCenter");
+    }
+
+    public void updateReceiver(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
         User user = (User) req.getSession().getAttribute("user");
-        String password = req.getParameter("newPassword");
-        if (password.equals(""))
-        {
-            password = user.getPassword();
-        }
+
         String receiverName = req.getParameter("receiverName");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
@@ -230,10 +248,26 @@ public class UserServlet extends HttpServlet
         String district = req.getParameter("district");
         String detailedAddress = req.getParameter("detailedAddress");
         Receiver receiver = new Receiver(receiverName, email, phone, country, province, city, district, detailedAddress);
-        user.setPassword(password);
-        user.setReceiver(receiver);
 
-        userService.updateUser(user);
+        userService.updateReceiver(user.getUsername(), receiver);
+
+        userLog.setLog("Update", "修改收件人信息", "true");
+        logService.addLog(userLog);
+        resp.sendRedirect("../User/personalCenter");
+    }
+
+    public void updateProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
+        User user = (User) req.getSession().getAttribute("user");
+
+        String languagePreference = req.getParameter("languagePreference");
+        String favouriteCategory = req.getParameter("favouriteCategory");
+        String enableMyList = req.getParameter("enableMyList");
+        String enableMyBanner = req.getParameter("enableMyBanner");
+        Profile profile = new Profile(languagePreference, favouriteCategory, enableMyList, enableMyBanner);
+        
+        userService.updateProfile(user.getUsername(), profile);
 
         userLog.setLog("Update", "修改个人信息", "true");
         logService.addLog(userLog);
