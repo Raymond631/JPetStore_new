@@ -17,10 +17,10 @@
 <%@include file="../Common/Top.jsp" %>
 
 <div class="mainBox">
-    <div style="margin-left: -110px;margin-right: 10px">
-        <h1>${sessionScope.category}</h1>
+    <div style="margin-left: -120px;margin-right: 10px">
+        <h2>${sessionScope.category}</h2>
     </div>
-    <div class="center" id="content">
+    <div class="center" id="centerContent">
 
         <c:forEach items="${sessionScope.productMap}" var="product" varStatus="line">
             <div class="smallCate"

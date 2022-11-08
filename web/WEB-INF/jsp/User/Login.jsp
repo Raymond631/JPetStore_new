@@ -39,6 +39,12 @@
                 return false;
             }
         }
+
+        function newVerification() {
+            let image = document.getElementById("verificationCode");
+            image.src = "../User/verificationCode";
+        }
+
     </script>
 </head>
 
@@ -60,7 +66,12 @@
                 </div>
                 <div class="vf">
                     <input type="text" name="vCode" id="code" placeholder="verificationCode"/>
-                    <a href="../User/verificationCode"><img border="0" src="../User/verificationCode" name="checkcode"></a>
+                    <a style="margin-left: 40px;" href="../User/verificationCode" onclick="newVerification()">change
+                        verification</a>
+                    <a href="../User/verificationCode"><img border="0" id="verificationCode"
+                                                            src="../User/verificationCode" name="checkcode"
+                    ></a>
+
                     <span id="name" style="margin-left: 20px; width: 20px"></span>
                     <span id="pass" style="margin-left: 40px; width: 20px"></span>
                 </div>
