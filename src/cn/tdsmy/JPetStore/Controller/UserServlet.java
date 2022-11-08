@@ -128,6 +128,8 @@ public class UserServlet extends HttpServlet
 
             if (userService.register(user))//注册成功
             {
+                user.setReceiver(userService.getReceiver(username));
+                user.setProfile(userService.getProfile(username));
                 req.getSession().setAttribute("user", user);
                 userLog.setLog("Create", "注册新用户,username=" + username, "true");
                 logService.addLog(userLog);
@@ -181,6 +183,8 @@ public class UserServlet extends HttpServlet
                 }
                 else
                 {
+                    user.setReceiver(userService.getReceiver(username));
+                    user.setProfile(userService.getProfile(username));
                     req.getSession().setAttribute("user", user);//通过session保持登录状态
 
                     userLog.setLog("Read", "登录,username=" + username, "true");
@@ -266,7 +270,7 @@ public class UserServlet extends HttpServlet
         String enableMyList = req.getParameter("enableMyList");
         String enableMyBanner = req.getParameter("enableMyBanner");
         Profile profile = new Profile(languagePreference, favouriteCategory, enableMyList, enableMyBanner);
-        
+
         userService.updateProfile(user.getUsername(), profile);
 
         userLog.setLog("Update", "修改个人信息", "true");

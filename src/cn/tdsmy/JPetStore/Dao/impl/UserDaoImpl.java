@@ -61,6 +61,25 @@ public class UserDaoImpl implements UserDao
                 {
                     statement.executeUpdate();
                 }
+
+                //偏好初始化
+                Profile profile = new Profile();
+                String value = "'" + user.getUsername() + "','" + profile.getLanguagePreference() + "','" + profile.getFavouriteCategory() + "','" + profile.getEnableMyList() + "','" + profile.getEnableMyBanner() + "'";
+                String sql3 = "insert into profile (username,languagePreference,favouriteCategory,enableMyList,enableMyBanner) values (" + value + ")";
+                try (PreparedStatement statement = connection.prepareStatement(sql3))
+                {
+                    statement.executeUpdate();
+                }
+
+                //收件人初始化
+                Receiver receiver = new Receiver();
+                String value2 = "'" + user.getUsername() + "','" + receiver.getReceiverName() + "','" + receiver.getEmail() + "','" + receiver.getPhoneNumber() + "','" + receiver.getCountry()
+                        + "','" + receiver.getProvince() + "','" + receiver.getCity() + "','" + receiver.getDistrict() + "','" + receiver.getDetailedAddress() + "'";
+                String sql4 = "insert into receiver (username,receiverName,email,phoneNumber,country,province,city,district,detailedAddress) values (" + value2 + ")";
+                try (PreparedStatement statement = connection.prepareStatement(sql4))
+                {
+                    statement.executeUpdate();
+                }
             }
 
         }
@@ -70,46 +89,6 @@ public class UserDaoImpl implements UserDao
         }
         return isSuccess;//返回是否注册成功
     }
-
-    @Override
-    public void addProfile(String username, Profile profile)
-    {
-        String value = "'" + username + "','" + profile.getLanguagePreference() + "','" + profile.getFavouriteCategory() + "','" + profile.getEnableMyList() + "','" + profile.getEnableMyBanner() + "'";
-        String sql = "insert into profile (username,languagePreference,favouriteCategory,enableMyList,enableMyBanner) values (" + value + ")";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
-        {
-            statement.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void addReceiver(String username, Receiver receiver)
-    {
-        String receiverName = receiver.getReceiverName();
-        String email = receiver.getEmail();
-        String phoneNumber = receiver.getPhoneNumber();
-        String country = receiver.getCountry();
-        String province = receiver.getProvince();
-        String city = receiver.getCity();
-        String district = receiver.getDistrict();
-        String detailedAddress = receiver.getDetailedAddress();
-
-        String value = "'" + username + "','" + receiverName + "','" + email + "','" + phoneNumber + "','" + country + "','" + province + "','" + city + "','" + district + "','" + detailedAddress + "'";
-        String sql = "insert into receiver (username,receiverName,email,phoneNumber,country,province,city,district,detailedAddress) values (" + value + ")";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql))
-        {
-            statement.executeUpdate();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public Receiver getReceiver(String username)
@@ -225,24 +204,5 @@ public class UserDaoImpl implements UserDao
         {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public boolean isExist(String tableName, String username)
-    {
-        boolean exist = false;
-        String sql = "select * from " + tableName + " where username ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
-        {
-            if (res.next())
-            {
-                exist = true;
-            }
-        }
-        catch (SQLException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return exist;
     }
 }

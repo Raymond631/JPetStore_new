@@ -26,10 +26,10 @@ public class Profile implements Serializable
 
     public Profile()
     {
-        this.languagePreference = "";
-        this.favouriteCategory = "";
-        this.enableMyList = "";
-        this.enableMyBanner = "";
+        this.languagePreference = "English";
+        this.favouriteCategory = "Dogs";
+        this.enableMyList = "true";
+        this.enableMyBanner = "true";
     }
 
     public String getLanguagePreference()

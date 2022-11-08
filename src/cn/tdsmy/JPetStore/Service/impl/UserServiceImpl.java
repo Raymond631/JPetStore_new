@@ -37,26 +37,6 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public void addProfile(String username, Profile profile)
-    {
-        if (userDao == null)
-        {
-            userDao = new UserDaoImpl();
-        }
-        userDao.addProfile(username, profile);
-    }
-
-    @Override
-    public void addReceiver(String username, Receiver receiver)
-    {
-        if (userDao == null)
-        {
-            userDao = new UserDaoImpl();
-        }
-        userDao.addReceiver(username, receiver);
-    }
-
-    @Override
     public Receiver getReceiver(String username)
     {
         if (userDao == null)
@@ -93,15 +73,7 @@ public class UserServiceImpl implements UserService
         {
             userDao = new UserDaoImpl();
         }
-
-        if (userDao.isExist("receiver", username))
-        {
-            userDao.updateReceiver(username, receiver);
-        }
-        else
-        {
-            addReceiver(username, receiver);
-        }
+        userDao.updateReceiver(username, receiver);
     }
 
     @Override
@@ -111,14 +83,6 @@ public class UserServiceImpl implements UserService
         {
             userDao = new UserDaoImpl();
         }
-
-        if (userDao.isExist("receiver", username))
-        {
-            userDao.updateProfile(username, profile);
-        }
-        else
-        {
-            addProfile(username, profile);
-        }
+        userDao.updateProfile(username, profile);
     }
 }

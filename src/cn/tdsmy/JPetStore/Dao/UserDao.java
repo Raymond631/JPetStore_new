@@ -16,10 +16,6 @@ public interface UserDao
 
     public boolean register(User user);
 
-    public void addProfile(String username, Profile profile);
-
-    public void addReceiver(String username, Receiver receiver);
-
 
     public Receiver getReceiver(String username);
 
@@ -31,7 +27,4 @@ public interface UserDao
     public void updateReceiver(String username, Receiver receiver);
 
     public void updateProfile(String username, Profile profile);
-
-
-    public boolean isExist(String tableName, String username);//用于检查receiver和profile是否为空
 }

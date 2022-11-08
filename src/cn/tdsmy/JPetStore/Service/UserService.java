@@ -13,13 +13,8 @@ public interface UserService
 {
     public boolean login(User user);
 
-
     public boolean register(User user);
-
-    public void addProfile(String username, Profile profile);
-
-    public void addReceiver(String username, Receiver receiver);
-
+    
 
     public Receiver getReceiver(String username);
 
