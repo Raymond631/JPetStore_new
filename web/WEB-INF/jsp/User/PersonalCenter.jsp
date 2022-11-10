@@ -22,7 +22,8 @@
                 whetherFull = false;
             } else {//输入了内容后清除节点内容
                 document.getElementById("receiverNull").textContent = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
             var email = document.getElementById("emailInfo");
@@ -32,7 +33,8 @@
                 whetherFull = false;
             } else {
                 document.getElementById("emailNull").innerText = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
             var phone = document.getElementById("phoneInfo");
@@ -42,7 +44,8 @@
                 whetherFull = false;
             } else {
                 document.getElementById("phoneNull").innerText = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
             var country = document.getElementById("countryInfo");
@@ -52,7 +55,8 @@
                 whetherFull = false;
             } else {
                 document.getElementById("countryNull").innerText = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
             var province = document.getElementById("provinceInfo");
@@ -62,7 +66,8 @@
                 whetherFull = false;
             } else {
                 document.getElementById("provinceNull").innerText = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
             var city = document.getElementById("cityInfo");
@@ -72,7 +77,8 @@
                 whetherFull = false;
             } else {
                 document.getElementById("cityNull").innerText = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
             var district = document.getElementById("districtInfo");
@@ -82,7 +88,8 @@
                 whetherFull = false;
             } else {
                 document.getElementById("districtNull").innerText = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
             var detailedAddress = document.getElementById("detailedAddressInfo");
@@ -92,14 +99,11 @@
                 whetherFull = false;
             } else {
                 document.getElementById("detailedAddressNull").innerText = "";
-                whetherFull = true;
+                if (whetherFull)
+                    whetherFull = true;
             }
 
-            if (whetherFull) {
-                return true;
-            } else {
-                return false;
-            }
+            return whetherFull;
         }
 
         // var button = document.getElementById("changePassword");
@@ -110,7 +114,7 @@
 
         function savePassword() {
             let originWrite = document.getElementById("origin").value;
-            let originTrue = ${sessionScope.user.getPassword()};
+            let originTrue = "${sessionScope.user.getPassword()}";
             let newPassword = document.getElementById("newPassword").value;
             let confirmNewPassword = document.getElementById("confirmNewPassword").value;
             console.log(originWrite);
@@ -125,9 +129,12 @@
                     console.log("ajax");
                     const xhr = new XMLHttpRequest();
                     //初始化，设置请求方法和url
-                    xhr.open("Get", "Category.Small?newPassword=" + newPassword, true);
+                    xhr.open("post", "../User/changePassword", true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     //发送
-                    xhr.send();
+                    xhr.send(newPassword);
+                } else {
+
                 }
             } else {
                 originFalse.innerText = "Password is wrong";
@@ -167,27 +174,27 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div>
-                        <div class="password">
-                            Original Password:<input style="width: 40%;font-size: 25px;"
+                        <div class="inChange">
+                            Original Password:<input class="inChangeInput"
                                                      type="password"
-                                                     name="originalPassword"
+                                                     name="newPassword"
                                                      value=""
                                                      id="origin"
-                                                     autocomplete="off"/>
-                            <span class="error-msg" id="originFalse"></span>
+                                                     autocomplete="off"/><span class="error-msg"
+                                                                               id="originFalse"></span>
                         </div>
-                        <div>New Password:<input style="width: 40%;font-size: 25px;"
-                                                 type="password"
-                                                 name="originalPassword"
-                                                 value=""
-                                                 id="newPassword"
-                                                 autocomplete="off"/></div>
-                        <div>Confirm New Password:<input style="width: 40%;font-size: 25px;"
-                                                         type="password"
-                                                         name="originalPassword"
-                                                         value=""
-                                                         id="confirmNewPassword"
-                                                         autocomplete="off"/></div>
+                        <div class="inChange">New Password:<input class="inChangeInput"
+                                                                  type="password"
+                                                                  name="originalPassword"
+                                                                  value=""
+                                                                  id="newPassword"
+                                                                  autocomplete="off"/></div>
+                        <div class="inChange">Confirm New Password:<input class="inChangeInput"
+                                                                          type="password"
+                                                                          name="originalPassword"
+                                                                          value=""
+                                                                          id="confirmNewPassword"
+                                                                          autocomplete="off"/></div>
                         <%--跳往下一个界面--%>
                         <button class="determine" onclick="savePassword()">save password</button>
                         <%--关闭弹窗--%>
@@ -295,164 +302,6 @@
 </div>
 
 
-<%--<div id="Content">--%>
-<%--    <div id="CenterForm">--%>
-<%--        <form action="../User/updateUser" method="post">--%>
-
-<%--            <h3>User Information</h3>--%>
-<%--            <table>--%>
-<%--                <colgroup>--%>
-<%--                    <col style="width: 25%"/>--%>
-<%--                    <col/>--%>
-<%--                </colgroup>--%>
-<%--                <tr>--%>
-<%--                    <td>Username:</td>--%>
-<%--                    <td>${sessionScope.user.getUsername()}</td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Original password:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="password" name="originalPassword" value="" autocomplete="off"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>New password:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="password" name="newPassword" value="" autocomplete="off"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Confirm password:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="password" name="repeatedPassword" value="" autocomplete="off"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--            </table>--%>
-
-<%--            <h3>Account Information</h3>--%>
-<%--            <table>--%>
-<%--                <colgroup>--%>
-<%--                    <col style="width: 25%"/>--%>
-<%--                    <col/>--%>
-<%--                </colgroup>--%>
-<%--                <tr>--%>
-<%--                    <td>ReceiverName:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" name="receiverName" value="${requestScope.receiver.getReceiverName()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Email:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" size="40" name="email" value="${requestScope.receiver.getEmail()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Phone:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" name="phone" value="${requestScope.receiver.getPhoneNumber()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Country:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" size="40" name="country" value="${requestScope.receiver.getCountry()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Province:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" size="40" name="province" value="${requestScope.receiver.getProvince()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>City:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" name="city" value="${requestScope.receiver.getCity()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>district:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" size="4" name="district" value="${requestScope.receiver.getDistrict()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>DetailedAddress:</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text" size="10" name="detailedAddress"--%>
-<%--                               value="${requestScope.receiver.getDetailedAddress()}"/>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--            </table>--%>
-
-
-<%--            <h3>Profile Information</h3>--%>
-<%--            <table>--%>
-<%--                <colgroup>--%>
-<%--                    <col style="width: 25%"/>--%>
-<%--                    <col/>--%>
-<%--                </colgroup>--%>
-<%--                <tr>--%>
-<%--                    <td>Language Preference:</td>--%>
-<%--                    <td>--%>
-<%--                        <select name="languagePreference">--%>
-<%--                            <option value="english" selected>English</option>--%>
-<%--                            <option value="german">German</option>--%>
-<%--                            <option value="french">French</option>--%>
-<%--                            <option value="korean">Korean</option>--%>
-<%--                            <option value="japanese">Japanese</option>--%>
-<%--                        </select>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Favourite Category:</td>--%>
-<%--                    <td>--%>
-<%--                        <select name="favouriteCategoryId">--%>
-<%--                            <option value="FISH">Fish</option>--%>
-<%--                            <option value="DOGS" selected>Dogs</option>--%>
-<%--                            <option value="REPTILES">Reptiles</option>--%>
-<%--                            <option value="CATS">Cats</option>--%>
-<%--                            <option value="BIRDS">Birds</option>--%>
-<%--                        </select>--%>
-<%--                        <span class="error-msg"></span>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Enable MyList</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="checkbox" name="listOption" value="true"/>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td>Enable MyBanner</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="checkbox" name="bannerOption" value="true" checked/>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--            </table>--%>
-
-<%--            <div class="button-bar">--%>
-<%--                <button type="submit" class="button">Save Account Information</button>--%>
-<%--            </div>--%>
-<%--        </form>--%>
-
-<%--        <a href="viewListOrder?username=${sessionScope.user.username}">My Orders</a>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
 <%@include file="../Common/Bottom.jsp" %>
 </body>
 </html>
@@ -476,8 +325,8 @@
         top: 15%;
         left: 50%;
         margin-left: -25%;
-        width: 25%;
-        height: 70%;
+        width: 14%;
+        height: 40%;
         min-width: 31.125rem;
         min-height: 18.625rem;
         border-radius: .125rem;
@@ -517,6 +366,7 @@
     }
 
     .determine {
+        width: 30%;
         right: 6.5rem;
         bottom: .725rem;
         background-color: rgba(9, 139, 245, 0.788);

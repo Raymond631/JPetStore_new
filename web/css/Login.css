@@ -1,42 +1,42 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.all input{
+.all input {
     outline: none;
 }
 
-.all input:focus{
+.all input:focus {
     color: #b0cfe9;
 }
 
-input:focus::placeholder{
+input:focus::placeholder {
     opacity: 0;
 }
 
 
-.all{
+.all {
     display: flex;
-    background: linear-gradient(to right,#f5e1d8,#b8e5fa);
+    background: linear-gradient(to right, #f5e1d8, #b8e5fa);
     width: 100%;
     height: 800px;
     margin: auto;
 }
 
-.box{
-    height:80%;
-    width:70%;
+.box {
+    height: 80%;
+    width: 70%;
     display: flex;
     position: relative;
     margin: auto;
-    border: 1px solid rgba(255,255,255, .6);
+    border: 1px solid rgba(255, 255, 255, .6);
     border-radius: 8px;
     box-shadow: 4px 4px 3px rgba(0, 0, 0, 1);
 }
 
-.pre-box{
+.pre-box {
     width: 50%;
     height: 100%;
     left: 0;
@@ -44,11 +44,11 @@ input:focus::placeholder{
     position: absolute;
     border-radius: 4px;
     background-color: #f5e1d8;
-    box-shadow:1px 1px 1px rgba(0, 0, 0, 1) ;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
     transition: 0.5s ease-in-out;
 }
 
-.pre-box h1{
+.pre-box h1 {
     margin-top: 150px;
     text-align: center;
     letter-spacing: 5px;
@@ -56,17 +56,17 @@ input:focus::placeholder{
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 1);
 }
 
-.pre-box p{
+.pre-box p {
     height: 30px;
     line-height: 30px;
     text-align: center;
     margin: 20px 0;
     font-weight: bold;
-    color:white;
+    color: white;
     text-shadow: 4px 4px 3px rgba(0, 0, 0, 1);
 }
 
-.img-box{
+.img-box {
     width: 200px;
     height: 200px;
     margin: 20px auto;
@@ -75,44 +75,47 @@ input:focus::placeholder{
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
 
 }
-.img-box img{
+
+.img-box img {
 
     transition: 0.5s;
 }
 
-.vf img{
+.vf img {
     width: 100%;
 }
 
 
-.login-form,.register-form{
+.login-form, .register-form {
     flex: 1;
     height: 100%;
 }
 
-.title-box{
+.title-box {
     height: 200px;
     line-height: 300px;
 }
 
-.title-box h1{
+.title-box h1 {
     text-align: center;
     letter-spacing: 5px;
     color: white;
     text-shadow: 4px 4px 3px rgba(0, 0, 0, 1);
 }
-.input-box{
+
+.input-box {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.vf{
+
+.vf {
     display: flex;
     align-items: center;
     width: 60%;
 }
 
-.all input{
+.all input {
     width: 60%;
     height: 40px;
     margin-bottom: 20px;
@@ -121,13 +124,13 @@ input:focus::placeholder{
     border-radius: 4px;
 }
 
-.btn-box{
+.btn-box {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.btn{
+.btn {
 
     width: 100px;
     height: 30px;
@@ -140,18 +143,20 @@ input:focus::placeholder{
     margin-bottom: 3px;
 
 }
-button:hover{
+
+button:hover {
     cursor: pointer;
     opacity: .8;
 }
 
-.btn-box p{
+.btn-box p {
     height: 30px;
     line-height: 30px;
     font-size: 14px;
     color: white;
 }
-.btn-box p:hover{
+
+.btn-box p:hover {
     cursor: pointer;
     border-bottom: 1px solid white;
 }
