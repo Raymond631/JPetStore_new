@@ -5,13 +5,14 @@
     /* background-color: aqua; */
     display: flex;
     margin: 0;
-    /* background-color: #ffd8d8; */
+    background-color: #ffd8d8;
 }
 
 .header .logo {
     margin-top: 2px;
+    margin-left: 7%;
     height: 90%;
-    width: 25%;
+    width: 20%;
     /* border:1px solid black; */
     display: flex;
 }
@@ -20,36 +21,33 @@
     margin-left: 2px;
     margin-top: 2px;
     height: 90%;
-    width: 30%;
+    width: 5%;
     /* border:1px solid black; */
 }
 
-<<<<<<< HEAD
-.allheader .logo .logoName {
-=======
+
 .header .logo .logoName {
->>>>>>> origin/master
-    margin-left: 8px;
+    margin-left: 24px;
     margin-top: 2px;
     height: 90%;
-    width: 65%;
+    width: 95%;
     /* border:1px solid black; */
 
 }
 
 
-.header .cover .tb {
+.header .top-cover .tb {
     display: table;
     width: 100%;
 }
 
-.header .cover .td {
+.header .top-cover .td {
     display: table-cell;
     vertical-align: middle;
 }
 
-input,
-button {
+.header .top-cover .td input,
+.header .top-cover .td button {
     color: #fff;
     font-family: Nunito;
     padding: 0;
@@ -58,56 +56,52 @@ button {
     background-color: transparent;
 }
 
-.header .cover {
+.header .top-cover {
     /* position: absolute; */
     top: 50%;
     left: 0;
     right: 0;
-    width: 600px;
-    height: 65px;
-    padding: 35px;
+    width: 1100px;
+    height: 105px;
+    padding-left: 10px;
     padding-top: 5px;
     /* padding-left: 100px; */
-    margin: -10px auto 0 80px;
+    margin: -10px auto 0 30px;
     background-color: #ff7575;
-<<<<<<< HEAD
-    border: 1px solid black;
-=======
->>>>>>> origin/master
     border-radius: 20px;
     /* box-shadow: 0 10px 40px #ff7c7c, 0 0 0 20px #ffffffeb; */
     transform: scale(0.6);
 }
 
-form {
+.header .top-cover form {
     height: 56px;
 }
 
-input[type="text"] {
+.header .top-cover .tb .td input[type="text"] {
     width: 100%;
     height: 96px;
     font-size: 60px;
     line-height: 1;
 }
 
-input[type="text"]::placeholder {
+.header .top-cover .tb .td input[type="text"]::placeholder {
     color: #e16868;
 }
 
-#s-cover {
+.header .top-cover #s-cover {
     width: 1px;
     padding-left: 35px;
 }
 
-button {
+.header .top-cover button {
     position: relative;
     display: block;
-    width: 84px;
+    width: 100px;
     height: 96px;
     cursor: pointer;
 }
 
-#s-circle {
+.header .top-cover #s-circle {
     position: relative;
     top: -8px;
     left: 0;
@@ -115,13 +109,13 @@ button {
     height: 43px;
     margin-top: 0;
     border-width: 15px;
-    border: 15px solid #fff;
+    border: 35px solid #FFFFFF;
     background-color: transparent;
     border-radius: 50%;
     transition: 0.5s ease all;
 }
 
-button span {
+.header .top-cover button span {
     position: absolute;
     top: 68px;
     left: 43px;
@@ -134,8 +128,8 @@ button span {
     transition: 0.5s ease all;
 }
 
-button span:before,
-button span:after {
+.header .top-cover button span:before,
+.header .top-cover button span:after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -148,7 +142,7 @@ button span:after {
     transition: 0.5s ease all;
 }
 
-#s-cover:hover #s-circle {
+.header .top-cover #s-cover:hover #s-circle {
     top: -1px;
     width: 67px;
     height: 15px;
@@ -157,7 +151,7 @@ button span:after {
     border-radius: 20px;
 }
 
-#s-cover:hover span {
+.header .top-cover #s-cover:hover span {
     top: 50%;
     left: 56px;
     width: 25px;
@@ -165,40 +159,31 @@ button span:after {
     transform: rotateZ(0);
 }
 
-#s-cover:hover button span:before {
+.header .top-cover #s-cover:hover button span:before {
     bottom: 11px;
     transform: rotateZ(52deg);
 }
 
-#s-cover:hover button span:after {
+.header .top-cover #s-cover:hover button span:after {
     bottom: -11px;
     transform: rotateZ(-52deg);
 }
 
-#s-cover:hover button span:before,
-#s-cover:hover button span:after {
+.header .top-cover #s-cover:hover button span:before,
+.header .top-cover #s-cover:hover button span:after {
     right: -6px;
     width: 40px;
     background-color: #fff;
 }
 
-.header .right {
-    margin-top: 5px;
-    border: 1px splid black;
+.header .top-right {
+    margin-left: 50px;
+    margin-top: 8px;
+    /*border: 1px solid black;*/
     /* background-color: #e16868; */
-    width: 30%;
-    height: 50%;
+    width: 20%;
+    height: 80%;
     padding-top: 20px;
-}
-
-.header .right #Menu, #Menu a, #Menu a:link, #Menu a:visited, #Menu a:hover {
-    color: #eaac00;
-    text-decoration: none;
-    font-family: helvetica, tahoma, arial, verdana, sans-serif;
-}
-
-body > #Menu {
-    height: 9ex;
 }
 
 .header .logoName .gradient-text {

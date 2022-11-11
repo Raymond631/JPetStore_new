@@ -15,28 +15,30 @@
 <body>
 <%@ include file="../Common/Top.jsp" %>
 
-<div id="Content">
+<div class="Content">
 
-    <div id="Welcome">
-        <div id="WelcomeContent">
+    <%--    <div id="Welcome">--%>
+    <%--        <div id="WelcomeContent">--%>
 
-        </div>
-    </div>
+    <%--        </div>--%>
+    <%--    </div>--%>
 
-    <div id="Main">
+    <div class="Main">
         <div id="Sidebar">
-            <div id="SidebarContent">
-                <a href="../Pet/petList?category=fish">Fish</a><br/>
-                Saltwater, Freshwater<br/>
-                <a href="../Pet/petList?category=dogs">Dogs</a><br/>
-                Various Breeds<br/>
-                <a href="../Pet/petList?category=reptiles">Reptiles</a><br/>
-                Lizards, Turtles, Snakes<br/>
-                <a href="../Pet/petList?category=cats">Cats</a><br/>
-                Various Breeds, Exotic Varieties<br/>
-                <a href="../Pet/petList?category=birds">Birds</a><br/>
-                Exotic Varieties<br/>
-            </div>
+
+            <%--            <div id="SidebarContent">--%>
+            <%--                <a href="../Pet/petList?category=fish">Fish</a><br/>--%>
+            <%--                Saltwater, Freshwater<br/>--%>
+            <%--                <a href="../Pet/petList?category=dogs">Dogs</a><br/>--%>
+            <%--                Various Breeds<br/>--%>
+            <%--                <a href="../Pet/petList?category=reptiles">Reptiles</a><br/>--%>
+            <%--                Lizards, Turtles, Snakes<br/>--%>
+            <%--                <a href="../Pet/petList?category=cats">Cats</a><br/>--%>
+            <%--                Various Breeds, Exotic Varieties<br/>--%>
+            <%--                <a href="../Pet/petList?category=birds">Birds</a><br/>--%>
+            <%--                Exotic Varieties<br/>--%>
+            <%--            </div>--%>
+
         </div>
         <%--		<div id="MainImage">--%>
         <%--			<div id="MainImageContent">--%>
@@ -54,19 +56,19 @@
         <div class="layout">
             <ul>
                 <li><a href="../Pet/petList?category=fish">
-                    Fish
+                    <img style="width: 100%;height: 100%; background-size: cover;" src="../images/fish.jpg">
                 </a></li>
                 <li><a href="../Pet/petList?category=dogs">
-                    Dogs
+                    <img style="width: 100%;height: 100%; background-size: cover;" src="../images/dogs.jpg">
                 </a></li>
                 <li><a href="../Pet/petList?category=reptiles">
-                    Reptiles
+                    <img style="width: 100%;height: 100%; background-size: cover;" src="../images/reptiles.jpg">
                 </a></li>
                 <li><a href="../Pet/petList?category=cats">
-                    Cats
+                    <img style="width: 100%;height: 100%; background-size: cover;" src="../images/cats.jpg">
                 </a></li>
                 <li><a href="../Pet/petList?category=birds">
-                    Birds
+                    <img style="width: 100%;height: 100%; background-size: cover;" src="../images/birds.jpg">
                 </a></li>
             </ul>
         </div>
@@ -80,21 +82,22 @@
         <div id="Separator">&nbsp;</div>
     </div>
 
-    <%@include file="../Common/Bottom.jsp" %>
+
+    <%--    <%@include file="../Common/Bottom.jsp" %>--%>
 </body>
 </html>
 
 <style>
     .layout {
-        width: 40%;
-        height: 50%;
-        margin-left: 420px;
+        width: 50%;
+        height: 65%;
+        margin-left: 40px;
         margin-top: 0;
     }
 
     .layout ul {
-        width: 800px;
-        height: 480px;
+        width: 880px;
+        height: 560px;
         background-color: white;
         border: 1px solid black;
 
@@ -103,46 +106,56 @@
     .layout ul li {
         float: left;
         list-style: none;
+        background-size: cover;
+        width: 100%;
+        height: 100%
     }
 
     .layout ul li:nth-child(1) {
-        margin-left: 10px;
-        margin-top: 20px;
-        width: 270px;
-        height: 440px;
-        background-color: red;
+        margin-left: 15px;
+        margin-top: 15px;
+        width: 320px;
+        height: 530px;
+        /*background-color: red;*/
+        background-size: cover;
     }
 
     .layout ul li:nth-child(2) {
-        margin-left: 300px;
-        margin-top: -440px;
-        width: 470px;
-        height: 200px;
-        background-color: red;
+        margin-left: 350px;
+        margin-top: -530px;
+        width: 510px;
+        height: 230px;
+        /*background-color: red;*/
+        background-size: cover;
     }
 
     .layout ul li:nth-child(3) {
-        margin-left: 300px;
-        margin-top: -230px;
-        width: 200px;
-        height: 230px;
-        background-color: red;
+        margin-left: 350px;
+        margin-top: -280px;
+        width: 230px;
+        height: 280px;
+        /*background-color: red;*/
+        background-size: cover;
     }
 
+
     .layout ul li:nth-child(4) {
-        margin-left: 520px;
-        margin-top: -230px;
-        width: 250px;
-        height: 105px;
-        background-color: red;
+        margin-left: 595px;
+        margin-top: -280px;
+        width: 265px;
+        height: 133px;
+        /*background-color: red;*/
+        background-size: cover;
     }
 
     .layout ul li:nth-child(5) {
-        margin-left: 520px;
-        margin-top: -105px;
-        width: 250px;
-        height: 105px;
-        background-color: red;
+        margin-left: 595px;
+        margin-top: -134px;
+        width: 265px;
+        height: 133px;
+        /*background-color: red;*/
+        background-size: cover;
     }
+
 
 </style>
