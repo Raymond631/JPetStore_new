@@ -131,7 +131,6 @@
             $(".pre-box").css("transform", "translateX(100%)")
             $(".pre-box").css("background-color", "rgb(205,228,238)")
             $(".img01").attr("src", "../images/login02.jpg")
-
         } else {
             $(".pre-box").css("transform", "translateX(0%)")
             $(".pre-box").css("background-color", "rgb(230,226,224)")
