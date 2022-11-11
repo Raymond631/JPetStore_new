@@ -9,65 +9,59 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Top</title>
-    <link rel="stylesheet" type="text/css" href="../css/jpetstore.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="../css/aspectran.css"/>
+	<title>Top</title>
+	<link rel="stylesheet" type="text/css" href="../css/jpetstore.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="../css/aspectran.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/top.css"/>
 </head>
 <body>
 
-<div id="Header" style="background-color: whitesmoke">
+<div class="header">
+	<div class="logo">
+		<div class="logoImg">
+			<a href="../Pet/homePage"><img src="../images/logo-topbar.gif"/></a>
+		</div>
+		<div class="logoName">
+			<h1 class="gradient-text">Jpetstore</h1>
+		</div>
+	</div>
+	<div class="cover">
+		<form action="../Pet/searchPet">
+			<div class="tb">
+				<div class="td"><input type="text" name="keyword" placeholder="Product Search" required></div>
+				<div class="td" id="s-cover">
+					<button type="submit">
+						<div id="s-circle"></div>
+						<span></span>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="right">
+		<div id="Menu">
+			<div id="MenuContent">
+				<a href="../Cart/cartList"><img align="middle" name="img_cart" src="../images/cart.gif"/></a>
+				<img align="middle" src="../images/separator.gif"/>
 
-    <div id="Logo">
-        <div id="LogoContent">
-            <a href="../Pet/homePage"><img src="../images/logo-topbar.gif"/></a>
-        </div>
-    </div>
+				<c:if test="${sessionScope.user == null}">
+					<a href="../User/showLogin">Sign In</a>
+					<img align="middle" src="../images/separator.gif"/>
+					<a href="../User/showRegister">Sign Up</a>
+				</c:if>
+				<c:if test="${sessionScope.user != null}">
+					<a href="../Order/orderList">My Orders</a>
+					<img align="middle" src="../images/separator.gif"/>
+					<a href="../User/personalCenter">My Account</a>
+					<img align="middle" src="../images/separator.gif"/>
+					<a href="../User/signOut">Sign Out</a>
+				</c:if>
 
-    <div id="Menu">
-        <div id="MenuContent">
-            <a href="../Cart/cartList"><img align="middle" name="img_cart" src="../images/cart.gif"/></a>
-            <img align="middle" src="../images/separator.gif"/>
-
-            <c:if test="${sessionScope.user == null}">
-                <a href="../User/showLogin">Sign In</a>
-                <img align="middle" src="../images/separator.gif"/>
-                <a href="../User/showRegister">Sign Up</a>
-            </c:if>
-            <c:if test="${sessionScope.user != null}">
-                <a href="../Order/orderList">My Orders</a>
-                <img align="middle" src="../images/separator.gif"/>
-                <a href="../User/personalCenter">My Account</a>
-                <img align="middle" src="../images/separator.gif"/>
-                <a href="../User/signOut">Sign Out</a>
-            </c:if>
-
-            <img align="middle" src="../images/separator.gif"/>
-            <a href="../help.html">?</a>
-        </div>
-    </div>
-
-    <div id="Search" data-hide-for="large">
-        <div id="SearchContent">
-
-            <form action="../Pet/searchPet">
-                <div class="input-group">
-                    <input class="input-group-field" type="text" name="keyword" placeholder="Product Search">
-                    <div class="input-group-button">
-                        <button type="submit" class="button">Search</button>
-                    </div>
-                </div>
-            </form>
-
-        </div>
-    </div>
-
-    <div id="QuickLinks">
-        <a href="../Pet/petList?category=fish">Fish</a>
-        <a href="../Pet/petList?category=dogs">Dogs</a>
-        <a href="../Pet/petList?category=reptiles">Reptiles</a>
-        <a href="../Pet/petList?category=cats">Cats</a>
-        <a href="../Pet/petList?category=birds">Birds</a>
-    </div>
+				<img align="middle" src="../images/separator.gif"/>
+				<a href="../help.html">?</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 </body>
