@@ -1,15 +1,14 @@
-.allheader {
+.header {
     height: 13%;
     width: 100%;
     border: 1px solid black;
     /* background-color: aqua; */
     display: flex;
     margin: 0;
-    background-color: #ff7575;
     /* background-color: #ffd8d8; */
 }
 
-.allheader .logo {
+.header .logo {
     margin-top: 2px;
     height: 90%;
     width: 25%;
@@ -17,7 +16,7 @@
     display: flex;
 }
 
-.allheader .logo .logoImg {
+.header .logo .logoImg {
     margin-left: 2px;
     margin-top: 2px;
     height: 90%;
@@ -25,7 +24,11 @@
     /* border:1px solid black; */
 }
 
+<<<<<<< HEAD
 .allheader .logo .logoName {
+=======
+.header .logo .logoName {
+>>>>>>> origin/master
     margin-left: 8px;
     margin-top: 2px;
     height: 90%;
@@ -35,12 +38,12 @@
 }
 
 
-.allheader .cover .tb {
+.header .cover .tb {
     display: table;
     width: 100%;
 }
 
-.allheader .cover .td {
+.header .cover .td {
     display: table-cell;
     vertical-align: middle;
 }
@@ -55,7 +58,7 @@ button {
     background-color: transparent;
 }
 
-.allheader .cover {
+.header .cover {
     /* position: absolute; */
     top: 50%;
     left: 0;
@@ -67,7 +70,10 @@ button {
     /* padding-left: 100px; */
     margin: -10px auto 0 80px;
     background-color: #ff7575;
+<<<<<<< HEAD
     border: 1px solid black;
+=======
+>>>>>>> origin/master
     border-radius: 20px;
     /* box-shadow: 0 10px 40px #ff7c7c, 0 0 0 20px #ffffffeb; */
     transform: scale(0.6);
@@ -77,14 +83,14 @@ form {
     height: 56px;
 }
 
-.allinput {
+input[type="text"] {
     width: 100%;
     height: 96px;
     font-size: 60px;
     line-height: 1;
 }
 
-.allinput::placeholder {
+input[type="text"]::placeholder {
     color: #e16868;
 }
 
@@ -176,7 +182,7 @@ button span:after {
     background-color: #fff;
 }
 
-.allheader .allright {
+.header .right {
     margin-top: 5px;
     border: 1px splid black;
     /* background-color: #e16868; */
@@ -185,7 +191,7 @@ button span:after {
     padding-top: 20px;
 }
 
-.allheader .allright #Menu, #Menu a, #Menu a:link, #Menu a:visited, #Menu a:hover {
+.header .right #Menu, #Menu a, #Menu a:link, #Menu a:visited, #Menu a:hover {
     color: #eaac00;
     text-decoration: none;
     font-family: helvetica, tahoma, arial, verdana, sans-serif;
@@ -195,10 +201,9 @@ body > #Menu {
     height: 9ex;
 }
 
-.allheader .logoName .gradient-text {
+.header .logoName .gradient-text {
     /* Fallback: Set a background color. */
     background-color: #CA4246;
-
 
     /* Create the gradient. */
     background-image: linear-gradient(
@@ -263,7 +268,7 @@ body > #Menu {
 }
 
 
-.allheader .logoName h1 {
+.header .logoName h1 {
     margin-top: 0;
     font-family: "Archivo Black", sans-serif;
     font-weight: normal;

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: tender
-  Date: 2022/10/28
-  Time: 12:37
+  User: Raymond Li
+  Date: 2022/11/11
+  Time: 9:50
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -46,11 +46,6 @@
             console.log(result);
             // return false;
             return result;
-            // if (name == "root" && pass == "123") {
-            //     console.log("yeap");
-            //     // window.location.href = '../User/root';
-            //     return false;
-            // }
         }
 
         function newVerification()
@@ -61,7 +56,7 @@
 
 	</script>
 </head>
-<body style="background-image: url('../images/login_background.jpg');background-size: cover">
+<body>
 
 <div class="mainbox">
 	<div class="boxTop">
@@ -74,10 +69,8 @@
 
 		</h1>
 	</div>
-
 	<div class="boxBottom">
 		<form action="../User/login" method="post" class="" name="loginForm">
-			<%--用户名--%>
 			<div class="content">
 				<div class="together">
 					<div class="front">ID</div>
@@ -85,7 +78,6 @@
 				</div>
 				<div class="back" style="color: red;" id="nameNull"></div>
 			</div>
-			<%--密码--%>
 			<div class="content">
 				<div class="together">
 					<div class="front">Password</div>
@@ -93,7 +85,6 @@
 				</div>
 				<div class="back" style="color: red;" id="passwordNull"></div>
 			</div>
-			<%--验证码--%>
 			<div class="content">
 				<input type="text" style="border:2px solid black;height:40px; width: 50%; border-radius: 10px;" name="vCode"/>
 				<a href="newUser"><img border="0" src="../User/verificationCode" name="checkcode"></a>
@@ -103,7 +94,6 @@
 		</form>
 		<div class="button" style="width: 120px;height:23px">register</div>
 	</div>
-
 </div>
 </body>
 </html>
