@@ -125,8 +125,9 @@ body > #Banner {
 
 .Content {
     padding: 15px;
-    width: 80%;
-    margin-left: 16%;
+    /*width: 80%;*/
+    /*margin-left: 16%;*/
+    margin-left: 130px;
     height: 500px;
     /*min-height: 200px;*/
     border-width: 0;

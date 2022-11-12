@@ -14,7 +14,7 @@
 
 <%@include file="../Common/Top.jsp" %>
 
-<div id="Content">
+<div class="Content">
 
 	<div id="Catalog">
 		<div id="Cart">
@@ -48,8 +48,7 @@
 					<c:if test="${!sessionScope.cartItemList.isEmpty()}">
 						<c:forEach items="${sessionScope.cartItemList}" var="cartItem">
 							<tr>
-
-								<td><a href="../Pet//petProduct?productID=${cartItem.productID}">${cartItem.itemID}</a></td>
+								<td>${cartItem.itemID}</td>
 								<td>${cartItem.productID}</td>
 								<td>${cartItem.description}</td>
 								<td>${cartItem.stock}</td>

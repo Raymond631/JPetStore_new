@@ -14,7 +14,7 @@
 
 <%@include file="../Common/Top.jsp" %>
 
-<div id="Content">
+<div class="Content">
 	<div id="CenterForm">
 
 		<form method="post" action="../Order/orderPay">

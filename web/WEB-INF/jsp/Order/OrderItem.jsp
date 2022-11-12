@@ -14,7 +14,7 @@
 
 <%@include file="../Common/Top.jsp" %>
 
-<div id="Content">
+<div class="Content">
 
 	<c:if test="${requestScope.newOrder}">
 		<div id="MessageBar">

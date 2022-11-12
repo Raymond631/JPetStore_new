@@ -69,7 +69,7 @@
 
 	</div>
 </div>
-<nav id="navbar">
+<nav id="navbar" style="z-index: 9999">
 	<ul class="navbar-items flexbox-col">
 		<li class="navbar-logo flexbox-left">
 			<a class="navbar-item-inner flexbox" href="../Pet/homePage">
@@ -235,7 +235,7 @@
        ========= */
 
     button {
-        padding: .8em 1.2em;
+        /*padding: .8em 1.2em;*/
         border: 1px solid hsl(var(--black));
         background-color: hsl(var(--background));
         font-size: var(--paragraph);

@@ -15,7 +15,7 @@
 <body>
 <%@ include file="../Common/Top.jsp" %>
 
-<div class="Content">
+<div class="Content" style="margin-left: 21%">
 	<div class="Main">
 		<div class="layout">
 			<ul>
