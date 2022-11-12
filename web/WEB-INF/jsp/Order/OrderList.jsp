@@ -8,44 +8,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>OrderList</title>
+	<title>OrderList</title>
 </head>
 <body>
 
 <%@include file="../Common/Top.jsp" %>
 
 <div id="Content">
-    <div id="Catalog">
+	<div id="Catalog">
 
-        <h3>My Orders</h3>
+		<h3>My Orders</h3>
 
-        <table style="text-align: center">
-            <tr>
-                <th>Order ID</th>
-                <th>Date</th>
-                <th>Total Price</th>
-            </tr>
-            <c:if test="${requestScope.orderList.isEmpty()}">
-                <tr>
-                    <td colspan="3">You have no order.</td>
-                </tr>
-            </c:if>
-            <c:if test="${!requestScope.orderList.isEmpty()}">
-                <c:forEach items="${requestScope.orderList}" var="orderItem">
-                    <tr>
-                        <td>
-                            <a href="../Order/orderItem?orderID=${orderItem.getOrderID()}&newOrder=false">${orderItem.getOrderID()}</a>
-                        </td>
-                        <td>${orderItem.getOrderTime()}</td>
-                        <td>${orderItem.getTotalPrice()}</td>
-                    </tr>
-                </c:forEach>
-            </c:if>
-        </table>
-    </div>
+		<table style="text-align: center">
+			<tr>
+				<th>Order ID</th>
+				<th>Date</th>
+				<th>Total Price</th>
+			</tr>
+			<c:if test="${requestScope.orderList.isEmpty()}">
+				<tr>
+					<td colspan="3">You have no order.</td>
+				</tr>
+			</c:if>
+			<c:if test="${!requestScope.orderList.isEmpty()}">
+				<c:forEach items="${requestScope.orderList}" var="orderItem">
+					<tr>
+						<td>
+							<a href="../Order/orderItem?orderID=${orderItem.getOrderID()}&newOrder=false">${orderItem.getOrderID()}</a>
+						</td>
+						<td>${orderItem.getOrderTime()}</td>
+						<td>${orderItem.getTotalPrice()}</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</table>
+	</div>
 </div>
-
-<%--<%@include file="../Common/Bottom.jsp" %>--%>
 
 </body>
 </html>

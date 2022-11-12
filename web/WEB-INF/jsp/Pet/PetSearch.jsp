@@ -8,27 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+	<title>Title</title>
 </head>
 <body>
 
 <%@include file="../Common/Top.jsp" %>
 <table style="text-align: center">
-    <tr>
-        <th><b>ProductID</b></th>
-        <th><b>Name</b></th>
-        <th><b>Introduce</b></th>
-    </tr>
+	<tr>
+		<th><b>ProductID</b></th>
+		<th><b>Name</b></th>
+		<th><b>Introduce</b></th>
+	</tr>
 
-    <c:forEach items="${requestScope.productMap}" var="product">
-        <tr>
-            <td><a href="../Pet/petProduct?productID=${product.key}&search=true">${product.key}</a></td>
-            <td>${product.value.getName()}</td>
-            <td>${product.value.getIntroduce()}</td>
-        </tr>
-    </c:forEach>
+	<c:forEach items="${requestScope.productMap}" var="product">
+		<tr>
+			<td><a href="../Pet/petProduct?productID=${product.key}&search=true">${product.key}</a></td>
+			<td>${product.value.getName()}</td>
+			<td>${product.value.getIntroduce()}</td>
+		</tr>
+	</c:forEach>
 </table>
-<%--<%@include file="../Common/Bottom.jsp" %>--%>
 
 </body>
 </html>

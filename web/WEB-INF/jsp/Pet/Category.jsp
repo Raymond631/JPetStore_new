@@ -10,36 +10,35 @@
 
 <html>
 <head>
-    <title>Category</title>
-    <link rel="stylesheet" type="text/css" href="../css/category.css"/>
+	<title>Category</title>
+	<link rel="stylesheet" type="text/css" href="../css/category.css"/>
 </head>
 <body>
 <%@include file="../Common/Top.jsp" %>
 
 <div class="mainBox">
-    <div style="margin-left: 0;margin-right: -10px">
-        <h2>${sessionScope.category}</h2>
-    </div>
-    <div class="center" id="centerContent">
+	<div style="margin-left: 0;margin-right: -10px">
+		<h2>${sessionScope.category}</h2>
+	</div>
+	<div class="center" id="centerContent">
 
-        <c:forEach items="${sessionScope.productMap}" var="product" varStatus="line">
-            <div class="smallCate"
-                 id=${product.key} onclick="window.location.href='../Pet/petProduct?productID=${product.key}&search=false'">
-                <div class="imgBox">
-                    <img src="../images/${product.key}.jpg">
-                </div>
-                <div class="productID">
-                        ${product.value.getProductID()}
-                </div>
-                <div class="briefIntroduction">
-                    <div class="info">${product.value.getName()}</div>
-                    <div class="info" style="font-size: 18px;">${product.value.getIntroduce()}</div>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
+		<c:forEach items="${sessionScope.productMap}" var="product" varStatus="line">
+			<div class="smallCate"
+			     id=${product.key} onclick="window.location.href='../Pet/petProduct?productID=${product.key}&search=false'">
+				<div class="imgBox">
+					<img src="../images/${product.key}.jpg">
+				</div>
+				<div class="productID">
+						${product.value.getProductID()}
+				</div>
+				<div class="briefIntroduction">
+					<div class="info">${product.value.getName()}</div>
+					<div class="info" style="font-size: 18px;">${product.value.getIntroduce()}</div>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
 </div>
 
-<%--<%@include file="../Common/Bottom.jsp" %>--%>
 </body>
 </html>
