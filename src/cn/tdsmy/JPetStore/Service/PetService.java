@@ -13,7 +13,7 @@ public interface PetService
 {
     public Map<String, Product> getProductMap(String category);
 
-    public Map<String, Product> searchPet(String key);//通过关键字搜索宠物列表
-
     public Product getProduct(String productID);
+
+    public Map<String, Product> searchPet(String key);//通过关键字搜索宠物列表
 }

@@ -1,7 +1,6 @@
 package cn.tdsmy.JPetStore.Controller;
 
 import cn.tdsmy.JPetStore.Entity.Product;
-import cn.tdsmy.JPetStore.Entity.UserLog;
 import cn.tdsmy.JPetStore.Service.LogService;
 import cn.tdsmy.JPetStore.Service.PetService;
 import cn.tdsmy.JPetStore.Service.impl.LogServiceImpl;
@@ -54,72 +53,57 @@ public class PetServlet extends HttpServlet
         switch (url)
         {
             case "/homePage":
-                homePage(req, resp);
+                homePage(req, resp);//主页
                 break;
             case "/searchPet":
-                searchPet(req, resp);
+                searchPet(req, resp);//搜索
                 break;
             case "/petList":
-                petList(req, resp);
+                petList(req, resp);//大类，展示每个Category中所有的Product
                 break;
             case "/petProduct":
-                petProduct(req, resp);
+                petProduct(req, resp);//小类，展示每个Product中所有的Item
                 break;
         }
     }
 
-    /**
-     * get请求
-     */
+
     public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
-        userLog.setLog("Other", "查看首页", "true");
-        logService.addLog(userLog);
+        logService.addLog(req, "Other", "查看首页", "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
     }
 
-    /**
-     * post请求
-     */
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
         String key = req.getParameter("keyword");
         Map<String, Product> productMap = petService.searchPet(key);
         req.setAttribute("productMap", productMap);
 
-        userLog.setLog("Read", "搜索宠物,keyword=" + key, "true");
-        logService.addLog(userLog);
+        logService.addLog(req, "Read", "搜索宠物,keyword=" + key, "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp").forward(req, resp);
     }
 
     /**
-     * get请求
      * 参数/petList?category=
      */
     public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
         String category = req.getParameter("category");
         Map<String, Product> productMap = petService.getProductMap(category);
-
         req.getSession().setAttribute("category", category);
         req.getSession().setAttribute("productMap", productMap);
 
-        userLog.setLog("Read", "查看宠物列表,category=" + category, "true");
-        logService.addLog(userLog);
+        logService.addLog(req, "Read", "查看宠物列表,category=" + category, "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
     }
 
     /**
-     * get请求
      * 参数/petProduct?productID= &search=
      */
     public void petProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        UserLog userLog = (UserLog) req.getAttribute("myLog");//日志
-        String search = req.getParameter("search");
+        String search = req.getParameter("search");//如果不是从search中眺过来的，可以直接从session中获取信息，不用再查数据库
         String productID = req.getParameter("productID");
         if (search.equals("false"))
         {
@@ -133,8 +117,7 @@ public class PetServlet extends HttpServlet
             req.setAttribute("product", product);
         }
 
-        userLog.setLog("Read", "查看宠物详情,productID=" + productID, "true");
-        logService.addLog(userLog);
+        logService.addLog(req, "Read", "查看宠物详情,productID=" + productID, "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduct.jsp").forward(req, resp);
     }
 }

@@ -39,8 +39,9 @@ public class LogFilter implements javax.servlet.Filter
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
+        //1、用户名
         User user = (User) req.getSession().getAttribute("user");
-        String username;//用户名
+        String username;
         if (user == null)
         {
             username = "游客";
@@ -49,13 +50,19 @@ public class LogFilter implements javax.servlet.Filter
         {
             username = user.getUsername();
         }
-        String time = getTimeNow();//请求时间
-        String ip = req.getRemoteAddr();//客户端IP
+
+        //2、请求时间
+        String time = getTimeNow();
+
+        //3、客户端IP
+        String ip = req.getRemoteAddr();
         if (ip.equals("0:0:0:0:0:0:0:1"))//将localhost的IPv6地址转为IPv4地址
         {
             ip = "127.0.0.1";
         }
-        String url = req.getRequestURI();//请求路径
+
+        //4、请求路径
+        String url = req.getRequestURI();
 
         UserLog userLog = new UserLog();
         userLog.setUsername(username);
@@ -64,7 +71,7 @@ public class LogFilter implements javax.servlet.Filter
         userLog.setUrl(url);
 
         req.setAttribute("myLog", userLog);
-        filterChain.doFilter(servletRequest, servletResponse);//传递过滤链
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     public String getTimeNow()
