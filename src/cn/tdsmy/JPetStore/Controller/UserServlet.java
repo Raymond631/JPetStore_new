@@ -21,6 +21,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -29,37 +30,31 @@ import java.util.List;
  * @Version 1.0
  */
 @WebServlet("/User/*")
-public class UserServlet extends HttpServlet
-{
+public class UserServlet extends HttpServlet {
     private UserService userService;
     private LogService logService;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         urlDistribute(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         urlDistribute(req, resp);
     }
 
-    public void urlDistribute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
-        if (userService == null)
-        {
+    public void urlDistribute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (userService == null) {
             userService = new UserServiceImpl();
         }
-        if (logService == null)
-        {
+        if (logService == null) {
             logService = new LogServiceImpl();
         }
 
         String url = req.getPathInfo();
-        switch (url)
-        {
+        System.out.println(url);
+        switch (url) {
             case "/showRegister"://注册页面
                 showRegister(req, resp);
                 break;
@@ -93,18 +88,19 @@ public class UserServlet extends HttpServlet
             case "/userLog"://管理员查看日志
                 userLog(req, resp);
                 break;
+            case "/UsernameExist"://判断用户名是否存在
+                userExist(req, resp);
+                break;
         }
     }
 
 
-    public void showRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void showRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logService.addLog(req, "Other", "跳往注册界面", "true");
         req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
     }
 
-    public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String vCode = req.getParameter("vCode");//获得输入的验证码值
         String checkCode = (String) req.getSession().getAttribute("checkCode");//获取图片的值
         if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
@@ -113,9 +109,7 @@ public class UserServlet extends HttpServlet
 
             logService.addLog(req, "Other", "注册验证码错误", "false");
             req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
-        }
-        else
-        {
+        } else {
             //获取用户输入的用户名和密码
             String username = req.getParameter("username");
             String password = req.getParameter("password");
@@ -131,8 +125,7 @@ public class UserServlet extends HttpServlet
 
                 logService.addLog(req, "Create", "注册新用户,username=" + username, "true");
                 resp.sendRedirect(req.getContextPath() + "/Pet/homePage");//请求重定向，避免刷新时重复提交表单
-            }
-            else//用户名已存在
+            } else//用户名已存在
             {
                 req.setAttribute("messageBox", "Username already exists.");
 
@@ -142,14 +135,12 @@ public class UserServlet extends HttpServlet
         }
     }
 
-    public void showLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void showLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logService.addLog(req, "Other", "跳往登录界面", "true");
         req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
     }
 
-    public void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String vCode = req.getParameter("vCode");//获得输入的验证码值
         String checkCode = (String) req.getSession().getAttribute("checkCode");//获取图片的值
         if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
@@ -158,9 +149,7 @@ public class UserServlet extends HttpServlet
 
             logService.addLog(req, "Other", "登录验证码错误", "false");
             req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
-        }
-        else
-        {
+        } else {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
             User user = new User();
@@ -175,8 +164,7 @@ public class UserServlet extends HttpServlet
 
                     logService.addLog(req, "Read", "管理员查看用户日志" + username, "true");
                     resp.sendRedirect(req.getContextPath() + "/User/userLog");
-                }
-                else//普通用户
+                } else//普通用户
                 {
                     user.setReceiver(userService.getReceiver(username));
                     user.setProfile(userService.getProfile(username));
@@ -185,8 +173,7 @@ public class UserServlet extends HttpServlet
                     logService.addLog(req, "Read", "登录,username=" + username, "true");
                     resp.sendRedirect(req.getContextPath() + "/Pet/homePage");
                 }
-            }
-            else//用户名或密码错误
+            } else//用户名或密码错误
             {
                 req.setAttribute("messageBox", "Invalid username or password.");
 
@@ -196,16 +183,14 @@ public class UserServlet extends HttpServlet
         }
     }
 
-    public void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("user", null);
 
         logService.addLog(req, "Other", "退出登录", "true");
         resp.sendRedirect(req.getContextPath() + "/Pet/homePage");
     }
 
-    public void personalCenter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void personalCenter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         user.setReceiver(userService.getReceiver(user.getUsername()));
         user.setProfile((userService.getProfile(user.getUsername())));
@@ -215,8 +200,7 @@ public class UserServlet extends HttpServlet
         req.getRequestDispatcher("/WEB-INF/jsp/User/PersonalCenter.jsp").forward(req, resp);
     }
 
-    public void changePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void changePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         String password = req.getParameter("newPassword");
         user.setPassword(password);
@@ -226,8 +210,7 @@ public class UserServlet extends HttpServlet
         resp.sendRedirect("../User/personalCenter");
     }
 
-    public void updateReceiver(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void updateReceiver(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String receiverName = req.getParameter("receiverName");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
@@ -245,8 +228,7 @@ public class UserServlet extends HttpServlet
         resp.sendRedirect("../User/personalCenter");
     }
 
-    public void updateProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void updateProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         String languagePreference = req.getParameter("languagePreference");
         String favouriteCategory = req.getParameter("favouriteCategory");
@@ -259,8 +241,7 @@ public class UserServlet extends HttpServlet
         resp.sendRedirect("../User/personalCenter");
     }
 
-    public void verificationCode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void verificationCode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int width = 60;
         int height = 20;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);//创建内存图像
@@ -277,8 +258,7 @@ public class UserServlet extends HttpServlet
         //产生随机验证码
         String chars = "ABCDEFGHJKMNPQRSTWXYZabcdefghjkmnpqrstwxyz23456789";//去掉了ILOUV ilouv 01
         char[] rands = new char[4];
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             int rand = (int) (Math.random() * 50);
             rands[i] = chars.charAt(rand);
         }
@@ -294,8 +274,7 @@ public class UserServlet extends HttpServlet
         g.drawString("" + rands[3], 46, 16);
 
         //画干扰点
-        for (int i = 0; i < 120; i++)
-        {
+        for (int i = 0; i < 120; i++) {
             int x = (int) (Math.random() * width);//坐标
             int y = (int) (Math.random() * height);
 
@@ -309,8 +288,7 @@ public class UserServlet extends HttpServlet
 
         // 画干扰线
         g.setColor(Color.GREEN);
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             int x1 = (int) (Math.random() * width);
             int y1 = (int) (Math.random() * height);
             int x2 = (int) (Math.random() * width);
@@ -322,8 +300,7 @@ public class UserServlet extends HttpServlet
         g.dispose();
 
         //将图像传到客户端
-        try (ServletOutputStream sos = resp.getOutputStream(); ByteArrayOutputStream baos = new ByteArrayOutputStream())
-        {
+        try (ServletOutputStream sos = resp.getOutputStream(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             resp.setContentType("image/jpeg");
             //设置浏览器不要缓存此图片
             resp.setHeader("Pragma", "No-cache");
@@ -337,8 +314,7 @@ public class UserServlet extends HttpServlet
         }
     }
 
-    public void userLog(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void userLog(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         if (user.getUsername().equals("root"))//防止普通用户直接访问
         {
@@ -346,5 +322,29 @@ public class UserServlet extends HttpServlet
             req.setAttribute("userLogList", userLogList);
             req.getRequestDispatcher("/WEB-INF/jsp/User/UserLog.jsp").forward(req, resp);
         }
+    }
+
+    public void userExist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        User user = new User();
+        user.setUsername(username);
+        System.out.println(username);
+        //下面需要在数据库中查询是否存在该名字
+
+        if (userService.registerSuccess(user))//注册成功（进行用户名查重）
+        {
+            resp.setContentType("text/plain");
+            resp.setHeader("Access-Control-Allow-Origin", "*");
+            PrintWriter out = resp.getWriter();
+            out.println("");
+        } else//用户名已存在
+        {
+            resp.setContentType("text/plain");
+            resp.setHeader("Access-Control-Allow-Origin", "*");
+            PrintWriter out = resp.getWriter();
+            out.println("用户名已存在");
+        }
+
+
     }
 }
