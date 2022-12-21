@@ -9,6 +9,8 @@
 <html>
 <head>
 	<title>购物车</title>
+	<script type="text/javascript" src="../js/jquery-3.6.2.js"></script>
+	<script type="text/javascript" src="../js/Cart.js"></script>
 </head>
 <body>
 
