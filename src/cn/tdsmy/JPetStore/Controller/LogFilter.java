@@ -21,8 +21,7 @@ import java.util.Date;
  */
 
 @WebFilter(urlPatterns = {"/*"})
-public class LogFilter implements javax.servlet.Filter
-{
+public class LogFilter implements javax.servlet.Filter {
     /**
      * req.getRequestURL()    //完整请求路径,包括IP地址和端口号，如http://localhost:8080/JPetStore_war_exploded/
      * req.getRemoteAddr()    //获取客户端IP地址,如127.0.0.1
@@ -32,8 +31,7 @@ public class LogFilter implements javax.servlet.Filter
      * req.getPathInfo();     //与getServletPath()获取的路径互补，能得到模糊匹配*的路径部分 ，如/cartList
      */
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException
-    {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         servletRequest.setCharacterEncoding("UTF-8");
         servletResponse.setCharacterEncoding("UTF-8");
         HttpServletRequest req = (HttpServletRequest) servletRequest;
@@ -42,12 +40,10 @@ public class LogFilter implements javax.servlet.Filter
         //1、用户名
         User user = (User) req.getSession().getAttribute("user");
         String username;
-        if (user == null)
-        {
+        if (user == null) {
             username = "游客";
         }
-        else
-        {
+        else {
             username = user.getUsername();
         }
 
@@ -74,8 +70,7 @@ public class LogFilter implements javax.servlet.Filter
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    public String getTimeNow()
-    {
+    public String getTimeNow() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
