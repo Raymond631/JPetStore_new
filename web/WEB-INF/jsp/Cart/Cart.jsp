@@ -13,9 +13,7 @@
 	<script type="text/javascript" src="../js/Cart.js"></script>
 </head>
 <body>
-
 <%@include file="../Common/Top.jsp" %>
-
 <div class="Content">
 	<div id="Catalog">
 		<div id="Cart">
