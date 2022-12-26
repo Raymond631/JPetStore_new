@@ -53,7 +53,6 @@ public class UserServlet extends HttpServlet {
         }
 
         String url = req.getPathInfo();
-        System.out.println(url);
         switch (url) {
             case "/showRegister"://注册页面
                 showRegister(req, resp);
@@ -109,7 +108,8 @@ public class UserServlet extends HttpServlet {
 
             logService.addLog(req, "Other", "注册验证码错误", "false");
             req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
-        } else {
+        }
+        else {
             //获取用户输入的用户名和密码
             String username = req.getParameter("username");
             String password = req.getParameter("password");
@@ -125,7 +125,8 @@ public class UserServlet extends HttpServlet {
 
                 logService.addLog(req, "Create", "注册新用户,username=" + username, "true");
                 resp.sendRedirect(req.getContextPath() + "/Pet/homePage");//请求重定向，避免刷新时重复提交表单
-            } else//用户名已存在
+            }
+            else//用户名已存在
             {
                 req.setAttribute("messageBox", "Username already exists.");
 
@@ -149,7 +150,8 @@ public class UserServlet extends HttpServlet {
 
             logService.addLog(req, "Other", "登录验证码错误", "false");
             req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
-        } else {
+        }
+        else {
             String username = req.getParameter("username");
             String password = req.getParameter("password");
             User user = new User();
@@ -164,7 +166,8 @@ public class UserServlet extends HttpServlet {
 
                     logService.addLog(req, "Read", "管理员查看用户日志" + username, "true");
                     resp.sendRedirect(req.getContextPath() + "/User/userLog");
-                } else//普通用户
+                }
+                else//普通用户
                 {
                     user.setReceiver(userService.getReceiver(username));
                     user.setProfile(userService.getProfile(username));
@@ -173,7 +176,8 @@ public class UserServlet extends HttpServlet {
                     logService.addLog(req, "Read", "登录,username=" + username, "true");
                     resp.sendRedirect(req.getContextPath() + "/Pet/homePage");
                 }
-            } else//用户名或密码错误
+            }
+            else//用户名或密码错误
             {
                 req.setAttribute("messageBox", "Invalid username or password.");
 
@@ -256,10 +260,10 @@ public class UserServlet extends HttpServlet {
         g.drawRect(0, 0, width - 1, height - 1);
 
         //产生随机验证码
-        String chars = "ABCDEFGHJKMNPQRSTWXYZabcdefghjkmnpqrstwxyz23456789";//去掉了ILOUV ilouv 01
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";//
         char[] rands = new char[4];
         for (int i = 0; i < 4; i++) {
-            int rand = (int) (Math.random() * 50);
+            int rand = (int) (Math.random() * 36);
             rands[i] = chars.charAt(rand);
         }
         HttpSession session = req.getSession();
@@ -287,14 +291,14 @@ public class UserServlet extends HttpServlet {
         }
 
         // 画干扰线
-        g.setColor(Color.GREEN);
-        for (int i = 0; i < 4; i++) {
-            int x1 = (int) (Math.random() * width);
-            int y1 = (int) (Math.random() * height);
-            int x2 = (int) (Math.random() * width);
-            int y2 = (int) (Math.random() * height);
-            g.drawLine(x1, y1, x2, y2);
-        }
+//        g.setColor(Color.GREEN);
+//        for (int i = 0; i < 4; i++) {
+//            int x1 = (int) (Math.random() * width);
+//            int y1 = (int) (Math.random() * height);
+//            int x2 = (int) (Math.random() * width);
+//            int y2 = (int) (Math.random() * height);
+//            g.drawLine(x1, y1, x2, y2);
+//        }
 
         //画完图像后，释放画笔
         g.dispose();
@@ -328,7 +332,6 @@ public class UserServlet extends HttpServlet {
         String username = req.getParameter("username");
         User user = new User();
         user.setUsername(username);
-        System.out.println(username);
         //下面需要在数据库中查询是否存在该名字
 
         if (userService.registerSuccess(user))//注册成功（进行用户名查重）
@@ -337,7 +340,8 @@ public class UserServlet extends HttpServlet {
             resp.setHeader("Access-Control-Allow-Origin", "*");
             PrintWriter out = resp.getWriter();
             out.println("");
-        } else//用户名已存在
+        }
+        else//用户名已存在
         {
             resp.setContentType("text/plain");
             resp.setHeader("Access-Control-Allow-Origin", "*");
