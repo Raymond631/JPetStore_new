@@ -116,12 +116,10 @@ public class PetServlet extends HttpServlet {
 
     public void searchTips(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
-        System.out.println("key " + keyword);
         //下面需要在数据库中查询有关该字符的所有内容
         List<Product> ProductList = petService.searchTips(keyword);
         //获得json对象
         String SearchResult = JSON.toJSONString(ProductList);
-        System.out.println("what" + SearchResult);
         resp.setContentType("text/plain");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         PrintWriter out = resp.getWriter();
