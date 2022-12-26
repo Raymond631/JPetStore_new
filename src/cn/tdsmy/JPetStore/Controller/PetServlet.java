@@ -5,6 +5,7 @@ import cn.tdsmy.JPetStore.Service.LogService;
 import cn.tdsmy.JPetStore.Service.PetService;
 import cn.tdsmy.JPetStore.Service.impl.LogServiceImpl;
 import cn.tdsmy.JPetStore.Service.impl.PetServiceImpl;
+import com.alibaba.fastjson.JSON;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,6 +59,9 @@ public class PetServlet extends HttpServlet {
                 break;
             case "/petProduct":
                 petProduct(req, resp);//小类，展示每个Product中所有的Item
+                break;
+            case "/searchTips":
+                searchTips(req, resp);//小类，展示每个Product中所有的Item
                 break;
         }
     }
@@ -106,5 +112,21 @@ public class PetServlet extends HttpServlet {
 
         logService.addLog(req, "Read", "查看宠物详情,productID=" + productID, "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduct.jsp").forward(req, resp);
+    }
+
+    public void searchTips(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String keyword = req.getParameter("keyword");
+        System.out.println("key " + keyword);
+        //下面需要在数据库中查询有关该字符的所有内容
+        List<Product> ProductList = petService.searchTips(keyword);
+        //获得json对象
+        String SearchResult = JSON.toJSONString(ProductList);
+        System.out.println("what" + SearchResult);
+        resp.setContentType("text/plain");
+        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+        PrintWriter out = resp.getWriter();
+        out.println(SearchResult);
+
+
     }
 }
