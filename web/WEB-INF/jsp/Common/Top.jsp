@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	<div class="top-cover">
-		<form action="../Pet/searchPet">
+		<form action="../Pet/searchPet" autocomplete="off">
 			<div class="tb">
 				<div class="td"><input type="text" name="keyword" placeholder="Product Search" required></div>
 				<div class="td" id="s-cover">

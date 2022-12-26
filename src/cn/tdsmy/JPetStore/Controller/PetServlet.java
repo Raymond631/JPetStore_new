@@ -21,37 +21,30 @@ import java.util.Map;
  */
 
 @WebServlet("/Pet/*")
-public class PetServlet extends HttpServlet
-{
+public class PetServlet extends HttpServlet {
     public PetService petService;
     private LogService logService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         urlDistribute(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         urlDistribute(req, resp);
     }
 
-    public void urlDistribute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
-        if (petService == null)
-        {
+    public void urlDistribute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (petService == null) {
             petService = new PetServiceImpl();
         }
-        if (logService == null)
-        {
+        if (logService == null) {
             logService = new LogServiceImpl();
         }
 
         String url = req.getPathInfo();
-        switch (url)
-        {
+        switch (url) {
             case "/homePage":
                 homePage(req, resp);//主页
                 break;
@@ -68,14 +61,12 @@ public class PetServlet extends HttpServlet
     }
 
 
-    public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logService.addLog(req, "Other", "查看首页", "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
     }
 
-    public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String key = req.getParameter("keyword");
         Map<String, Product> productMap = petService.searchPet(key);
         req.setAttribute("productMap", productMap);
@@ -87,8 +78,7 @@ public class PetServlet extends HttpServlet
     /**
      * 参数/petList?category=
      */
-    public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String category = req.getParameter("category");
         Map<String, Product> productMap = petService.getProductMap(category);
         req.getSession().setAttribute("category", category);
@@ -101,18 +91,15 @@ public class PetServlet extends HttpServlet
     /**
      * 参数/petProduct?productID= &search=
      */
-    public void petProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    public void petProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String search = req.getParameter("search");//如果不是从search中眺过来的，可以直接从session中获取信息，不用再查数据库
         String productID = req.getParameter("productID");
-        if (search.equals("false"))
-        {
+        if (search.equals("false")) {
             Map<String, Product> productMap = (Map<String, Product>) req.getSession().getAttribute("productMap");
             Product product = productMap.get(productID);
             req.setAttribute("product", product);
         }
-        else if (search.equals("true"))
-        {
+        else if (search.equals("true")) {
             Product product = petService.getProduct(productID);
             req.setAttribute("product", product);
         }

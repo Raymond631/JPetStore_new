@@ -25,7 +25,7 @@
 		</h1>
 	</div>
 	<div class="boxBottom">
-		<form action="../User/login" method="post" class="" name="loginForm">
+		<form action="../User/login" method="post" class="" name="loginForm" autocomplete="off">
 			<%--用户名--%>
 			<div class="content">
 				<div class="together">

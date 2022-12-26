@@ -29,7 +29,7 @@
 		</h1>
 	</div>
 	<div class="boxBottom">
-		<form action="../User/register" method="post" name="registerForm" id="registerForm">
+		<form action="../User/register" method="post" name="registerForm" id="registerForm" autocomplete="off">
 			<div class="content">
 				<div class="together">
 					<div class="front">ID</div>
