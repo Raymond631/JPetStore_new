@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/category.css"/>
 </head>
 <body>
-<%@include file="../Common/Top.jsp" %>
+<%@include file="../../../Top.jsp" %>
 <div class="mainBox">
 	<div style="margin-left: 0;margin-right: -10px">
 		<h2>${sessionScope.category}</h2>

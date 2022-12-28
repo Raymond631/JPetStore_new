@@ -11,7 +11,7 @@
 	<title>Title</title>
 </head>
 <body>
-<%@include file="../Common/Top.jsp" %>
+<%@include file="../../../Top.jsp" %>
 <div class="Content">
 	<table style="text-align: center">
 		<tr>

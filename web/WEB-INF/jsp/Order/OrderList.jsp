@@ -11,7 +11,7 @@
 	<title>OrderList</title>
 </head>
 <body>
-<%@include file="../Common/Top.jsp" %>
+<%@include file="../../../Top.jsp" %>
 <div class="Content">
 	<div id="Catalog">
 		<h3>My Orders</h3>

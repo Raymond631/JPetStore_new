@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/category.css"/>
 </head>
 <body>
-<%@include file="../Common/Top.jsp" %>
+<%@include file="../../../Top.jsp" %>
 <div class="mainBox">
 	<div class="left">
 		<div class="left-top">

@@ -11,7 +11,7 @@
 	<title>OrderForm</title>
 </head>
 <body>
-<%@include file="../Common/Top.jsp" %>
+<%@include file="../../../Top.jsp" %>
 <div class="Content">
 	<div id="CenterForm">
 		<form method="post" action="../Order/orderPay" autocomplete="off">

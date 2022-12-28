@@ -1,6 +1,6 @@
 package cn.tdsmy.JPetStore.Dao;
 
-import cn.tdsmy.JPetStore.Entity.CartItem;
+import cn.tdsmy.JPetStore.Entity.CartJson;
 
 import java.util.List;
 
@@ -9,8 +9,7 @@ import java.util.List;
  * @Date: 2022/10/24 10:02
  * @Version 1.0
  */
-public interface CartDao
-{
+public interface CartDao {
     public void addCartItem(String username, String itemID, int quantity);//增
 
     public void removeCartItem(String username, String itemID);//删
@@ -19,5 +18,5 @@ public interface CartDao
 
     public void updateCart(String username, String itemID, int quantity);//改
 
-    public List<CartItem> selectCartList(String username);//查
+    public List<CartJson> selectCartList(String username);//查
 }

@@ -11,7 +11,7 @@
 	<title>OrderView</title>
 </head>
 <body>
-<%@include file="../Common/Top.jsp" %>
+<%@include file="../../../Top.jsp" %>
 <div class="Content">
 	<c:if test="${requestScope.newOrder}">
 		<div id="MessageBar">

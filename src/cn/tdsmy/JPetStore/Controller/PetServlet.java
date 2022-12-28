@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +68,7 @@ public class PetServlet extends HttpServlet {
 
     public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logService.addLog(req, "Other", "查看首页", "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/Pet/HomePage.jsp").forward(req, resp);
+        req.getRequestDispatcher(req.getContextPath()).forward(req, resp);
     }
 
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -117,11 +116,8 @@ public class PetServlet extends HttpServlet {
     public void searchTips(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
         List<Product> ProductList = petService.searchTips(keyword);
-        String SearchResult = JSON.toJSONString(ProductList);
-        System.out.println(SearchResult);
         resp.setContentType("text/plain");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
-        PrintWriter out = resp.getWriter();
-        out.println(SearchResult);
+        resp.getWriter().print(JSON.toJSONString(ProductList));
     }
 }

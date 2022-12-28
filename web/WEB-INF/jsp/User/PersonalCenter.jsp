@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="../js/SelfCenter.js"></script>
 </head>
 <body>
-<%@ include file="../Common/Top.jsp" %>
+<%@ include file="../../../Top.jsp" %>
 <div class="mainBox">
 	<div class="left">
 		<h3>User Information</h3>

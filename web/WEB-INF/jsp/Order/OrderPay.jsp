@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/pay.css">
 </head>
 <body>
-<%@include file="../Common/Top.jsp" %>
+<%@include file="../../../Top.jsp" %>
 <div class="Content">
 	<div id="MessageBar">
 		<p>Please confirm the information below and then press "Pay"...</p>
