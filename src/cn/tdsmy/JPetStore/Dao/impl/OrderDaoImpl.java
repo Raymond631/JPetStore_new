@@ -5,6 +5,8 @@ import cn.tdsmy.JPetStore.Dao.Utils.DBUtils;
 import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.Order;
 import cn.tdsmy.JPetStore.Entity.Receiver;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -19,59 +21,52 @@ import java.util.List;
  * @Date: 2022/10/26 19:19
  * @Version 1.0
  */
-public class OrderDaoImpl implements OrderDao
-{
+public class OrderDaoImpl implements OrderDao {
     @Override
-    public void addOrder(String username, Order order)
-    {
-        try (Connection connection = DBUtils.getConnection())
-        {
+    public void addOrder(String username, Order order, JSONArray cart, JSONArray index) {
+        try (Connection connection = DBUtils.getConnection()) {
             String value = "'" + username + "','"
                     + order.getOrderID() + "','"
                     + order.getOrderTime() + "','"
-                    + order.getPayTime() + "','"
                     + order.getReceiver().getReceiverName() + "','"
                     + order.getReceiver().getPhoneNumber() + "','"
-                    + order.getReceiver().getCountry() + "','"
-                    + order.getReceiver().getProvince() + "','"
-                    + order.getReceiver().getCity() + "','"
-                    + order.getReceiver().getDistrict() + "','"
-                    + order.getReceiver().getDetailedAddress() + "','"
+                    + order.getReceiver().getAddress() + "','"
                     + order.getTotalPrice() + "','"
                     + order.getPayMethod() + "'";
-            String sql = "insert into orderlist (username,orderID,orderTime,payTime,receiverName,phoneNumber,country," +
-                    "province,city,district,detailedAddress,totalPrice,payMethod) values (" + value + ")";
-            try (PreparedStatement statement = connection.prepareStatement(sql))
-            {
+            String sql = "insert into orderlist (username,orderID,orderTime,receiverName,phoneNumber,address,totalPrice,payMethod) values (" + value + ")";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.executeUpdate();
             }
 
-            for (CartItem cartItem : order.getCartItemList())
-            {
+            for (int i = 0; i < index.size(); i++) {
+                JSONObject obj = (JSONObject) cart.get((Integer) index.get(i));
                 String value2 = "'" + order.getOrderID() + "','"
-                        + cartItem.getItemID() + "','"
-                        + cartItem.getProductID() + "','"
-                        + cartItem.getDescription() + "','"
-                        + cartItem.getStock() + "','"
-                        + cartItem.getQuantity() + "','"
-                        + cartItem.getListPrice() + "'";
-                String sql2 = "insert into orderitem (orderID,itemID,productID,description,stock,quantity,listPrice) values (" + value2 + ")";
-                try (PreparedStatement statement = connection.prepareStatement(sql2))
-                {
-                    statement.executeUpdate();
+                        + obj.get("itemID") + "','"
+                        + obj.get("name") + "','"
+                        + obj.get("xz") + "','"
+                        + obj.get("number") + "','"
+                        + obj.get("proc") + "','"
+                        + obj.get("img") + "'";
+                String sql2 = "insert into orderitem (orderID,itemID,description,stock,quantity,listPrice,img) values (" + value2 + ")";
+                try (PreparedStatement statement2 = connection.prepareStatement(sql2)) {
+                    statement2.executeUpdate();
                 }
 
                 //更新库存
-                int newStock = cartItem.getStock() - cartItem.getQuantity();
-                String sql3 = "update item set stock = '" + newStock + "' where itemID ='" + cartItem.getItemID() + "'";
-                try (PreparedStatement statement = connection.prepareStatement(sql3))
-                {
-                    statement.executeUpdate();
+                int newStock = (int) obj.get("xz") - (int) obj.get("number");
+                String sql3 = "update item set stock = '" + newStock + "' where itemID ='" + obj.get("itemID") + "'";
+                try (PreparedStatement statement3 = connection.prepareStatement(sql3)) {
+                    statement3.executeUpdate();
+                }
+
+                //从购物车移除
+                String sql4 = "delete from cart where itemID ='" + obj.get("itemID") + "'";
+                try (PreparedStatement statement4 = connection.prepareStatement(sql4)) {
+                    statement4.executeUpdate();
                 }
             }
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -79,36 +74,28 @@ public class OrderDaoImpl implements OrderDao
     @Override
     public void deleteOrder(String orderID)//为了方便，"删除订单"时默认订单已完成，不再复原库存
     {
-        try (Connection connection = DBUtils.getConnection())
-        {
+        try (Connection connection = DBUtils.getConnection()) {
             String sql = "delete from orderlist where orderID ='" + orderID + "'";
-            try (PreparedStatement statement = connection.prepareStatement(sql))
-            {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.executeUpdate();
             }
             String sql2 = "delete from orderitem where orderID ='" + orderID + "'";
-            try (PreparedStatement statement = connection.prepareStatement(sql2))
-            {
+            try (PreparedStatement statement = connection.prepareStatement(sql2)) {
                 statement.executeUpdate();
             }
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Order selectOrder(String orderID)
-    {
+    public Order selectOrder(String orderID) {
         Order order = new Order();
-        try (Connection connection = DBUtils.getConnection())
-        {
+        try (Connection connection = DBUtils.getConnection()) {
             String sql = "select * from orderlist where orderID ='" + orderID + "'";
-            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
-            {
-                if (res.next())
-                {
+            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
+                if (res.next()) {
                     String orderTime = res.getString("orderTime");
                     String payTime = res.getString("payTime");
 
@@ -126,11 +113,7 @@ public class OrderDaoImpl implements OrderDao
                     Receiver receiver = new Receiver();
                     receiver.setReceiverName(receiverName);
                     receiver.setPhoneNumber(phoneNumber);
-                    receiver.setCountry(country);
-                    receiver.setProvince(province);
-                    receiver.setCity(city);
-                    receiver.setDistrict(district);
-                    receiver.setDetailedAddress(detailedAddress);
+                    receiver.setAddress(detailedAddress);
 
                     order.setOrderID(orderID);
                     order.setOrderTime(orderTime);
@@ -143,10 +126,8 @@ public class OrderDaoImpl implements OrderDao
             }
 
             String sql2 = "select * from orderitem where orderID ='" + orderID + "'";
-            try (PreparedStatement statement = connection.prepareStatement(sql2); ResultSet res = statement.executeQuery(sql2))
-            {
-                while (res.next())
-                {
+            try (PreparedStatement statement = connection.prepareStatement(sql2); ResultSet res = statement.executeQuery(sql2)) {
+                while (res.next()) {
                     String itemID = res.getString("itemID");
                     String productID = res.getString("productID");
                     String description = res.getString("description");
@@ -159,22 +140,18 @@ public class OrderDaoImpl implements OrderDao
                 }
             }
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return order;
     }
 
     @Override
-    public List<Order> selectOrderList(String username)
-    {
+    public List<Order> selectOrderList(String username) {
         List<Order> orderList = new ArrayList<>();
         String sql = "select * from orderlist where username ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql))
-        {
-            while (res.next())
-            {
+        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
+            while (res.next()) {
                 String nextOrderID = res.getString("orderID");
                 String orderTime = res.getString("orderTime");
                 BigDecimal totalPrice = res.getBigDecimal("totalPrice");
@@ -186,8 +163,7 @@ public class OrderDaoImpl implements OrderDao
                 orderList.add(order);
             }
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return orderList;

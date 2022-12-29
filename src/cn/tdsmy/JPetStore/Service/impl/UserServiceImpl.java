@@ -7,6 +7,8 @@ import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
 import cn.tdsmy.JPetStore.Service.UserService;
 
+import java.util.List;
+
 /**
  * @Author:liliyyyyy
  * @Date: 2022/10/27 20:04
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Receiver getReceiver(String username) {
+    public List<Receiver> getReceiver(String username) {
         if (userDao == null) {
             userDao = new UserDaoImpl();
         }
@@ -63,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateReceiver(String username, Receiver receiver) {
+    public void updateReceiver(String username, List<Receiver> receiver) {
         if (userDao == null) {
             userDao = new UserDaoImpl();
         }

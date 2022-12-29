@@ -65,26 +65,9 @@ public class CartServlet extends HttpServlet {
             case "/getData":
                 getData(req, resp);//查
                 break;
-        }
-    }
-
-
-    /**
-     * 注意：“增删改”用请求重定向，防止用户重复提交表单
-     * 参数/addCartItem?itemID
-     */
-    public void addCartItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user == null) {
-            logService.addLog(req, "Create", "加入购物车", "false");
-            resp.sendRedirect(req.getContextPath() + "/User/showLogin");
-        }
-        else {
-            String itemID = req.getParameter("itemID");
-            cartService.addCartItem(user.getUsername(), itemID, 1);
-
-            logService.addLog(req, "Create", "加入购物车,itemID=" + itemID, "true");
-            resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
+            case "/CheckOut":
+                CheckOut(req, resp);//
+                break;
         }
     }
 
@@ -104,7 +87,7 @@ public class CartServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         List<CartJson> cartItemList = cartService.selectCartList(user.getUsername());
 
-        //TODO 后端json响应标准格式
+        //TODO 后端发送JSON
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
@@ -112,7 +95,7 @@ public class CartServlet extends HttpServlet {
     }
 
     public void updateCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //TODO 后端json读取标准格式
+        //TODO 后端解析JSON对象
         BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
         StringBuilder responseStrBuilder = new StringBuilder();
         String inputStr;
@@ -145,6 +128,51 @@ public class CartServlet extends HttpServlet {
 
         logService.addLog(req, "Delete", "移出购物车，itemID=" + itemID, "true");
         resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
+    }
+
+    public void addCartItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
+
+        User user = (User) req.getSession().getAttribute("user");
+        if (user == null) {
+            resp.setContentType("text/plain");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+            resp.getWriter().print("请先登录~");
+
+            logService.addLog(req, "Create", "加入购物车,未登录", "false");
+        }
+        else {
+            String itemID = (String) obj.get("itemID");
+            int quantity = (int) obj.get("quantity");
+            cartService.addCartItem(user.getUsername(), itemID, quantity);
+
+            resp.setContentType("text/plain");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+            resp.getWriter().print("加入成功！");
+
+            logService.addLog(req, "Create", "加入购物车,itemID=" + itemID, "true");
+        }
+    }
+
+    public void CheckOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
+
+        req.getSession().setAttribute("cart_data", obj);
+        resp.sendRedirect(req.getContextPath() + "/Order/showOrderSubmit");
     }
 
 }

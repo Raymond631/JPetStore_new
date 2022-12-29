@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: Raymond Li
@@ -68,9 +70,8 @@ public class UserDaoImpl implements UserDao {
 
                 //收件人初始化
                 Receiver receiver = new Receiver();
-                String value2 = "'" + user.getUsername() + "','" + receiver.getReceiverName() + "','" + receiver.getEmail() + "','" + receiver.getPhoneNumber() + "','" + receiver.getCountry()
-                        + "','" + receiver.getProvince() + "','" + receiver.getCity() + "','" + receiver.getDistrict() + "','" + receiver.getDetailedAddress() + "'";
-                String sql4 = "insert into receiver (username,receiverName,email,phoneNumber,country,province,city,district,detailedAddress) values (" + value2 + ")";
+                String value2 = "'" + user.getUsername() + "','" + receiver.getReceiverName() + "','" + receiver.getAddress() + "'";
+                String sql4 = "insert into receiver (username,receiverName,address) values (" + value2 + ")";
                 try (PreparedStatement statement = connection.prepareStatement(sql4)) {
                     statement.executeUpdate();
                 }
@@ -83,34 +84,26 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Receiver getReceiver(String username) {
-        Receiver receiver = new Receiver();
+    public List<Receiver> getReceiver(String username) {
+        List<Receiver> receiverList = new ArrayList<>();
         String sql = "select * from receiver where username ='" + username + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
-            if (res.next()) {
+            while (res.next()) {
                 String receiverName = res.getString("receiverName");
-                String email = res.getString("email");
                 String phoneNumber = res.getString("phoneNumber");
-                String country = res.getString("country");
-                String province = res.getString("province");
-                String city = res.getString("city");
-                String district = res.getString("district");
-                String detailedAddress = res.getString("detailedAddress");
+                String address = res.getString("address");
 
+                Receiver receiver = new Receiver();
                 receiver.setReceiverName(receiverName);
-                receiver.setEmail(email);
                 receiver.setPhoneNumber(phoneNumber);
-                receiver.setCountry(country);
-                receiver.setProvince(province);
-                receiver.setCity(city);
-                receiver.setDistrict(district);
-                receiver.setDetailedAddress(detailedAddress);
+                receiver.setAddress(address);
+                receiverList.add(receiver);
             }
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return receiver;
+        return receiverList;
     }
 
     @Override
@@ -148,20 +141,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateReceiver(String username, Receiver receiver) {
-        String receiverName = receiver.getReceiverName();
-        String email = receiver.getEmail();
-        String phoneNumber = receiver.getPhoneNumber();
-        String country = receiver.getCountry();
-        String province = receiver.getProvince();
-        String city = receiver.getCity();
-        String district = receiver.getDistrict();
-        String detailedAddress = receiver.getDetailedAddress();
-
-        String sql = "update receiver set receiverName='" + receiverName + "',email ='" + email + "',phoneNumber='" + phoneNumber
-                + "',country='" + country + "',province='" + province + "',city='" + city + "',district='" + district + "',detailedAddress='" + detailedAddress + "' where username ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.executeUpdate();
+    public void updateReceiver(String username, List<Receiver> receiverList) {
+        String sql = "delete from receiver where username='" + username + "'";
+        try (Connection connection = DBUtils.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.executeUpdate();
+            }
+            for (int i = 0; i < receiverList.size(); i++) {
+                String sql2 = "insert into receiver (username,receiverName,phoneNumber,address) values ('" + username + "','" + receiverList.get(i).getReceiverName() + "','" + receiverList.get(i).getPhoneNumber() + "','" + receiverList.get(i).getAddress() + "')";
+                try (PreparedStatement statement2 = connection.prepareStatement(sql2)) {
+                    statement2.executeUpdate();
+                }
+            }
         }
         catch (Exception e) {
             e.printStackTrace();

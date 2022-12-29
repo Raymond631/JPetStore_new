@@ -20,12 +20,24 @@ import java.util.List;
 public class CartDaoImpl implements CartDao {
     @Override
     public void addCartItem(String username, String itemID, int quantity) {
-        String value = "'" + username + "','" + itemID + "','" + quantity + "'";
-        String sql = "insert into cart (username,itemID,quantity) values (" + value + ")";
-
-        //下面用到了try-with-resources语法: 执行完{}后，自动关闭()内的resources,不需要再写finally子句去手动关闭connection等资源
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.executeUpdate();
+        try (Connection connection = DBUtils.getConnection()) {
+            String sql = "select * from cart where username ='" + username + "' and itemID ='" + itemID + "'";
+            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
+                if (res.next()) {
+                    quantity += res.getInt("quantity");
+                    String sql2 = "update cart set quantity = '" + quantity + "' where username ='" + username + "'" + " and itemID ='" + itemID + "'";
+                    try (PreparedStatement statement2 = connection.prepareStatement(sql2)) {
+                        statement2.executeUpdate();
+                    }
+                }
+                else {
+                    String value = "'" + username + "','" + itemID + "','" + quantity + "'";
+                    String sql2 = "insert into cart (username,itemID,quantity) values (" + value + ")";
+                    try (PreparedStatement statement2 = connection.prepareStatement(sql2)) {
+                        statement2.executeUpdate();
+                    }
+                }
+            }
         }
         catch (SQLException e) {
             throw new RuntimeException(e);

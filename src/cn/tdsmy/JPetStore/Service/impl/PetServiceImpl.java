@@ -33,11 +33,11 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Product getProduct(String productID) {
+    public Product getProduct(String name) {
         if (petDao == null) {
             petDao = new PetDaoImpl();
         }
-        return petDao.getProduct(productID);
+        return petDao.getProduct(name);
     }
 
     public List<Product> searchTips(String key) {

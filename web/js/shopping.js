@@ -1,4 +1,8 @@
-﻿var xiaomi = {
+﻿var cart_data;
+var index_set = [];
+var money = 0;
+
+var xiaomi = {
     // 初始化方法
     start() {
         let J_userInfo = document.getElementById('J_userInfo');
@@ -20,12 +24,13 @@
 
     // 数据请求
     ajaxFun() {
-        //TODO 前端json获取标准格式
+        //TODO 前端json解析标准格式
         $.ajax({
             url: "../Cart/getData",
             type: "get",
             dataType: "json",
             success: function (obj) {
+                cart_data = obj;
                 if (obj) {
                     let str = '',
                         index = [],
@@ -89,7 +94,7 @@
                     colTotal[i + 1].innerHTML = '$' + proc[i] * J_goodsNum[i].value;
                     sum();
 
-                    //TODO 前端json发送标准格式
+                    //TODO 前端json-post标准格式
                     let data = {
                         itemID: itemID[i],
                         quantity: quantity
@@ -148,6 +153,7 @@
                 }
             }
             J_cartTotalPrice.innerText = total;
+            money = total;
             Select();
         }
 
@@ -175,16 +181,15 @@
             }
         }
 
-        // 单个选中
+        // 单个选中、取消选中
         for (let i = 1, len = check.length; i < len; i++) {
             check[i].onclick = function () {
                 if (this.parentNode.parentNode.dataset.checked == 'false') {
-                    this.parentNode.parentNode.dataset.checked = 'true';
-                    this.style.color = '#000';
+                    check[i].parentNode.parentNode.dataset.checked = 'true';
+                    check[i].style.color = '#000';
                 } else {
-                    this.parentNode.parentNode.dataset.checked = 'false';
-                    this.style.color = '#fff';
-
+                    check[i].parentNode.parentNode.dataset.checked = 'false';
+                    check[i].style.color = '#fff';
                 }
                 if (isSelect()) {
                     J_selectAll.parentNode.parentNode.dataset.checked = 'false';
@@ -196,7 +201,6 @@
                 sum();
             }
         }
-
         // 全选
         J_selectAll.onclick = function () {
             if (this.parentNode.parentNode.dataset.checked == 'false') {
@@ -245,6 +249,28 @@
                 }
             }
             return false;
+        }
+
+        J_goCheckout.onclick = function CheckOut() {
+            index_set.length = 0;//清空
+            for (let i = 1, len = check.length; i < len; i++) {
+                if (check[i].parentNode.parentNode.dataset.checked != 'false') {
+                    index_set.push(i - 1);
+                }
+            }
+            let data = {
+                cart_info: cart_data,
+                item_index: index_set,
+                cost: money
+            };
+            $.ajax({
+                url: "../Cart/CheckOut",
+                type: "post",
+                data: JSON.stringify(data),
+                success: function () {
+                    window.location.href = "../Order/showOrderSubmit"
+                }
+            });
         }
     },
 }

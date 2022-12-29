@@ -17,5 +17,5 @@ public interface PetDao {
 
     public List<Product> searchTips(String key);//通过关键字AJAX
 
-    public Product getProduct(String productID);
+    public Product getProduct(String name);
 }

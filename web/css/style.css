@@ -1,9 +1,8 @@
-/* 重置页面 */
+﻿/* 重置页面 */
 @import url("reset.css");
 
 body {
-    font: 14px/1.5 Helvetica Neue, Helvetica, Arial, Microsoft Yahei,
-    Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei, sans-serif;
+    font: 14px "Arial", "华文细黑";
     color: #333;
     background-color: #fff;
     min-width: 1226px;
@@ -490,7 +489,7 @@ body {
     font-size: 20px;
     border: 0;
     color: #fff;
-    background: rgba(105, 101, 101, .6);
+    background: #333;
 }
 
 .swiper-category-list .title {

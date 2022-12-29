@@ -7,6 +7,8 @@ import cn.tdsmy.JPetStore.Service.LogService;
 import cn.tdsmy.JPetStore.Service.UserService;
 import cn.tdsmy.JPetStore.Service.impl.LogServiceImpl;
 import cn.tdsmy.JPetStore.Service.impl.UserServiceImpl;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -18,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author:liliyyyyy
@@ -124,8 +126,8 @@ public class UserServlet extends HttpServlet {
 
                 if (userService.register(user))//注册成功（进行用户名查重）
                 {
-                    user.setReceiver(userService.getReceiver(username));
-                    user.setProfile(userService.getProfile(username));
+//                    user.setReceiver(userService.getReceiver(username));
+//                    user.setProfile(userService.getProfile(username));
                     req.getSession().setAttribute("user", user);
 
                     logService.addLog(req, "Create", "注册新用户,username=" + username, "true");
@@ -175,8 +177,8 @@ public class UserServlet extends HttpServlet {
                 }
                 else//普通用户
                 {
-                    user.setReceiver(userService.getReceiver(username));
-                    user.setProfile(userService.getProfile(username));
+//                    user.setReceiver(userService.getReceiver(username));
+//                    user.setProfile(userService.getProfile(username));
                     req.getSession().setAttribute("user", user);//通过session保持登录状态
 
                     logService.addLog(req, "Read", "登录,username=" + username, "true");
@@ -202,8 +204,8 @@ public class UserServlet extends HttpServlet {
 
     public void personalCenter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
-        user.setReceiver(userService.getReceiver(user.getUsername()));
-        user.setProfile((userService.getProfile(user.getUsername())));
+//        user.setReceiver(userService.getReceiver(user.getUsername()));
+//        user.setProfile((userService.getProfile(user.getUsername())));
         req.getSession().setAttribute("user", user);
 
         logService.addLog(req, "Read", "查看个人中心", "true");
@@ -217,24 +219,6 @@ public class UserServlet extends HttpServlet {
         userService.changePassword(user);
 
         logService.addLog(req, "Update", "修改密码", "true");
-        resp.sendRedirect("../User/personalCenter");
-    }
-
-    public void updateReceiver(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String receiverName = req.getParameter("receiverName");
-        String email = req.getParameter("email");
-        String phone = req.getParameter("phone");
-        String country = req.getParameter("country");
-        String province = req.getParameter("province");
-        String city = req.getParameter("city");
-        String district = req.getParameter("district");
-        String detailedAddress = req.getParameter("detailedAddress");
-        Receiver receiver = new Receiver(receiverName, email, phone, country, province, city, district, detailedAddress);
-
-        User user = (User) req.getSession().getAttribute("user");
-        userService.updateReceiver(user.getUsername(), receiver);
-
-        logService.addLog(req, "Update", "修改收件人信息", "true");
         resp.sendRedirect("../User/personalCenter");
     }
 
@@ -354,5 +338,28 @@ public class UserServlet extends HttpServlet {
             PrintWriter out = resp.getWriter();
             out.print("用户名已存在");
         }
+    }
+
+    public void updateReceiver(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        //TODO 后端解析json数组
+        JSONArray arr = JSONArray.parseArray(responseStrBuilder.toString());
+        List<Receiver> receiverList = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            JSONObject object = (JSONObject) arr.get(i);
+            Receiver receiver = new Receiver();
+            receiver.setReceiverName((String) object.get("name"));
+            receiver.setPhoneNumber((String) object.get("tel"));
+            receiver.setAddress((String) object.get("adr"));
+            receiverList.add(receiver);
+        }
+
+        User user = (User) req.getSession().getAttribute("user");
+        userService.updateReceiver(user.getUsername(), receiverList);
     }
 }

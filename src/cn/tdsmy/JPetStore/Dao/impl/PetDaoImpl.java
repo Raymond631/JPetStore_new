@@ -95,17 +95,17 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
-    public Product getProduct(String productID) {
+    public Product getProduct(String name) {
         Product product = new Product();
         try (Connection connection = DBUtils.getConnection()) {
-            String sql = "select * from product where productID = '" + productID + "'";
+            String sql = "select * from product where name = '" + name + "'";
             try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
                 if (res.next()) {
-                    String name = res.getString("name");
+                    String productID = res.getString("productID");
                     String introduce = res.getString("introduce");
 
-                    product.setProductID(productID);
                     product.setName(name);
+                    product.setProductID(productID);
                     product.setIntroduce(introduce);
                 }
             }
@@ -118,8 +118,11 @@ public class PetDaoImpl implements PetDao {
                     int stock = res.getInt("stock");
                     BigDecimal listPrice = res.getBigDecimal("listPrice");
 
+                    String img = res.getString("img");
+                    product.setImg(img);
+
                     Item item = new Item(itemID, description, stock, listPrice);
-                    product.getItemMap().put(itemID, item);
+                    product.getItemList().add(item);
                 }
             }
         }
@@ -160,7 +163,7 @@ public class PetDaoImpl implements PetDao {
                         BigDecimal listPrice = res.getBigDecimal("listPrice");
 
                         Item item = new Item(itemID, description, stock, listPrice);
-                        product.getItemMap().put(itemID, item);
+                        product.getItemList().add(item);
                     }
                 }
                 catch (SQLException e) {

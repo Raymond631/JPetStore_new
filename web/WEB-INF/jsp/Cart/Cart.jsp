@@ -72,7 +72,7 @@
 						<span class="total-price">
 								合计：<em id="J_cartTotalPrice">0</em>元
 							</span>
-						<a href="javascript:void(0);" class="btn btn-disabled" id="J_goCheckout">去结算</a>
+						<a class="btn btn-disabled" id="J_goCheckout">去结算</a>
 					</div>
 					<div class="no-select-tip" id="J_noSelectTip">
 						请勾选需要结算的商品

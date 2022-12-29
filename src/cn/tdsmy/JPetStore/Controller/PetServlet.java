@@ -62,6 +62,9 @@ public class PetServlet extends HttpServlet {
             case "/searchTips":
                 searchTips(req, resp);//小类，展示每个Product中所有的Item
                 break;
+            case "/getDetails":
+                getDetails(req, resp);//小类，展示每个Product中所有的Item
+                break;
         }
     }
 
@@ -119,5 +122,15 @@ public class PetServlet extends HttpServlet {
         resp.setContentType("text/plain");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(ProductList));
+    }
+
+    public void getDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        Product product = petService.getProduct(name);
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+        resp.getWriter().print(JSON.toJSONString(product));
     }
 }

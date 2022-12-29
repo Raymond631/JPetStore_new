@@ -13,7 +13,7 @@ import java.util.Map;
 public interface PetService {
     public Map<String, Product> getProductMap(String category);
 
-    public Product getProduct(String productID);
+    public Product getProduct(String name);
 
     public Map<String, Product> searchPet(String key);//通过关键字搜索宠物列表
 
