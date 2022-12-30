@@ -25,14 +25,6 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Map<String, Product> getProductMap(String category) {
-        if (petDao == null) {
-            petDao = new PetDaoImpl();
-        }
-        return petDao.getProductMap(category);
-    }
-
-    @Override
     public Product getProduct(String name) {
         if (petDao == null) {
             petDao = new PetDaoImpl();

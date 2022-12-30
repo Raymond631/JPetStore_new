@@ -23,8 +23,6 @@ public interface UserDao {
 
     public List<Receiver> getReceiver(String username);
 
-    public Profile getProfile(String username);
-
 
     public void changePassword(User user);
 

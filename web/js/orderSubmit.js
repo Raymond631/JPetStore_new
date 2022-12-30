@@ -164,11 +164,7 @@ function newOrder() {
                 type: "post",
                 data: JSON.stringify(data),
                 success: function () {
-                    let btn = $("#adr_save_div")
-                    btn.text("保存成功");
-                    setTimeout(function () {
-                        btn.remove();
-                    }, 1000)
+                    window.location.href = "../Order/showMyOrder"
                 }
             });
         } else {

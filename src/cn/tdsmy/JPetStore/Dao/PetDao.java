@@ -11,7 +11,6 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface PetDao {
-    public Map<String, Product> getProductMap(String category);
 
     public Map<String, Product> searchPet(String key);//通过关键字搜索宠物列表
 

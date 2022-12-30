@@ -1,0 +1,164 @@
+.mainBox {
+    padding: 0;
+    top: 0;
+    margin-top: -10px;
+    background-color: rgb(243, 243, 244);
+    width: 100%;
+    height: 715px;
+    overflow: hidden;
+}
+
+.mainBox .topName {
+    margin-left: 190px;
+    width: 88%;
+    height: 100px;
+    padding-top: 30px;
+    padding-left: 20px;
+    font-size: 50px;
+    font-weight: 300;
+}
+
+.mainBox .topContent {
+    margin-top: 10px;
+    background-color: white;
+    margin-left: 190px;
+    width: 88%;
+    height: 45%;
+    overflow: hidden;
+}
+
+.mainBox .topContent .welcome {
+    margin-top: 30px;
+    margin-left: 470px;
+    width: 88%;
+    height: 45%;
+    font-size: 20px;
+    font-weight: 300;
+    color: rgb(103, 106, 108);
+    overflow: hidden;
+}
+
+.mainBox .topContent .fourButton {
+    margin-top: -40px;
+    margin-left: 80px;
+    width: 88%;
+    height: 185px;
+    font-size: 20px;
+    font-weight: 300;
+    color: rgb(103, 106, 108);
+    /* border: 1px solid black; */
+    overflow: hidden;
+}
+
+.mainBox .topContent .fourButton li {
+    margin-left: 105px;
+    list-style-type: none;
+    width: 165px;
+    height: 165px;
+    line-height: 165px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 900;
+    border-radius: 180px;
+    color: white;
+    /* border: 1px solid black; */
+    overflow: hidden;
+    float: left;
+    transition: 0.5s;
+}
+
+.mainBox .topContent .fourButton li:hover {
+    width: 180px;
+    height: 180px;
+    line-height: 180px;
+    font-size: 33px;
+    transition: 0.5s;
+}
+
+.mainBox .bottomLeft {
+    margin-left: 255px;
+    margin-top: 32px;
+    width: 400px;
+    height: 200px;
+    font-size: 25px;
+    background-color: white;
+    overflow: hidden;
+    float: left;
+    color: rgb(103, 106, 108);
+    word-wrap: break-word;
+}
+
+.mainBox .bottomLeft .introduction {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    width: 370px;
+    height: 100px;
+    font-size: 25px;
+    background-color: white;
+    overflow: hidden;
+    float: left;
+    color: rgb(103, 106, 108);
+    word-wrap: break-word;
+}
+
+.mainBox .bottomRight {
+    margin-left: 755px;
+    margin-top: 32px;
+    width: 700px;
+    height: 200px;
+    background-color: white;
+    color: white;
+    /* border: 1px solid black; */
+    overflow: hidden;
+}
+
+.mainBox .bottomRight .tip {
+    margin-left: 40px;
+    width: 300px;
+    height: 150px;
+    background-color: white;
+    color: black;
+    border-right: 1px solid rgb(231, 234, 236);
+    overflow: hidden;
+    float: left;
+}
+
+.label {
+    margin-top: 10px;
+    padding-left: 20px;
+    width: 97%;
+    height: 16%;
+    font-size: 20px;
+    color: rgb(103, 106, 108);
+    border-bottom: 1px solid rgb(231, 234, 236);
+    float: left;
+}
+
+.advice {
+    margin-top: 20px;
+    background-color: white;
+    width: 95%;
+    padding-top: 2%;
+    height: 30%;
+    font-size: 28px;
+    color: grey;
+    font-weight: 300;
+    overflow: hidden;
+}
+
+.cause {
+    background-color: white;
+    width: 130px;
+    text-align: center;
+    /* border: 1px solid black; */
+    border-radius: 100px;
+    margin-left: 140px;
+    margin-top: 10px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    color: white;
+    font-weight: 300;
+    overflow: hidden;
+}

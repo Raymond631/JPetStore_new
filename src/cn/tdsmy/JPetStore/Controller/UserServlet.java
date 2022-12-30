@@ -3,8 +3,10 @@ package cn.tdsmy.JPetStore.Controller;
 import cn.tdsmy.JPetStore.Entity.Profile;
 import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
+import cn.tdsmy.JPetStore.Service.BackStage;
 import cn.tdsmy.JPetStore.Service.LogService;
 import cn.tdsmy.JPetStore.Service.UserService;
+import cn.tdsmy.JPetStore.Service.impl.BackStageImpl;
 import cn.tdsmy.JPetStore.Service.impl.LogServiceImpl;
 import cn.tdsmy.JPetStore.Service.impl.UserServiceImpl;
 import com.alibaba.fastjson.JSONArray;
@@ -34,6 +36,8 @@ public class UserServlet extends HttpServlet {
     private UserService userService;
     private LogService logService;
 
+    private BackStage backStage;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         urlDistribute(req, resp);
@@ -50,6 +54,9 @@ public class UserServlet extends HttpServlet {
         }
         if (logService == null) {
             logService = new LogServiceImpl();
+        }
+        if (backStage == null) {
+            backStage = new BackStageImpl();
         }
 
         String url = req.getPathInfo();
@@ -87,8 +94,14 @@ public class UserServlet extends HttpServlet {
             case "/BackStage"://后台
                 BackStage(req, resp);
                 break;
+            case "/IndexBack"://后台首页
+                IndexBack(req, resp);
+                break;
             case "/UsernameExist"://判断用户名是否存在
                 userExist(req, resp);
+                break;
+            case "/ServiceBack"://后台前往客服
+                serviceBack(req, resp);
                 break;
         }
     }
@@ -173,7 +186,7 @@ public class UserServlet extends HttpServlet {
                     req.getSession().setAttribute("user", user);
 
                     logService.addLog(req, "Read", "管理员查看用户日志" + username, "true");
-                    resp.sendRedirect(req.getContextPath() + "/User/userLog");
+                    resp.sendRedirect(req.getContextPath() + "/User/IndexBack");
                 }
                 else//普通用户
                 {
@@ -361,5 +374,24 @@ public class UserServlet extends HttpServlet {
 
         User user = (User) req.getSession().getAttribute("user");
         userService.updateReceiver(user.getUsername(), receiverList);
+    }
+
+    public void IndexBack(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        User user = (User) req.getSession().getAttribute("user");
+        //下面先注释掉
+//        if (user.getUsername().equals("root"))//防止普通用户直接访问
+//        {
+//        List<UserLog> userLogList = logService.getLog();
+//        req.setAttribute("userLogList", userLogList);
+        JSONObject jsonObject = backStage.getIndexData();
+        req.setAttribute("json", jsonObject);
+        req.getRequestDispatcher("/WEB-INF/jsp/User/IndexBack.jsp").forward(req, resp);
+//        }
+    }
+
+    public void serviceBack(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().setAttribute("user", null);
+        //  logService.addLog(req, "Other", "", "true");
+        req.getRequestDispatcher("/WEB-INF/jsp/User/ServiceBack.jsp").forward(req, resp);
     }
 }

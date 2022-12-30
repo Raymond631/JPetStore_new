@@ -20,9 +20,6 @@ public interface UserService {
 
     public List<Receiver> getReceiver(String username);
 
-    public Profile getProfile(String username);
-
-
     public void changePassword(User user);
 
     public void updateReceiver(String username, List<Receiver> receiver);

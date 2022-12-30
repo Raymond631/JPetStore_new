@@ -49,14 +49,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Profile getProfile(String username) {
-        if (userDao == null) {
-            userDao = new UserDaoImpl();
-        }
-        return userDao.getProfile(username);
-    }
-
-    @Override
     public void changePassword(User user) {
         if (userDao == null) {
             userDao = new UserDaoImpl();

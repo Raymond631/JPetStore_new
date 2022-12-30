@@ -62,20 +62,11 @@ public class OrderServlet extends HttpServlet {
             case "/showOrderDetails":
                 showOrderDetails(req, resp);//查看订单详情
                 break;
-            case "/orderPay":
-                orderPay(req, resp);//确认并支付订单
-                break;
             case "/newOrder":
                 newOrder(req, resp);//提交订单
                 break;
             case "/deleteOrder":
                 deleteOrder(req, resp);//删除订单
-                break;
-            case "/orderList":
-                orderList(req, resp);//查看订单列表
-                break;
-            case "/orderItem":
-                orderItem(req, resp);//查看订单详情
                 break;
             case "/getAddress":
                 getAddress(req, resp);
@@ -104,31 +95,6 @@ public class OrderServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderDetails.jsp").forward(req, resp);
     }
 
-    public void orderPay(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String Name = req.getParameter("Name");
-        String Phone = req.getParameter("Phone");
-        String Country = req.getParameter("Country");
-        String Province = req.getParameter("Province");
-        String City = req.getParameter("City");
-        String District = req.getParameter("District");
-        String Address = req.getParameter("Address");
-        if (Address.equals("")) {
-            logService.addLog(req, "Other", "跳往支付页面", "false");
-            resp.sendRedirect(req.getContextPath() + "/User/personalCenter");
-        }
-        else {
-            Receiver receiver = new Receiver();
-            receiver.setReceiverName(Name);
-            receiver.setPhoneNumber(Phone);
-            receiver.setAddress(Address);
-
-            req.getSession().setAttribute("receiver", receiver);
-
-            logService.addLog(req, "Other", "跳往支付页面", "true");
-            req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderPay.jsp").forward(req, resp);
-        }
-    }
-
     /**
      * 参数/deleteOrder?orderID=
      */
@@ -140,39 +106,6 @@ public class OrderServlet extends HttpServlet {
         logService.addLog(req, "Delete", "Delete除订单，orderID=" + orderID, "true");
     }
 
-    public void orderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        if (user == null) {
-            logService.addLog(req, "Read", "查看订单列表", "false");
-            resp.sendRedirect(req.getContextPath() + "/User/showLogin");
-        }
-        else {
-            List<Order> orderList = orderService.selectOrderList(user.getUsername());
-            req.setAttribute("orderList", orderList);
-
-            logService.addLog(req, "Read", "查看订单列表", "true");
-            req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderList.jsp").forward(req, resp);
-        }
-    }
-
-    /**
-     * 参数/orderItem?orderID=
-     */
-    public void orderItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String orderID = req.getParameter("orderID");
-        String newOrder = req.getParameter("newOrder");
-        Order order = orderService.selectOrder(orderID);
-        req.setAttribute("order", order);
-        if (newOrder.equals("true")) {
-            req.setAttribute("newOrder", true);
-        }
-        else {
-            req.setAttribute("newOrder", false);
-        }
-
-        logService.addLog(req, "Read", "查看订单详情,orderID=" + orderID, "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderItem.jsp").forward(req, resp);
-    }
 
     public void getAddress(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");

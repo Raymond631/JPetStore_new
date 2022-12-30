@@ -1,9 +1,7 @@
 package cn.tdsmy.JPetStore.Service;
 
-import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.CartJson;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -19,6 +17,4 @@ public interface CartService {
     public void updateCart(String username, String itemID, int quantity);//改
 
     public List<CartJson> selectCartList(String username);//查
-
-    public BigDecimal getAllCost(List<CartItem> cartItemList);
 }

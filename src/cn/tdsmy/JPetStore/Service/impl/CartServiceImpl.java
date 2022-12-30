@@ -2,11 +2,9 @@ package cn.tdsmy.JPetStore.Service.impl;
 
 import cn.tdsmy.JPetStore.Dao.CartDao;
 import cn.tdsmy.JPetStore.Dao.impl.CartDaoImpl;
-import cn.tdsmy.JPetStore.Entity.CartItem;
 import cn.tdsmy.JPetStore.Entity.CartJson;
 import cn.tdsmy.JPetStore.Service.CartService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -30,15 +28,7 @@ public class CartServiceImpl implements CartService {
         if (cartDao == null) {
             cartDao = new CartDaoImpl();
         }
-
-        if (itemID.equals("0"))//删除全部
-        {
-            cartDao.clearCart(username);
-        }
-        else//删除一项
-        {
-            cartDao.removeCartItem(username, itemID);
-        }
+        cartDao.removeCartItem(username, itemID);
     }
 
     @Override
@@ -55,16 +45,6 @@ public class CartServiceImpl implements CartService {
             cartDao = new CartDaoImpl();
         }
         return cartDao.selectCartList(username);
-    }
-
-    @Override
-    public BigDecimal getAllCost(List<CartItem> cartItemList) {
-        BigDecimal allCost = BigDecimal.valueOf(0);
-        for (CartItem c : cartItemList) {
-            BigDecimal temp = c.getListPrice().multiply(new BigDecimal(c.getQuantity()));
-            allCost = allCost.add(temp);
-        }
-        return allCost;
     }
 
 }

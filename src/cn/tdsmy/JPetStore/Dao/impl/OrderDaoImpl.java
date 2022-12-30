@@ -90,89 +90,9 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order selectOrder(String orderID) {
-        Order order = new Order();
-        try (Connection connection = DBUtils.getConnection()) {
-            String sql = "select * from orderlist where orderID ='" + orderID + "'";
-            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
-                if (res.next()) {
-                    String orderTime = res.getString("orderTime");
-                    String payTime = res.getString("payTime");
-
-                    String receiverName = res.getString("receiverName");
-                    String phoneNumber = res.getString("phoneNumber");
-                    String country = res.getString("country");
-                    String province = res.getString("province");
-                    String city = res.getString("city");
-                    String district = res.getString("district");
-                    String detailedAddress = res.getString("detailedAddress");
-
-                    BigDecimal totalPrice = res.getBigDecimal("totalPrice");
-                    String payMethod = res.getString("payMethod");
-
-                    Receiver receiver = new Receiver();
-                    receiver.setReceiverName(receiverName);
-                    receiver.setPhoneNumber(phoneNumber);
-                    receiver.setAddress(detailedAddress);
-
-                    order.setOrderID(orderID);
-                    order.setOrderTime(orderTime);
-                    order.setPayTime(payTime);
-                    order.setReceiver(receiver);
-                    order.setTotalPrice(totalPrice);
-                    order.setPayMethod(payMethod);
-                }
-
-            }
-
-            String sql2 = "select * from orderitem where orderID ='" + orderID + "'";
-            try (PreparedStatement statement = connection.prepareStatement(sql2); ResultSet res = statement.executeQuery(sql2)) {
-                while (res.next()) {
-                    String itemID = res.getString("itemID");
-                    String productID = res.getString("productID");
-                    String description = res.getString("description");
-                    int stock = res.getInt("stock");
-                    int quantity = res.getInt("quantity");
-                    BigDecimal listPrice = res.getBigDecimal("listPrice");
-
-                    CartItem cartItem = new CartItem(itemID, productID, description, stock, quantity, listPrice);
-                    order.getCartItemList().add(cartItem);
-                }
-            }
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return order;
-    }
-
-    @Override
-    public List<Order> selectOrderList(String username) {
-        List<Order> orderList = new ArrayList<>();
-        String sql = "select * from orderlist where username ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
-            while (res.next()) {
-                String nextOrderID = res.getString("orderID");
-                String orderTime = res.getString("orderTime");
-                BigDecimal totalPrice = res.getBigDecimal("totalPrice");
-
-                Order order = new Order();
-                order.setOrderID(nextOrderID);
-                order.setOrderTime(orderTime);
-                order.setTotalPrice(totalPrice);
-                orderList.add(order);
-            }
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return orderList;
-    }
-
-    @Override
     public List<Order> getOrder(String username) {
         List<Order> orderList = new ArrayList<>();
-        String sql = "select * from orderlist where username ='" + username + "'";
+        String sql = "select * from orderlist where username ='" + username + "' order by orderTime desc";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
             while (res.next()) {
                 String orderTime = res.getString("orderTime");

@@ -14,8 +14,6 @@ public interface CartDao {
 
     public void removeCartItem(String username, String itemID);//删
 
-    public void clearCart(String username);//清空
-
     public void updateCart(String username, String itemID, int quantity);//改
 
     public List<CartJson> selectCartList(String username);//查

@@ -131,49 +131,4 @@ public class PetDaoImpl implements PetDao {
         }
         return product;
     }
-
-    @Override
-    public Map<String, Product> getProductMap(String category) {
-        Map<String, Product> productMap = new HashMap<>();//key:productID,value:product
-        try (Connection connection = DBUtils.getConnection()) {
-            String sql = "select * from product where category = '" + category + "'";
-            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
-                while (res.next()) {
-                    String productID = res.getString("productID");
-                    String name = res.getString("name");
-                    String introduce = res.getString("introduce");
-
-                    Product product = new Product();
-                    product.setProductID(productID);
-                    product.setName(name);
-                    product.setIntroduce(introduce);
-
-                    productMap.put(productID, product);
-                }
-            }
-
-            productMap.forEach((productID, product) ->
-            {
-                String sql2 = "select * from item where productID = '" + product.getProductID() + "'";
-                try (PreparedStatement statement = connection.prepareStatement(sql2); ResultSet res = statement.executeQuery(sql2)) {
-                    while (res.next()) {
-                        String itemID = res.getString("itemID");
-                        String description = res.getString("description");
-                        int stock = res.getInt("stock");
-                        BigDecimal listPrice = res.getBigDecimal("listPrice");
-
-                        Item item = new Item(itemID, description, stock, listPrice);
-                        product.getItemList().add(item);
-                    }
-                }
-                catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return productMap;
-    }
 }

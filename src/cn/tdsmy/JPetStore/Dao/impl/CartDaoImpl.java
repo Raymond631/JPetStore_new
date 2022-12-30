@@ -56,17 +56,6 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public void clearCart(String username) {
-        String sql = "delete from cart where username ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.executeUpdate();
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public void updateCart(String username, String itemID, int quantity) {
         String sql = "update cart set quantity = '" + quantity + "' where username ='" + username + "'" + " and itemID ='" + itemID + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {

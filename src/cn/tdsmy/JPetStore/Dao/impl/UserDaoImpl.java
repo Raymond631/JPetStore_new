@@ -107,29 +107,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Profile getProfile(String username) {
-        Profile profile = new Profile();
-        String sql = "select * from profile where username = '" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
-            if (res.next()) {
-                String languagePreference = res.getString("languagePreference");
-                String favouriteCategory = res.getString("favouriteCategory");
-                String enableMyList = res.getString("enableMyList");
-                String enableMyBanner = res.getString("enableMyBanner");
-
-                profile.setLanguagePreference(languagePreference);
-                profile.setFavouriteCategory(favouriteCategory);
-                profile.setEnableMyList(enableMyList);
-                profile.setEnableMyBanner(enableMyBanner);
-            }
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return profile;
-    }
-
-    @Override
     public void changePassword(User user) {
         String sql = "update user set password ='" + user.getPassword() + "' where username ='" + user.getUsername() + "'";
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {

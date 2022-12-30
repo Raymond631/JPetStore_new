@@ -15,10 +15,6 @@ public interface OrderDao {
 
     public void deleteOrder(String orderID);//删
 
-    public Order selectOrder(String orderID);//查询订单详情
-
-    public List<Order> selectOrderList(String username);//查询历史订单
-
     List<Order> getOrder(String username);
 
     Order getDetails(String orderID);

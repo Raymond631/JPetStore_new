@@ -3,7 +3,6 @@ package cn.tdsmy.JPetStore.Service.impl;
 import cn.tdsmy.JPetStore.Dao.CartDao;
 import cn.tdsmy.JPetStore.Dao.OrderDao;
 import cn.tdsmy.JPetStore.Dao.UserDao;
-import cn.tdsmy.JPetStore.Dao.impl.CartDaoImpl;
 import cn.tdsmy.JPetStore.Dao.impl.OrderDaoImpl;
 import cn.tdsmy.JPetStore.Dao.impl.UserDaoImpl;
 import cn.tdsmy.JPetStore.Entity.Order;
@@ -44,35 +43,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void clearCart(String username) {
-        if (cartDao == null) {
-            cartDao = new CartDaoImpl();
-        }
-        cartDao.clearCart(username);
-    }
-
-    @Override
     public void deleteOrder(String orderID) {
         if (orderDao == null) {
             orderDao = new OrderDaoImpl();
         }
         orderDao.deleteOrder(orderID);
-    }
-
-    @Override
-    public Order selectOrder(String orderID) {
-        if (orderDao == null) {
-            orderDao = new OrderDaoImpl();
-        }
-        return orderDao.selectOrder(orderID);
-    }
-
-    @Override
-    public List<Order> selectOrderList(String username) {
-        if (orderDao == null) {
-            orderDao = new OrderDaoImpl();
-        }
-        return orderDao.selectOrderList(username);
     }
 
     @Override

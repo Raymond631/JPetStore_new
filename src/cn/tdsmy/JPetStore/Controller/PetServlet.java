@@ -1,11 +1,14 @@
 package cn.tdsmy.JPetStore.Controller;
 
 import cn.tdsmy.JPetStore.Entity.Product;
+import cn.tdsmy.JPetStore.Service.BackStage;
 import cn.tdsmy.JPetStore.Service.LogService;
 import cn.tdsmy.JPetStore.Service.PetService;
+import cn.tdsmy.JPetStore.Service.impl.BackStageImpl;
 import cn.tdsmy.JPetStore.Service.impl.LogServiceImpl;
 import cn.tdsmy.JPetStore.Service.impl.PetServiceImpl;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +29,7 @@ import java.util.Map;
 public class PetServlet extends HttpServlet {
     public PetService petService;
     private LogService logService;
+    private BackStage backStage;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,20 +48,14 @@ public class PetServlet extends HttpServlet {
         if (logService == null) {
             logService = new LogServiceImpl();
         }
+        if (backStage == null) {
+            backStage = new BackStageImpl();
+        }
 
         String url = req.getPathInfo();
         switch (url) {
-            case "/homePage":
-                homePage(req, resp);//主页
-                break;
             case "/searchPet":
                 searchPet(req, resp);//搜索
-                break;
-            case "/petList":
-                petList(req, resp);//大类，展示每个Category中所有的Product
-                break;
-            case "/petProduct":
-                petProduct(req, resp);//小类，展示每个Product中所有的Item
                 break;
             case "/searchTips":
                 searchTips(req, resp);//小类，展示每个Product中所有的Item
@@ -65,13 +63,13 @@ public class PetServlet extends HttpServlet {
             case "/getDetails":
                 getDetails(req, resp);//小类，展示每个Product中所有的Item
                 break;
+            case "/ProductAllBack":
+                productAllBack(req, resp);//小类，展示每个Product中所有的Item
+                break;
+            case "/ProductDetailBack":
+                productDetailBack(req, resp);//小类，展示每个Product中所有的Item
+                break;
         }
-    }
-
-
-    public void homePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logService.addLog(req, "Other", "查看首页", "true");
-        req.getRequestDispatcher(req.getContextPath()).forward(req, resp);
     }
 
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -81,39 +79,6 @@ public class PetServlet extends HttpServlet {
 
         logService.addLog(req, "Read", "搜索宠物,keyword=" + key, "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp").forward(req, resp);
-    }
-
-    /**
-     * 参数/petList?category=
-     */
-    public void petList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String category = req.getParameter("category");
-        Map<String, Product> productMap = petService.getProductMap(category);
-        req.getSession().setAttribute("category", category);
-        req.getSession().setAttribute("productMap", productMap);
-
-        logService.addLog(req, "Read", "查看宠物列表,category=" + category, "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/Pet/Category.jsp").forward(req, resp);
-    }
-
-    /**
-     * 参数/petProduct?productID= &search=
-     */
-    public void petProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String search = req.getParameter("search");//如果不是从search中眺过来的，可以直接从session中获取信息，不用再查数据库
-        String productID = req.getParameter("productID");
-        if (search.equals("false")) {
-            Map<String, Product> productMap = (Map<String, Product>) req.getSession().getAttribute("productMap");
-            Product product = productMap.get(productID);
-            req.setAttribute("product", product);
-        }
-        else if (search.equals("true")) {
-            Product product = petService.getProduct(productID);
-            req.setAttribute("product", product);
-        }
-
-        logService.addLog(req, "Read", "查看宠物详情,productID=" + productID, "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetProduct.jsp").forward(req, resp);
     }
 
     public void searchTips(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -132,5 +97,21 @@ public class PetServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(product));
+    }
+
+    public void productAllBack(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.getSession().setAttribute("user", null);
+        //logService.addLog(req, "Other", "退出登录", "true");
+        JSONObject jsonObject = backStage.getProductData();
+        req.setAttribute("json", jsonObject);
+        System.out.println(jsonObject);
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/ProductAllBack.jsp").forward(req, resp);
+    }
+
+    public void productDetailBack(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String Category = req.getParameter("Category");//如果不是从search中眺过来的，可以直接从session中获取信息，不用再查数据库
+        System.out.println(Category);
+        //logService.addLog(req, "Read", "查看宠物详情,productID=" + productID, "true");
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/ProductDetailBack.jsp").forward(req, resp);
     }
 }
