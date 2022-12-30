@@ -32,57 +32,49 @@
 		<div class="topbar-info" id="J_userInfo">
 			<a rel="nofollow" class="link link-order" href="#">欢迎光临：${sessionScope.user.username}</a>
 			<span class="sep">|</span>
-			<a rel="nofollow" class="link link-order" href="../Order/orderList">我的订单</a>
+			<a rel="nofollow" class="link link-order" href="../Order/showMyOrder">我的订单</a>
 		</div>
 	</div>
 </header>
 <!-- 商品内容 -->
 <section class="page-main">
 	<div class="container">
-		<c:if test="${sessionScope.cartItemList.isEmpty()}">
-			<div class="cart-empty hide" id="J_cartEmpty">
-				<h2>您的购物车还是空的！</h2>
-				<a href="index.html" class="btn btn-primary btn-shoping J_goShoping" id="J_Shoping">马上去购物</a>
+		<div class="cart-goods-list" id="J_cartListGoods">
+			<div class="list-head myclear" data-checked="false">
+				<div class="col col-check"><i class="iconfont icon-checkbox J_select" id="J_selectAll">√</i>全选</div>
+				<div class="col col-img">&nbsp;</div>
+				<div class="col col-name">商品名称</div>
+				<div class="col col-price">单价</div>
+				<div class="col col-num">数量</div>
+				<div class="col col-total">小计</div>
+				<div class="col col-action">操作</div>
 			</div>
-		</c:if>
-		<c:if test="${!sessionScope.cartItemList.isEmpty()}">
-			<div class="cart-goods-list" id="J_cartListGoods">
-				<div class="list-head myclear" data-checked="false">
-					<div class="col col-check"><i class="iconfont icon-checkbox J_select" id="J_selectAll">√</i>全选</div>
-					<div class="col col-img">&nbsp;</div>
-					<div class="col col-name">商品名称</div>
-					<div class="col col-price">单价</div>
-					<div class="col col-num">数量</div>
-					<div class="col col-total">小计</div>
-					<div class="col col-action">操作</div>
-				</div>
-				<div id="wapper">
+			<div id="wapper">
 
-				</div>
-				<div class="cart-bar myclear cart-bar-fixed">
-					<div class="section-left">
-						<a href="../" class="back-shopping J_goShoping">继续购物</a>
-						<span class="cart-total">
+			</div>
+			<div class="cart-bar myclear cart-bar-fixed">
+				<div class="section-left">
+					<a href="../" class="back-shopping J_goShoping">继续购物</a>
+					<span class="cart-total">
 								共
 								<i id="J_cartTotalNum">1</i>
 								件商品，已选择
 								<i id="J_selTotalNum">0</i>
 								件
 							</span>
-						<span class="total-price">
+					<span class="total-price">
 								合计：<em id="J_cartTotalPrice">0</em>元
 							</span>
-						<a class="btn btn-disabled" id="J_goCheckout">去结算</a>
-					</div>
-					<div class="no-select-tip" id="J_noSelectTip">
-						请勾选需要结算的商品
-						<i class="arrow arrow-a"></i>
-						<i class="arrow arrow-b"></i>
-					</div>
+					<a class="btn btn-disabled" id="J_goCheckout">去结算</a>
+				</div>
+				<div class="no-select-tip" id="J_noSelectTip">
+					请勾选需要结算的商品
+					<i class="arrow arrow-a"></i>
+					<i class="arrow arrow-b"></i>
 				</div>
 			</div>
-			<h2 class="xm-recommend-title"><span id="J_span">已经到底啦！</span></h2>
-		</c:if>
+		</div>
+		<h2 class="xm-recommend-title"><span id="J_span">已经到底啦！</span></h2>
 	</div>
 </section>
 </body>

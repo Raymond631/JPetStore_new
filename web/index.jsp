@@ -42,9 +42,6 @@
 					<em></em>
 					购物车
 				</a>
-				<%--				<div id="J_miniCartMenu" class="cart-menu">--%>
-				<%--					购物车中还没有商品，赶紧选购吧！--%>
-				<%--				</div>--%>
 			</div>
 			<!-- 登录注册 -->
 			<c:if test="${sessionScope.user==null}">
@@ -60,7 +57,7 @@
 					<span class="sep">|</span>
 					<a href="User/signOut">退出登录</a>
 					<span class="sep">|</span>
-					<a href="Order/orderList">我的订单</a>
+					<a href="Order/showMyOrder">我的订单</a>
 				</div>
 			</c:if>
 		</div>

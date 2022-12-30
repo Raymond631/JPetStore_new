@@ -27,4 +27,8 @@ public interface OrderService {
     public String getTimeNow();
 
     public String createOrderID();
+
+    List<Order> getOrder(String username);
+
+    Order getDetails(String orderID);
 }

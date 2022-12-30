@@ -17,7 +17,7 @@
 			<div class="head_right">
 				<span class="head_right_in">欢迎光临：${sessionScope.user.username}</span>
 				<span class="head_right_in">|</span>
-				<a href="" class="head_right_in">我的订单</a>
+				<a href="../Order/showMyOrder" class="head_right_in">我的订单</a>
 			</div>
 		</div>
 	</div>

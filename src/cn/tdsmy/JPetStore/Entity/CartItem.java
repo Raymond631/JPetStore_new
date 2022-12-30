@@ -9,8 +9,7 @@ import java.math.BigDecimal;
  * @Version 1.0
  */
 
-public class CartItem implements Serializable
-{
+public class CartItem implements Serializable {
     private static final long serialVersionUID = 7328478120237328517L;
     private String itemID;
     private String productID;
@@ -18,9 +17,9 @@ public class CartItem implements Serializable
     private int stock;
     private int quantity;
     private BigDecimal listPrice;
+    private String img;
 
-    public CartItem(String itemID, String productID, String description, int stock, int quantity, BigDecimal listPrice)
-    {
+    public CartItem(String itemID, String productID, String description, int stock, int quantity, BigDecimal listPrice) {
         this.itemID = itemID;
         this.productID = productID;
         this.description = description;
@@ -29,13 +28,11 @@ public class CartItem implements Serializable
         this.listPrice = listPrice;
     }
 
-    public CartItem()
-    {
+    public CartItem() {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "itemID=" + itemID + "\n"
                 + "productID=" + productID + "\n"
                 + "description=" + description + "\n"
@@ -44,63 +41,59 @@ public class CartItem implements Serializable
                 + "listPrice=" + listPrice + "\n";
     }
 
-    public String getItemID()
-    {
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getItemID() {
         return itemID;
     }
 
-    public void setItemID(String itemID)
-    {
+    public void setItemID(String itemID) {
         this.itemID = itemID;
     }
 
-    public String getProductID()
-    {
+    public String getProductID() {
         return productID;
     }
 
-    public void setProductID(String productID)
-    {
+    public void setProductID(String productID) {
         this.productID = productID;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public int getStock()
-    {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(int stock)
-    {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public int getQuantity()
-    {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity)
-    {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public BigDecimal getListPrice()
-    {
+    public BigDecimal getListPrice() {
         return listPrice;
     }
 
-    public void setListPrice(BigDecimal listPrice)
-    {
+    public void setListPrice(BigDecimal listPrice) {
         this.listPrice = listPrice;
     }
 }

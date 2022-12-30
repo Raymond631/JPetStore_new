@@ -10,8 +10,7 @@ import java.util.List;
  * @Date: 2022/10/26 17:00
  * @Version 1.0
  */
-public class Order implements Serializable
-{
+public class Order implements Serializable {
     private static final long serialVersionUID = 7632942823786187032L;
     private String orderID;
     private String orderTime;
@@ -20,9 +19,9 @@ public class Order implements Serializable
     private BigDecimal totalPrice;
     private String payMethod;
     private List<CartItem> cartItemList;
+    
 
-    public Order(String orderID, String orderTime, String payTime, Receiver receiver, List<CartItem> cartItemList, BigDecimal totalPrice, String payMethod)
-    {
+    public Order(String orderID, String orderTime, String payTime, Receiver receiver, List<CartItem> cartItemList, BigDecimal totalPrice, String payMethod) {
         this.orderID = orderID;
         this.orderTime = orderTime;
         this.payTime = payTime;
@@ -32,78 +31,63 @@ public class Order implements Serializable
         this.payMethod = payMethod;
     }
 
-    public Order()
-    {
+    public Order() {
         cartItemList = new ArrayList<>();
     }
 
-    public String getOrderID()
-    {
+    public String getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(String orderID)
-    {
+    public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
 
-    public String getOrderTime()
-    {
+    public String getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(String orderTime)
-    {
+    public void setOrderTime(String orderTime) {
         this.orderTime = orderTime;
     }
 
-    public String getPayTime()
-    {
+    public String getPayTime() {
         return payTime;
     }
 
-    public void setPayTime(String payTime)
-    {
+    public void setPayTime(String payTime) {
         this.payTime = payTime;
     }
 
-    public Receiver getReceiver()
-    {
+    public Receiver getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(Receiver receiver)
-    {
+    public void setReceiver(Receiver receiver) {
         this.receiver = receiver;
     }
 
-    public List<CartItem> getCartItemList()
-    {
+    public List<CartItem> getCartItemList() {
         return cartItemList;
     }
 
-    public void setCartItemList(List<CartItem> cartItemList)
-    {
+    public void setCartItemList(List<CartItem> cartItemList) {
         this.cartItemList = cartItemList;
     }
 
-    public BigDecimal getTotalPrice()
-    {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice)
-    {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public String getPayMethod()
-    {
+    public String getPayMethod() {
         return payMethod;
     }
 
-    public void setPayMethod(String payMethod)
-    {
+    public void setPayMethod(String payMethod) {
         this.payMethod = payMethod;
     }
 }

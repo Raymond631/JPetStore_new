@@ -56,6 +56,12 @@ public class OrderServlet extends HttpServlet {
             case "/showOrderSubmit":
                 showOrderSubmit(req, resp);//查看订单详情
                 break;
+            case "/showMyOrder":
+                showMyOrder(req, resp);//查看订单详情
+                break;
+            case "/showOrderDetails":
+                showOrderDetails(req, resp);//查看订单详情
+                break;
             case "/orderPay":
                 orderPay(req, resp);//确认并支付订单
                 break;
@@ -77,11 +83,25 @@ public class OrderServlet extends HttpServlet {
             case "/getData":
                 getData(req, resp);
                 break;
+            case "/getOrder":
+                getOrder(req, resp);
+                break;
+            case "/getDetails":
+                getDetails(req, resp);
+                break;
         }
     }
 
     public void showOrderSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderSubmit.jsp").forward(req, resp);
+    }
+
+    public void showMyOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/jsp/Order/MyOrder.jsp").forward(req, resp);
+    }
+
+    public void showOrderDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderDetails.jsp").forward(req, resp);
     }
 
     public void orderPay(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -115,9 +135,9 @@ public class OrderServlet extends HttpServlet {
     public void deleteOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String orderID = req.getParameter("orderID");
         orderService.deleteOrder(orderID);
+        System.out.println("删除订单" + orderID);
 
         logService.addLog(req, "Delete", "Delete除订单，orderID=" + orderID, "true");
-        resp.sendRedirect(req.getContextPath() + "/Order/orderList");
     }
 
     public void orderList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -173,6 +193,29 @@ public class OrderServlet extends HttpServlet {
         resp.getWriter().print(JSON.toJSONString(obj));
     }
 
+    public void getOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = (User) req.getSession().getAttribute("user");
+        List<Order> orderList = orderService.getOrder(user.getUsername());
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+        resp.getWriter().print(JSON.toJSONString(orderList));
+        System.out.println(JSON.toJSONString(orderList));
+    }
+
+    public void getDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String orderID = req.getParameter("orderID");
+        Order order = orderService.getDetails(orderID);
+        System.out.println("huoqudingdanshuju");
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+        resp.getWriter().print(JSON.toJSONString(order));
+        System.out.println(JSON.toJSONString(order));
+    }
+
     public void newOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
         StringBuilder responseStrBuilder = new StringBuilder();
@@ -213,5 +256,6 @@ public class OrderServlet extends HttpServlet {
 
         orderService.addOrder(user.getUsername(), order, cart_info, item_index);
     }
+
 
 }

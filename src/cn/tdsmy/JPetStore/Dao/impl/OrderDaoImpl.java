@@ -168,4 +168,84 @@ public class OrderDaoImpl implements OrderDao {
         }
         return orderList;
     }
+
+    @Override
+    public List<Order> getOrder(String username) {
+        List<Order> orderList = new ArrayList<>();
+        String sql = "select * from orderlist where username ='" + username + "'";
+        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
+            while (res.next()) {
+                String orderTime = res.getString("orderTime");
+                String nextOrderID = res.getString("orderID");
+
+                String receiverName = res.getString("receiverName");
+                Receiver receiver = new Receiver();
+                receiver.setReceiverName(receiverName);
+
+                BigDecimal totalPrice = res.getBigDecimal("totalPrice");
+
+                Order order = new Order();
+                order.setOrderTime(orderTime);
+                order.setOrderID(nextOrderID);
+                order.setReceiver(receiver);
+                order.setTotalPrice(totalPrice);
+                orderList.add(order);
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return orderList;
+    }
+
+    @Override
+    public Order getDetails(String orderID) {
+        Order order = new Order();
+        try (Connection connection = DBUtils.getConnection()) {
+            String sql = "select * from orderlist where orderID ='" + orderID + "'";
+            try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
+                if (res.next()) {
+                    String receiverName = res.getString("receiverName");
+                    String phoneNumber = res.getString("phoneNumber");
+                    String address = res.getString("address");
+                    Receiver receiver = new Receiver();
+                    receiver.setReceiverName(receiverName);
+                    receiver.setPhoneNumber(phoneNumber);
+                    receiver.setAddress(address);
+
+                    String payMethod = res.getString("payMethod");
+                    BigDecimal totalPrice = res.getBigDecimal("totalPrice");
+
+
+                    order.setReceiver(receiver);
+                    order.setPayMethod(payMethod);
+                    order.setTotalPrice(totalPrice);
+                }
+            }
+
+            String sql2 = "select * from orderitem where orderID ='" + orderID + "'";
+            try (PreparedStatement statement2 = connection.prepareStatement(sql2); ResultSet res = statement2.executeQuery(sql2)) {
+                while (res.next()) {
+                    String itemID = res.getString("itemID");
+                    String description = res.getString("description");
+                    int quantity = res.getInt("quantity");
+                    BigDecimal listPrice = res.getBigDecimal("listPrice");
+                    String img = res.getString("img");
+
+                    CartItem cartItem = new CartItem();
+                    cartItem.setItemID(itemID);
+                    cartItem.setDescription(description);
+                    cartItem.setQuantity(quantity);
+                    cartItem.setListPrice(listPrice);
+                    cartItem.setImg(img);
+                    order.getCartItemList().add(cartItem);
+                }
+            }
+
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return order;
+    }
 }

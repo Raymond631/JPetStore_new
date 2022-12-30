@@ -1,6 +1,7 @@
 ﻿var cart_data;
 var index_set = [];
 var money = 0;
+var isEmpty = true;
 
 var xiaomi = {
     // 初始化方法
@@ -31,7 +32,8 @@ var xiaomi = {
             dataType: "json",
             success: function (obj) {
                 cart_data = obj;
-                if (obj) {
+                if (obj.length > 0) {
+                    isEmpty = false;
                     let str = '',
                         index = [],
                         proc = [],
@@ -60,8 +62,7 @@ var xiaomi = {
                     document.getElementById('wapper').innerHTML = str;
                     xiaomi.updata(index, proc, itemID);
                 } else {
-                    document.getElementById('J_cartEmpty').classList.remove('hide');
-                    document.getElementById('J_cartListGoods').style.display = 'none';
+                    isEmpty = true;
                 }
             }
         })
@@ -137,7 +138,8 @@ var xiaomi = {
 
         // 求和
         function sum() {
-            if (isSelectAll()) {
+            if (isSelectAll() && !isEmpty) {
+                console.log("展示")
                 J_noSelectTip.style.display = 'none';
                 J_goCheckout.classList.remove('btn-disabled');
             } else {

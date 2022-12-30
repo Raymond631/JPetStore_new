@@ -76,6 +76,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> getOrder(String username) {
+        if (orderDao == null) {
+            orderDao = new OrderDaoImpl();
+        }
+        return orderDao.getOrder(username);
+    }
+
+    @Override
+    public Order getDetails(String orderID) {
+        if (orderDao == null) {
+            orderDao = new OrderDaoImpl();
+        }
+        return orderDao.getDetails(orderID);
+    }
+
+    @Override
     public String getTimeNow() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

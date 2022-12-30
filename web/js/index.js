@@ -20,19 +20,7 @@ var xiaomi = {
             appcode.style.height = '0';
         }
         // 顶部导航栏下载app结束
-
-        // 顶部导航栏的购物车start
-        let J_miniCartTrigger = document.getElementById('J_miniCartTrigger');
-        let J_miniCartMenu = document.getElementById('J_miniCartMenu');
-        // 移入事件
-        J_miniCartTrigger.onmousemove = function () {
-            J_miniCartMenu.style.height = '100px';
-        }
-        // 移除事件
-        J_miniCartTrigger.onmouseout = function () {
-            J_miniCartMenu.style.height = '0';
-        }
-        // 顶部导航栏的购物车end
+        
 
         // 搜索start
         let search = document.getElementById('search');
