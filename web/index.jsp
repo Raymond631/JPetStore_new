@@ -96,8 +96,10 @@
 			</nav>
 			<!-- 搜索 -->
 			<div class="myclear header-search ">
-				<input id="search" class="search-text" type="text"/>
-				<input class="search-btn" type="text"/>
+				<form action="../Pet/searchPet" method="get">
+					<input id="search" class="search-text" type="text"/>
+					<input id="search_btn" class="search-btn" type="submit" value=""/>
+				</form>
 				<div id="J_keywordList" class="keyword-list">
 					<ul class="result-list">
 						<li><a href="javascript:;">Dogs</a></li>
