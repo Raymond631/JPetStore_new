@@ -6,7 +6,6 @@ import cn.tdsmy.JPetStore.Entity.Product;
 import cn.tdsmy.JPetStore.Service.PetService;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -17,7 +16,7 @@ public class PetServiceImpl implements PetService {
     private PetDao petDao;
 
     @Override
-    public Map<String, Product> searchPet(String key) {
+    public List<Product> searchPet(String key) {
         if (petDao == null) {
             petDao = new PetDaoImpl();
         }
@@ -32,7 +31,7 @@ public class PetServiceImpl implements PetService {
         return petDao.getProduct(name);
     }
 
-    public List<Product> searchTips(String key) {
+    public List<String> searchTips(String key) {
         if (petDao == null) {
             petDao = new PetDaoImpl();
         }

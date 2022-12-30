@@ -59,22 +59,6 @@ public class UserDaoImpl implements UserDao {
                 try (PreparedStatement statement = connection.prepareStatement(sql2)) {
                     statement.executeUpdate();
                 }
-
-                //偏好初始化
-                Profile profile = new Profile();
-                String value = "'" + user.getUsername() + "','" + profile.getLanguagePreference() + "','" + profile.getFavouriteCategory() + "','" + profile.getEnableMyList() + "','" + profile.getEnableMyBanner() + "'";
-                String sql3 = "insert into profile (username,languagePreference,favouriteCategory,enableMyList,enableMyBanner) values (" + value + ")";
-                try (PreparedStatement statement = connection.prepareStatement(sql3)) {
-                    statement.executeUpdate();
-                }
-
-                //收件人初始化
-                Receiver receiver = new Receiver();
-                String value2 = "'" + user.getUsername() + "','" + receiver.getReceiverName() + "','" + receiver.getAddress() + "'";
-                String sql4 = "insert into receiver (username,receiverName,address) values (" + value2 + ")";
-                try (PreparedStatement statement = connection.prepareStatement(sql4)) {
-                    statement.executeUpdate();
-                }
             }
         }
         catch (SQLException e) {

@@ -101,7 +101,6 @@ public class OrderServlet extends HttpServlet {
     public void deleteOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String orderID = req.getParameter("orderID");
         orderService.deleteOrder(orderID);
-        System.out.println("删除订单" + orderID);
 
         logService.addLog(req, "Delete", "Delete除订单，orderID=" + orderID, "true");
     }
@@ -119,7 +118,6 @@ public class OrderServlet extends HttpServlet {
 
     public void getData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject obj = (JSONObject) req.getSession().getAttribute("cart_data");
-
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
@@ -129,24 +127,22 @@ public class OrderServlet extends HttpServlet {
     public void getOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         List<Order> orderList = orderService.getOrder(user.getUsername());
+        System.out.println(JSON.toJSONString(orderList));
 
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(orderList));
-        System.out.println(JSON.toJSONString(orderList));
     }
 
     public void getDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String orderID = req.getParameter("orderID");
         Order order = orderService.getDetails(orderID);
-        System.out.println("huoqudingdanshuju");
 
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(order));
-        System.out.println(JSON.toJSONString(order));
     }
 
     public void newOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/style.css"/>
 	<script type="text/javascript" src="js/jquery-3.6.2.js"></script>
 	<script src="js/index.js" charset="utf-8"></script>
-	<script type="text/javascript" src="js/Search.js"></script>
+	<script type="text/javascript" src="js/SearchTip.js"></script>
 </head>
 <body>
 <!-- 头部 -->
@@ -95,24 +95,13 @@
 				</ul>
 			</nav>
 			<!-- 搜索 -->
-			<div class="myclear header-search ">
-				<form action="../Pet/searchPet" method="get">
-					<input id="search" class="search-text" type="text"/>
-					<input id="search_btn" class="search-btn" type="submit" value=""/>
+			<div class="myclear header-search">
+				<form action="Pet/searchPet" method="get" autocomplete="off">
+					<input id="search" class="search-text" type="text" name="keyword" style="border-color: #ff6700"/>
+					<input id="search_btn" class="search-btn" type="submit" value="" style="border-color: #ff6700"/>
 				</form>
 				<div id="J_keywordList" class="keyword-list">
-					<ul class="result-list">
-						<li><a href="javascript:;">Dogs</a></li>
-						<li><a href="javascript:;">Cats</a></li>
-						<li><a href="javascript:;">Birds</a></li>
-						<li><a href="javascript:;">Fish</a></li>
-						<li><a href="javascript:;">Reptiles</a></li>
-						<li><a href="javascript:;">Poodle</a></li>
-						<li><a href="javascript:;">Manx</a></li>
-						<li><a href="javascript:;">Finch</a></li>
-						<li><a href="javascript:;">Goldfish</a></li>
-						<li><a href="javascript:;">Rattlesnake</a></li>
-					</ul>
+					<ul class="result-list" id="tips"></ul>
 				</div>
 			</div>
 		</div>
@@ -892,7 +881,7 @@
 	<!-- 固定 -->
 	<div class="div_home">
 		<c:if test="${sessionScope.user!=null}">
-			<a href="User/personalCenter" class="home2"><span>个人中心</span></a>
+			<a href="#" class="home2"><span>个人中心</span></a>
 			<a href="Cart/cartList" class="home5"><span>购物车</span></a>
 		</c:if>
 		<a href="#top" class="img_yincang"><span>回到顶部</span></a>

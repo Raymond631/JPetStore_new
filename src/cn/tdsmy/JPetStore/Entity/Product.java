@@ -1,5 +1,6 @@
 package cn.tdsmy.JPetStore.Entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class Product {
     private String name;
     private String introduce;
     private String img;//url
+    private BigDecimal price;
     private List<Item> itemList;
 
     public Product(String category, String productID, String name, String introduce, String img, List<Item> itemList) {
@@ -27,6 +29,14 @@ public class Product {
 
     public Product() {
         itemList = new ArrayList<>();
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getCategory() {

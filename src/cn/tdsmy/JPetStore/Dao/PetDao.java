@@ -3,7 +3,6 @@ package cn.tdsmy.JPetStore.Dao;
 import cn.tdsmy.JPetStore.Entity.Product;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -12,9 +11,9 @@ import java.util.Map;
  */
 public interface PetDao {
 
-    public Map<String, Product> searchPet(String key);//通过关键字搜索宠物列表
+    public List<Product> searchPet(String key);//通过关键字搜索宠物列表
 
-    public List<Product> searchTips(String key);//通过关键字AJAX
+    public List<String> searchTips(String key);//通过关键字AJAX
 
     public Product getProduct(String name);
 }

@@ -1,44 +1,8 @@
 var xiaomi = {
     // 初始化方法
     start() {
-        this.header();
         this.sectionHeader();
         this.categoryList();
-    },
-
-    // 头部方法
-    header() {
-        // 顶部导航栏下载app开始
-        let J_siteDownloadApp = document.getElementById('J_siteDownloadApp');
-        let appcode = J_siteDownloadApp.getElementsByClassName('appcode')[0];
-        // 移入事件
-        J_siteDownloadApp.onmousemove = function () {
-            appcode.style.height = '148px';
-        }
-        // 移除事件
-        J_siteDownloadApp.onmouseout = function () {
-            appcode.style.height = '0';
-        }
-        // 顶部导航栏下载app结束
-        
-
-        // 搜索start
-        let search = document.getElementById('search');
-        let J_keywordList = document.getElementById('J_keywordList');
-        let lis = J_keywordList.querySelectorAll('li');
-        // 光标移入事件
-        search.onfocus = function () {
-            J_keywordList.style.display = 'block';
-            search.style.borderColor = '#ff6700';
-            search.nextElementSibling.style.borderColor = '#ff6700';
-        }
-        // 光标消失事件
-        search.onblur = function () {
-            J_keywordList.style.display = 'none';
-            search.style.borderColor = '#eee';
-            search.nextElementSibling.style.borderColor = '#eee';
-        }
-        // 搜索end
     },
 
     //主体部分的头部方法

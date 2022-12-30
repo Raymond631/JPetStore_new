@@ -446,7 +446,7 @@ body {
     border: 1px solid #ff6700;
     border-top: 0;
     background-color: #fff;
-    display: none;
+    display: block;
 }
 
 .header-search .keyword-list li a {

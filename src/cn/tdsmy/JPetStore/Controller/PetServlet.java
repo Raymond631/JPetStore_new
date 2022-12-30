@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: Raymond Li
@@ -57,6 +56,9 @@ public class PetServlet extends HttpServlet {
             case "/searchPet":
                 searchPet(req, resp);//搜索
                 break;
+            case "/getSearchData":
+                getSearchData(req, resp);//搜索
+                break;
             case "/searchTips":
                 searchTips(req, resp);//小类，展示每个Product中所有的Item
                 break;
@@ -74,17 +76,28 @@ public class PetServlet extends HttpServlet {
 
     public void searchPet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String key = req.getParameter("keyword");
-        Map<String, Product> productMap = petService.searchPet(key);
-        req.setAttribute("productMap", productMap);
 
         logService.addLog(req, "Read", "搜索宠物,keyword=" + key, "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/Pet/PetSearch.jsp?keyword=" + key).forward(req, resp);
+    }
+
+    public void getSearchData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String key = req.getParameter("keyword");
+        List<Product> productList = petService.searchPet(key);
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+        resp.getWriter().print(JSON.toJSONString(productList));
+        System.out.println(JSON.toJSONString(productList));
     }
 
     public void searchTips(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("keyword");
-        List<Product> ProductList = petService.searchTips(keyword);
+        List<String> ProductList = petService.searchTips(keyword);
+
         resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(ProductList));
     }
@@ -104,13 +117,11 @@ public class PetServlet extends HttpServlet {
         //logService.addLog(req, "Other", "退出登录", "true");
         JSONObject jsonObject = backStage.getProductData();
         req.setAttribute("json", jsonObject);
-        System.out.println(jsonObject);
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/ProductAllBack.jsp").forward(req, resp);
     }
 
     public void productDetailBack(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String Category = req.getParameter("Category");//如果不是从search中眺过来的，可以直接从session中获取信息，不用再查数据库
-        System.out.println(Category);
         //logService.addLog(req, "Read", "查看宠物详情,productID=" + productID, "true");
         req.getRequestDispatcher("/WEB-INF/jsp/Pet/ProductDetailBack.jsp").forward(req, resp);
     }
