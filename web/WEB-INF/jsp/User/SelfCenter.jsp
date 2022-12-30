@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>登录</title>
+	<title>个人中心</title>
 	<link rel="stylesheet" href="../css/Login.css"/>
 	<script type="text/javascript" src="../js/jquery-3.6.2.js"></script>
-	<script type="text/javascript" src="../js/login.js"></script>
+	<script type="text/javascript" src="../js/SelfCenter.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -23,47 +23,27 @@
 		<div class="layout_panel">
 			<div class="mian-content">
 				<div id="nav-tabs" class="nav_tabs">
-					<a class="navtab-link now" href="javascript: void(0);">登录</a>
+					<a class="navtab-link now" href="javascript: void(0);">修改密码</a>
 				</div>
 				<div class="loginbox">
 					<div class="btn login_area">
-						<form action="../User/login" method="post" autocomplete="off">
-							<input class="item_account" type="text" name="username" id="username" placeholder="用户名" required="required">
-							<input class="item_account" type="password" placeholder="密码" id="pwd" name="password" required="required">
+						<form action="../User/changePassword" method="post" id="registerForm" autocomplete="off">
+							<input class="item_account" type="password" name="password_old" id="password_old" placeholder="原密码" required="required">
+							<div id="name_repeat" class="err_tip"></div>
+							<input class="item_account" type="password" placeholder="新密码" id="password_new" name="password_new" required="required">
+							<input class="item_account" type="password" placeholder="确认密码" id="password_repeat" name="password_repeat" required="required">
 							<input class="code_input" type="text" name="vCode" id="code" placeholder="验证码" required="required">
 							<a class="code_link">
 								<img id="verificationCode" class="code_img" src="../User/verificationCode" alt="验证码" onclick="newVerification()">
 							</a>
 							<div id="errer" class="err_tip">
-								<%--								<em class="icon_error"></em>--%>
 								<span class="error-con">${requestScope.messageBox}</span>
 							</div>
-							<input class="btnadpt item_account" type="submit" value="登录">
+							<input class="btnadpt item_account" type="submit" value="保存">
 						</form>
 						<div class="other_panel myclear">
 							<div class="links_area">
-								<a href="../User/showRegister">没有账号？立即注册</a>
-							</div>
-							<div class="other_login_type">
-								<p>------------其他方式登录(敬请期待)------------</p>
-								<div id="sns-login-links" class="oth_type_links">
-									<a class="icon_type btn_qq" data-type="qq" href="javascript: void(0);"
-									   title="QQ登录">
-										<i class="btn_sns_icontype icon_default_qq"></i>
-									</a>
-									<a class="icon_type btn_weixin" data-type="weixin" href="javascript: void(0);"
-									   title="微信登录">
-										<i class="btn_sns_icontype icon_default_weixin"></i>
-									</a>
-									<a class="icon_type btn_alipay" data-type="alipay" href="javascript: void(0);"
-									   title="支付宝登录">
-										<i class="btn_sns_icontype icon_default_alipay"></i>
-									</a>
-									<a class="icon_type btn_weibo" data-type="weibo" href="javascript: void(0);"
-									   title="微博登录">
-										<i class="btn_sns_icontype icon_default_weibo"></i>
-									</a>
-								</div>
+								<a href="../">返回首页</a>
 							</div>
 						</div>
 					</div>

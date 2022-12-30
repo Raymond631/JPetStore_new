@@ -12,10 +12,7 @@
 	<title>Title</title>
 </head>
 <body>
-<%@include file="../Common/LeftBack.jsp" %>
-<%--<div style="margin-left: 300px ;height:500px; width:400px;">--%>
-<%--    <canvas id="myChart" width="400px" height="400px"></canvas>--%>
-<%--</div>--%>
+<%@include file="LeftBack.jsp" %>
 <div class="mainBox">
 	<div class="topGraph">
 		<div class="rank">
@@ -113,10 +110,10 @@
 				<td>
 					${requestScope.json.get("sales_rank").get(0).get("Category")}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(0).get("sale")*17}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(0).get("sale")}
 				</td>
 			</tr>
@@ -124,10 +121,10 @@
 				<td>
 					${requestScope.json.get("sales_rank").get(1).get("Category")}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(1).get("sale")*17}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(1).get("sale")}
 				</td>
 			</tr>
@@ -135,10 +132,10 @@
 				<td>
 					${requestScope.json.get("sales_rank").get(2).get("Category")}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(2).get("sale")*17}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(2).get("sale")}
 				</td>
 			</tr>
@@ -146,10 +143,10 @@
 				<td>
 					${requestScope.json.get("sales_rank").get(3).get("Category")}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(3).get("sale")*17}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(3).get("sale")}
 				</td>
 			</tr>
@@ -157,10 +154,10 @@
 				<td>
 					${requestScope.json.get("sales_rank").get(4).get("Category")}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(4).get("sale")*17}
 				</td>
-				<td id="">
+				<td>
 					${requestScope.json.get("sales_rank").get(4).get("sale")}
 				</td>
 			</tr>

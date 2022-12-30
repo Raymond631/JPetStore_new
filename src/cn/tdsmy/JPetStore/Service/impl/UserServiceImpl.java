@@ -2,7 +2,6 @@ package cn.tdsmy.JPetStore.Service.impl;
 
 import cn.tdsmy.JPetStore.Dao.UserDao;
 import cn.tdsmy.JPetStore.Dao.impl.UserDaoImpl;
-import cn.tdsmy.JPetStore.Entity.Profile;
 import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
 import cn.tdsmy.JPetStore.Service.UserService;
@@ -40,13 +39,6 @@ public class UserServiceImpl implements UserService {
         return userDao.registerSuccess(user);
     }
 
-    @Override
-    public List<Receiver> getReceiver(String username) {
-        if (userDao == null) {
-            userDao = new UserDaoImpl();
-        }
-        return userDao.getReceiver(username);
-    }
 
     @Override
     public void changePassword(User user) {
@@ -64,11 +56,4 @@ public class UserServiceImpl implements UserService {
         userDao.updateReceiver(username, receiver);
     }
 
-    @Override
-    public void updateProfile(String username, Profile profile) {
-        if (userDao == null) {
-            userDao = new UserDaoImpl();
-        }
-        userDao.updateProfile(username, profile);
-    }
 }

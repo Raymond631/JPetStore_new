@@ -5,12 +5,12 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>JPetStore</title>
-	<link rel="stylesheet" href="css/style.css"/>
-	<link rel="stylesheet" href="css/base.css">
-	<link rel="stylesheet" href="css/common.css">
-	<link rel="stylesheet" href="css/detail.css">
-	<script type="text/javascript" src="js/jquery-3.6.2.js"></script>
-	<script src="js/detail.js"></script>
+	<link rel="stylesheet" href="../css/style.css"/>
+	<link rel="stylesheet" href="../css/base.css">
+	<link rel="stylesheet" href="../css/common.css">
+	<link rel="stylesheet" href="../css/detail.css">
+	<script type="text/javascript" src="../js/jquery-3.6.2.js"></script>
+	<script src="../js/detail.js"></script>
 </head>
 <body>
 <!-- 头部 -->
@@ -40,7 +40,7 @@
 			</nav>
 			<!-- 购物车 -->
 			<div id="J_miniCartTrigger" class="topbar-cart top-cart">
-				<a href="Cart/cartList">
+				<a href="../Cart/cartList">
 					<em></em>
 					购物车
 				</a>
@@ -51,18 +51,18 @@
 			<!-- 登录注册 -->
 			<c:if test="${sessionScope.user==null}">
 				<div class="topbar-info">
-					<a href="User/showLogin">登录</a>
+					<a href="../User/showLogin">登录</a>
 					<span class="sep">|</span>
-					<a href="User/showRegister">注册</a>
+					<a href="../User/showRegister">注册</a>
 				</div>
 			</c:if>
 			<c:if test="${sessionScope.user!=null}">
 				<div class="topbar-info">
 					<a href="#">欢迎光临：${sessionScope.user.username}</a>
 					<span class="sep">|</span>
-					<a href="User/signOut">退出登录</a>
+					<a href="../User/signOut">退出登录</a>
 					<span class="sep">|</span>
-					<a href="Order/orderList">我的订单</a>
+					<a href="../Order/showMyOrder">我的订单</a>
 				</div>
 			</c:if>
 		</div>
@@ -74,7 +74,7 @@
 		<div class="w">
 			<div class="dropdown fl">
 				<div class="dt" onclick="window.location=''">
-					<a href="/JPetStore_war_exploded"><img src="images/header/logo.png"></a>
+					<a href="/JPetStore_war_exploded"><img src="../images/header/logo.png"></a>
 				</div>
 			</div>
 			<!-- 右侧导航 -->
@@ -138,8 +138,8 @@
 	<!-- 固定 -->
 	<div class="div_home">
 		<c:if test="${sessionScope.user!=null}">
-			<a href="User/personalCenter" class="home2"><span>个人中心</span></a>
-			<a href="Cart/cartList" class="home5"><span>购物车</span></a>
+			<a href="../User/SelfCenter" class="home2"><span>个人中心</span></a>
+			<a href="../Cart/cartList" class="home5"><span>购物车</span></a>
 		</c:if>
 		<a href="#top" class="img_yincang"><span>回到顶部</span></a>
 	</div>

@@ -8,19 +8,10 @@ var xiaomi = {
     start() {
         let J_userInfo = document.getElementById('J_userInfo');
         let J_cartListGoods = document.getElementById('J_cartListGoods');
-        let J_cartEmpty = document.getElementById('J_cartEmpty');
-
         //购物车不为空
         J_userInfo.style.display = 'block';
-        // J_cartEmpty.classList.add('hide');
         J_cartListGoods.style.display = 'block';
         this.ajaxFun();
-
-        //购物车为空
-        // J_userInfo.style.display = 'none';
-        // J_cartEmpty.classList.remove('hide');
-        // J_cartListGoods.style.display = 'none';
-
     },
 
     // 数据请求

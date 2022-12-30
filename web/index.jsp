@@ -124,14 +124,14 @@
 						<div class="children">
 							<ul class="children-list myclear">
 								<li>
-									<a class="link myclear" href="details.jsp?name=Bulldog">
+									<a class="link myclear" href="Pet/showDetails?name=Bulldog">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/150403/2-150403152450K3.jpg" alt="">
 										<span class="text">Bulldog</span>
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Chihuahua">
+									<a class="link myclear" href="Pet/showDetails?name=Chihuahua">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150617/3-15061G055460-L.jpg"
 										     alt="">
@@ -139,21 +139,21 @@
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Dalmation">
+									<a class="link myclear" href="Pet/showDetails?name=Dalmation">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/150413/3-150413105534b0.jpg" alt="">
 										<span class="text">Dalmation</span>
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Poodle">
+									<a class="link myclear" href="Pet/showDetails?name=Poodle">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/150410/2-150410144413b3.jpg" alt="">
 										<span class="text">Poodle</span>
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=GoldenRetriever">
+									<a class="link myclear" href="Pet/showDetails?name=GoldenRetriever">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150520/3-1505201145220-L.jpg"
 										     alt="">
@@ -161,7 +161,7 @@
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=LabradorRetriever">
+									<a class="link myclear" href="Pet/showDetails?name=LabradorRetriever">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150525/3-1505250931020-L.jpg"
 										     alt="">
@@ -179,14 +179,14 @@
 						<div class="children">
 							<ul class="children-list myclear">
 								<li>
-									<a class="link myclear" href="details.jsp?name=Persian">
+									<a class="link myclear" href="Pet/showDetails?name=Persian">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/150309/2-15030920514b57.jpg" alt="">
 										<span class="text">Persian</span>
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Manx">
+									<a class="link myclear" href="Pet/showDetails?name=Manx">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/150410/3-15041014351HZ.jpg" alt="">
 										<span class="text">Manx</span>
@@ -203,7 +203,7 @@
 						<div class="children">
 							<ul class="children-list myclear">
 								<li>
-									<a class="link myclear" href="details.jsp?name=AmazonParrot">
+									<a class="link myclear" href="Pet/showDetails?name=AmazonParrot">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150521/3-1505210941520-L.jpg"
 										     alt="">
@@ -211,7 +211,7 @@
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Finch">
+									<a class="link myclear" href="Pet/showDetails?name=Finch">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/150305/2-150305163023627.jpg" alt="">
 										<span class="text">Finch</span>
@@ -228,7 +228,7 @@
 						<div class="children">
 							<ul class="children-list myclear">
 								<li>
-									<a class="link myclear" href="details.jsp?name=Koi">
+									<a class="link myclear" href="Pet/showDetails?name=Koi">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150417/3-15041G459570-L.jpg"
 										     alt="">
@@ -236,14 +236,14 @@
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Goldfish">
+									<a class="link myclear" href="Pet/showDetails?name=Goldfish">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/150305/2-1503051622519B.jpg" alt="">
 										<span class="text">Goldfish</span>
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Angelfish">
+									<a class="link myclear" href="Pet/showDetails?name=Angelfish">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150423/3-1504230946360-L.jpg"
 										     alt="">
@@ -251,7 +251,7 @@
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=TigerShark">
+									<a class="link myclear" href="Pet/showDetails?name=TigerShark">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150525/3-1505251130140-L.jpg"
 										     alt="">
@@ -269,7 +269,7 @@
 						<div class="children">
 							<ul class="children-list myclear">
 								<li>
-									<a class="link myclear" href="details.jsp?name=Iguana">
+									<a class="link myclear" href="Pet/showDetails?name=Iguana">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150420/3-1504201405240-L.jpg"
 										     alt="">
@@ -277,7 +277,7 @@
 									</a>
 								</li>
 								<li>
-									<a class="link myclear" href="details.jsp?name=Rattlesnake">
+									<a class="link myclear" href="Pet/showDetails?name=Rattlesnake">
 										<img class="small-img"
 										     src="http://img.ixiupet.com/uploads/allimg/150519/3-15051Z930560-L.jpg"
 										     alt="">
@@ -378,7 +378,7 @@
 					<div class="right" style="display: block;">
 						<ul class="myclear">
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Bulldog">
+								<a href="Pet/showDetails?name=Bulldog">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/150403/2-150403152450K3.jpg" alt="">
 									</div>
@@ -388,7 +388,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Chihuahua">
+								<a href="Pet/showDetails?name=Chihuahua">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150617/3-15061G055460-L.jpg"
 											alt=""></div>
@@ -398,7 +398,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Dalmation">
+								<a href="Pet/showDetails?name=Dalmation">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/150413/3-150413105534b0.jpg" alt="">
 									</div>
@@ -408,7 +408,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Poodle">
+								<a href="Pet/showDetails?name=Poodle">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/150410/2-150410144413b3.jpg" alt="">
 									</div>
@@ -418,7 +418,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=GoldenRetriever">
+								<a href="Pet/showDetails?name=GoldenRetriever">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150520/3-1505201145220-L.jpg"
 											alt=""></div>
@@ -428,7 +428,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=LabradorRetriever">
+								<a href="Pet/showDetails?name=LabradorRetriever">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150525/3-1505250931020-L.jpg"
 											alt=""></div>
@@ -481,7 +481,7 @@
 					<div class="right" style="display: block;">
 						<ul class="myclear">
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Persian">
+								<a href="Pet/showDetails?name=Persian">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/150309/2-15030920514b57.jpg" alt="">
 									</div>
@@ -491,7 +491,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Manx">
+								<a href="Pet/showDetails?name=Manx">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/150410/3-15041014351HZ.jpg" alt="">
 									</div>
@@ -584,7 +584,7 @@
 					<div class="right" style="display: block;">
 						<ul class="myclear">
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=AmazonParrot">
+								<a href="Pet/showDetails?name=AmazonParrot">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150521/3-1505210941520-L.jpg"
 											alt=""></div>
@@ -594,7 +594,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Finch">
+								<a href="Pet/showDetails?name=Finch">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/150305/2-150305163023627.jpg" alt="">
 									</div>
@@ -686,7 +686,7 @@
 					<div class="right" style="display: block;">
 						<ul class="myclear">
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Koi">
+								<a href="Pet/showDetails?name=Koi">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150417/3-15041G459570-L.jpg"
 											alt=""></div>
@@ -696,7 +696,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Goldfish">
+								<a href="Pet/showDetails?name=Goldfish">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/150305/2-1503051622519B.jpg" alt="">
 									</div>
@@ -706,7 +706,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Angelfish">
+								<a href="Pet/showDetails?name=Angelfish">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150423/3-1504230946360-L.jpg"
 											alt=""></div>
@@ -716,7 +716,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=TigerShark">
+								<a href="Pet/showDetails?name=TigerShark">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150525/3-1505251130140-L.jpg"
 											alt=""></div>
@@ -789,7 +789,7 @@
 					<div class="right" style="display: block;">
 						<ul class="myclear">
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Iguana">
+								<a href="Pet/showDetails?name=Iguana">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150420/3-1504201405240-L.jpg"
 											alt=""></div>
@@ -799,7 +799,7 @@
 								</a>
 							</li>
 							<li class="brick-item brick-item-m">
-								<a href="details.jsp?name=Rattlesnake">
+								<a href="Pet/showDetails?name=Rattlesnake">
 									<div class="figure-img"><img
 											src="http://img.ixiupet.com/uploads/allimg/150519/3-15051Z930560-L.jpg"
 											alt=""></div>
@@ -881,7 +881,7 @@
 	<!-- 固定 -->
 	<div class="div_home">
 		<c:if test="${sessionScope.user!=null}">
-			<a href="#" class="home2"><span>个人中心</span></a>
+			<a href="User/SelfCenter" class="home2"><span>个人中心</span></a>
 			<a href="Cart/cartList" class="home5"><span>购物车</span></a>
 		</c:if>
 		<a href="#top" class="img_yincang"><span>回到顶部</span></a>

@@ -54,25 +54,23 @@ public class OrderServlet extends HttpServlet {
         String url = req.getPathInfo();
         switch (url) {
             case "/showOrderSubmit":
-                showOrderSubmit(req, resp);//查看订单详情
+                showOrderSubmit(req, resp);
                 break;
             case "/showMyOrder":
-                showMyOrder(req, resp);//查看订单详情
+                showMyOrder(req, resp);
                 break;
             case "/showOrderDetails":
-                showOrderDetails(req, resp);//查看订单详情
+                showOrderDetails(req, resp);
                 break;
-            case "/newOrder":
-                newOrder(req, resp);//提交订单
-                break;
-            case "/deleteOrder":
-                deleteOrder(req, resp);//删除订单
-                break;
+            //下面的为AJAX
             case "/getAddress":
                 getAddress(req, resp);
                 break;
             case "/getData":
                 getData(req, resp);
+                break;
+            case "/newOrder":
+                newOrder(req, resp);
                 break;
             case "/getOrder":
                 getOrder(req, resp);
@@ -80,8 +78,12 @@ public class OrderServlet extends HttpServlet {
             case "/getDetails":
                 getDetails(req, resp);
                 break;
+            case "/deleteOrder":
+                deleteOrder(req, resp);
+                break;
         }
     }
+
 
     public void showOrderSubmit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderSubmit.jsp").forward(req, resp);
@@ -95,17 +97,7 @@ public class OrderServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/Order/OrderDetails.jsp").forward(req, resp);
     }
 
-    /**
-     * 参数/deleteOrder?orderID=
-     */
-    public void deleteOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String orderID = req.getParameter("orderID");
-        orderService.deleteOrder(orderID);
-
-        logService.addLog(req, "Delete", "Delete除订单，orderID=" + orderID, "true");
-    }
-
-
+    //下面的为AJAX
     public void getAddress(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         List<Receiver> receiverList = orderService.getReceiver(user.getUsername());
@@ -122,27 +114,6 @@ public class OrderServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(obj));
-    }
-
-    public void getOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        List<Order> orderList = orderService.getOrder(user.getUsername());
-        System.out.println(JSON.toJSONString(orderList));
-
-        resp.setContentType("text/plain");
-        resp.setCharacterEncoding("UTF-8");
-        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
-        resp.getWriter().print(JSON.toJSONString(orderList));
-    }
-
-    public void getDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String orderID = req.getParameter("orderID");
-        Order order = orderService.getDetails(orderID);
-
-        resp.setContentType("text/plain");
-        resp.setCharacterEncoding("UTF-8");
-        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
-        resp.getWriter().print(JSON.toJSONString(order));
     }
 
     public void newOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -186,5 +157,40 @@ public class OrderServlet extends HttpServlet {
         orderService.addOrder(user.getUsername(), order, cart_info, item_index);
     }
 
+    public void getOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = (User) req.getSession().getAttribute("user");
+        List<Order> orderList = orderService.getOrder(user.getUsername());
+        System.out.println(JSON.toJSONString(orderList));
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+        resp.getWriter().print(JSON.toJSONString(orderList));
+    }
+
+    public void getDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String orderID = req.getParameter("orderID");
+        Order order = orderService.getDetails(orderID);
+
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
+        resp.getWriter().print(JSON.toJSONString(order));
+    }
+
+    public void deleteOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
+        String orderID = (String) obj.get("orderID");
+        orderService.deleteOrder(orderID);
+
+        logService.addLog(req, "Delete", "Delete除订单，orderID=" + orderID, "true");
+        resp.sendRedirect(req.getContextPath() + "/Order/showMyOrder");
+    }
 
 }

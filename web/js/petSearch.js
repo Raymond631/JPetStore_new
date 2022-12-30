@@ -15,14 +15,14 @@ function getData() {
                 for (var key in obj) {
                     str += `<div class="list-body myclear" data-checked = "false">
 								<div class="col col-name" style="padding-left: 100px;width: 250px"><img src="${obj[key].img}" style="height: 80px"></img></div>
-								<div class="col col-price" style="width: 200px"><a href="../details.jsp?name=${obj[key].name}">${obj[key].name}</a></div>
+								<div class="col col-price" style="width: 200px"><a href="../Pet/showDetails?name=${obj[key].name}">${obj[key].name}</a></div>
 								<div class="col col-total" >${obj[key].price}</div>
 								<div class="col col-price" style="width: 600px">${obj[key].introduce}</div>
 							</div>`;
                 }
                 document.getElementById('wapper').innerHTML = str;
             } else {
-                
+
             }
         }
     })

@@ -11,7 +11,7 @@ function getDetails() {
     //TODO 前端json-get标准格式
     let name = getQueryVariable("name");
     $.ajax({
-        url: "Pet/getDetails?name=" + name,
+        url: "../Pet/getDetails?name=" + name,
         type: "get",
         dataType: "json",
         success: function (data) {
@@ -93,7 +93,7 @@ function addToCart() {
             quantity: num
         };
         $.ajax({
-            url: "Cart/addCartItem",
+            url: "../Cart/addCartItem",
             type: "post",
             data: JSON.stringify(data),
             success: function (data) {

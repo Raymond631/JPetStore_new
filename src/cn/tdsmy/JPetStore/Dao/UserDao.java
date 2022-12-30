@@ -1,6 +1,5 @@
 package cn.tdsmy.JPetStore.Dao;
 
-import cn.tdsmy.JPetStore.Entity.Profile;
 import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
 
@@ -28,5 +27,4 @@ public interface UserDao {
 
     public void updateReceiver(String username, List<Receiver> receiver);
 
-    public void updateProfile(String username, Profile profile);
 }

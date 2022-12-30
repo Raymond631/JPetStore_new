@@ -12,7 +12,7 @@
 	<title>Title</title>
 </head>
 <body>
-<%@include file="../Common/LeftBack.jsp" %>
+<%@include file="LeftBack.jsp" %>
 <div class="mainBox">
 	<div class="view">
 		<div class="label">
@@ -94,10 +94,10 @@
 					<td>
 						Cat1
 					</td>
-					<td id="">
+					<td>
 						1245
 					</td>
-					<td id="">
+					<td>
 						4233
 					</td>
 				</tr>
@@ -105,10 +105,10 @@
 					<td>
 						Cat2
 					</td>
-					<td id="">
+					<td>
 						1233
 					</td>
-					<td id="">
+					<td>
 						2343
 					</td>
 				</tr>
@@ -116,20 +116,20 @@
 					<td>
 						Cat3
 					</td>
-					<td id="">
+					<td>
 						3253
 					</td>
-					<td id="">
+					<td>
 						1233
 					</td>
 				</tr>
 				<tr>
 					<td>
 						Cat4
-					<td id="">
+					<td>
 						2342
 					</td>
-					<td id="">
+					<td>
 						1002
 					</td>
 				</tr>
@@ -137,10 +137,10 @@
 					<td>
 						Cat5
 					</td>
-					<td id="">
+					<td>
 						2342
 					</td>
-					<td id="">
+					<td>
 						694
 					</td>
 				</tr>

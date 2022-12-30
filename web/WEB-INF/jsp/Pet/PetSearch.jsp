@@ -15,7 +15,7 @@
 	<div class="container">
 		<!--logo -->
 		<div class="header-logo">
-			<a class="logo ir" href="../"></a>
+			<a class="logo ir" href=".."></a>
 		</div>
 		<!-- 标题 -->
 		<div class="header-title has-more" id="J_miniHeaderTitle">
@@ -25,7 +25,7 @@
 		<div class="topbar-info" id="J_userInfo">
 			<a rel="nofollow" class="link link-order" href="#">欢迎光临：${sessionScope.user.username}</a>
 			<span class="sep">|</span>
-			<a rel="nofollow" class="link link-order" href="../">返回首页</a>
+			<a rel="nofollow" class="link link-order" href="..">返回首页</a>
 		</div>
 	</div>
 </header>

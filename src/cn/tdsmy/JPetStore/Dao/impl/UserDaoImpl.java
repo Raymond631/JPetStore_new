@@ -2,7 +2,6 @@ package cn.tdsmy.JPetStore.Dao.impl;
 
 import cn.tdsmy.JPetStore.Dao.UserDao;
 import cn.tdsmy.JPetStore.Dao.Utils.DBUtils;
-import cn.tdsmy.JPetStore.Entity.Profile;
 import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
 
@@ -117,18 +116,6 @@ public class UserDaoImpl implements UserDao {
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void updateProfile(String username, Profile profile) {
-        String sql = "update profile set languagePreference='" + profile.getLanguagePreference() + "',favouriteCategory ='"
-                + profile.getFavouriteCategory() + "',enableMyList='" + profile.getEnableMyList() + "',enableMyBanner='" + profile.getEnableMyBanner() + "' where username ='" + username + "'";
-        try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.executeUpdate();
-        }
-        catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 }

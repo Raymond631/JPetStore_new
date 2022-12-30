@@ -1,12 +1,9 @@
 package cn.tdsmy.JPetStore.Controller;
 
-import cn.tdsmy.JPetStore.Entity.Profile;
 import cn.tdsmy.JPetStore.Entity.Receiver;
 import cn.tdsmy.JPetStore.Entity.User;
-import cn.tdsmy.JPetStore.Service.BackStage;
 import cn.tdsmy.JPetStore.Service.LogService;
 import cn.tdsmy.JPetStore.Service.UserService;
-import cn.tdsmy.JPetStore.Service.impl.BackStageImpl;
 import cn.tdsmy.JPetStore.Service.impl.LogServiceImpl;
 import cn.tdsmy.JPetStore.Service.impl.UserServiceImpl;
 import com.alibaba.fastjson.JSONArray;
@@ -36,8 +33,6 @@ public class UserServlet extends HttpServlet {
     private UserService userService;
     private LogService logService;
 
-    private BackStage backStage;
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         urlDistribute(req, resp);
@@ -55,105 +50,45 @@ public class UserServlet extends HttpServlet {
         if (logService == null) {
             logService = new LogServiceImpl();
         }
-        if (backStage == null) {
-            backStage = new BackStageImpl();
-        }
 
         String url = req.getPathInfo();
         switch (url) {
-            case "/showRegister"://注册页面
-                showRegister(req, resp);
-                break;
-            case "/register"://注册判断
-                register(req, resp);
-                break;
             case "/showLogin"://登录页面
                 showLogin(req, resp);
                 break;
-            case "/login"://登录判断
-                login(req, resp);
+            case "/showRegister"://注册页面
+                showRegister(req, resp);
                 break;
-            case "/signOut"://退出登录
-                signOut(req, resp);
-                break;
-            case "/personalCenter"://个人中心
-                personalCenter(req, resp);
-                break;
-            case "/changePassword"://修改密码
-                changePassword(req, resp);
-                break;
-            case "/updateReceiver"://更新收件人信息
-                updateReceiver(req, resp);
-                break;
-            case "/updateProfile"://更新偏好信息
-                updateProfile(req, resp);
+            case "/SelfCenter"://个人中心
+                SelfCenter(req, resp);
                 break;
             case "/verificationCode"://验证码
                 verificationCode(req, resp);
                 break;
-            case "/BackStage"://后台
-                BackStage(req, resp);
+            case "/login"://登录判断
+                login(req, resp);
                 break;
-            case "/IndexBack"://后台首页
-                IndexBack(req, resp);
+            case "/register"://注册判断
+                register(req, resp);
                 break;
+            case "/changePassword"://修改密码
+                changePassword(req, resp);
+                break;
+            case "/signOut"://退出登录
+                signOut(req, resp);
+                break;
+            //下面的为AJAX
             case "/UsernameExist"://判断用户名是否存在
                 userExist(req, resp);
                 break;
-            case "/ServiceBack"://后台前往客服
-                serviceBack(req, resp);
+            case "/checkPassword":
+                checkPassword(req, resp);
                 break;
-        }
-    }
+            case "/updateReceiver"://更新收件人信息
+                updateReceiver(req, resp);
+                break;
 
 
-    public void showRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logService.addLog(req, "Other", "跳往注册界面", "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
-    }
-
-    public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String vCode = req.getParameter("vCode");//获得输入的验证码值
-        String checkCode = (String) req.getSession().getAttribute("checkCode");//获取图片的值
-        if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
-        {
-            req.setAttribute("messageBox", "验证码错误！");
-            logService.addLog(req, "Other", "注册验证码错误", "false");
-            req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
-        }
-        else {
-            //获取用户输入的用户名和密码
-            String username = req.getParameter("username");
-            String password = req.getParameter("password");
-            String password_repeat = req.getParameter("password_repeat");
-            if (!password.equals(password_repeat)) {
-                req.setAttribute("messageBox", "两次输入的密码不一致！");
-
-                logService.addLog(req, "Read", "两次输入的密码不一致，无法注册", "false");
-                req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
-            }
-            else {
-                User user = new User();
-                user.setUsername(username);
-                user.setPassword(password);
-
-                if (userService.register(user))//注册成功（进行用户名查重）
-                {
-//                    user.setReceiver(userService.getReceiver(username));
-//                    user.setProfile(userService.getProfile(username));
-                    req.getSession().setAttribute("user", user);
-
-                    logService.addLog(req, "Create", "注册新用户,username=" + username, "true");
-                    resp.sendRedirect(req.getContextPath());//请求重定向，避免刷新时重复提交表单
-                }
-                else//用户名已存在
-                {
-                    req.setAttribute("messageBox", "用户名已存在！");
-
-                    logService.addLog(req, "Read", "用户名重复，无法注册", "false");
-                    req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
-                }
-            }
         }
     }
 
@@ -162,90 +97,14 @@ public class UserServlet extends HttpServlet {
         req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
     }
 
-    public void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String vCode = req.getParameter("vCode");//获得输入的验证码值
-        String checkCode = (String) req.getSession().getAttribute("checkCode");//获取图片的值
-        if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
-        {
-            req.setAttribute("messageBox", "验证码错误！");
-
-            logService.addLog(req, "Other", "登录验证码错误", "false");
-            req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
-        }
-        else {
-            String username = req.getParameter("username");
-            String password = req.getParameter("password");
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-
-            if (userService.login(user))//登录成功
-            {
-                if (username.equals("root"))//超级管理员，登录后台界面
-                {
-                    req.getSession().setAttribute("user", user);
-
-                    logService.addLog(req, "Read", "管理员查看用户日志" + username, "true");
-                    resp.sendRedirect(req.getContextPath() + "/User/IndexBack");
-                }
-                else//普通用户
-                {
-//                    user.setReceiver(userService.getReceiver(username));
-//                    user.setProfile(userService.getProfile(username));
-                    req.getSession().setAttribute("user", user);//通过session保持登录状态
-
-                    logService.addLog(req, "Read", "登录,username=" + username, "true");
-                    resp.sendRedirect(req.getContextPath());
-                }
-            }
-            else//用户名或密码错误
-            {
-                req.setAttribute("messageBox", "用户名或密码错误！");
-
-                logService.addLog(req, "Read", "用户名或密码错误，登录失败", "false");
-                req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
-            }
-        }
+    public void showRegister(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logService.addLog(req, "Other", "跳往注册界面", "true");
+        req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
     }
 
-    public void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("user", null);
-
-        logService.addLog(req, "Other", "退出登录", "true");
-        resp.sendRedirect(req.getContextPath());
-    }
-
-    public void personalCenter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-//        user.setReceiver(userService.getReceiver(user.getUsername()));
-//        user.setProfile((userService.getProfile(user.getUsername())));
-        req.getSession().setAttribute("user", user);
-
+    public void SelfCenter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logService.addLog(req, "Read", "查看个人中心", "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/User/PersonalCenter.jsp").forward(req, resp);
-    }
-
-    public void changePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        String password = req.getParameter("newPassword");
-        user.setPassword(password);
-        userService.changePassword(user);
-
-        logService.addLog(req, "Update", "修改密码", "true");
-        resp.sendRedirect("../User/personalCenter");
-    }
-
-    public void updateProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
-        String languagePreference = req.getParameter("languagePreference");
-        String favouriteCategory = req.getParameter("favouriteCategory");
-        String enableMyList = req.getParameter("enableMyList");
-        String enableMyBanner = req.getParameter("enableMyBanner");
-        Profile profile = new Profile(languagePreference, favouriteCategory, enableMyList, enableMyBanner);
-        userService.updateProfile(user.getUsername(), profile);
-
-        logService.addLog(req, "Update", "修改个人信息", "true");
-        resp.sendRedirect("../User/personalCenter");
+        req.getRequestDispatcher("/WEB-INF/jsp/User/SelfCenter.jsp").forward(req, resp);
     }
 
     public void verificationCode(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -321,35 +180,172 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    public void BackStage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/jsp/BackStage/Index.jsp").forward(req, resp);
-//        User user = (User) req.getSession().getAttribute("user");
-//        if (user.getUsername().equals("root"))//防止普通用户直接访问
-//        {
-//            List<UserLog> userLogList = logService.getLog();
-//            req.setAttribute("userLogList", userLogList);
-//            req.getRequestDispatcher("/WEB-INF/jsp/User/UserLog.jsp").forward(req, resp);
-//        }
+    public void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String vCode = req.getParameter("vCode");//获得输入的验证码值
+        String checkCode = (String) req.getSession().getAttribute("checkCode");//获取图片的值
+        if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
+        {
+            req.setAttribute("messageBox", "验证码错误！");
+            logService.addLog(req, "Other", "登录验证码错误", "false");
+            req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
+        }
+        else {
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+
+            if (userService.login(user))//登录成功
+            {
+                if (username.equals("root"))//超级管理员，登录后台界面
+                {
+                    req.getSession().setAttribute("user", user);
+                    logService.addLog(req, "Read", "管理员查看用户日志" + username, "true");
+                    resp.sendRedirect(req.getContextPath() + "/BackStage/IndexBack");
+                }
+                else//普通用户
+                {
+                    req.getSession().setAttribute("user", user);//通过session保持登录状态
+                    logService.addLog(req, "Read", "登录,username=" + username, "true");
+                    resp.sendRedirect(req.getContextPath());
+                }
+            }
+            else//用户名或密码错误
+            {
+                req.setAttribute("messageBox", "用户名或密码错误！");
+                logService.addLog(req, "Read", "用户名或密码错误，登录失败", "false");
+                req.getRequestDispatcher("/WEB-INF/jsp/User/Login.jsp").forward(req, resp);
+            }
+        }
     }
 
+    public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String vCode = req.getParameter("vCode");//获得输入的验证码值
+        String checkCode = (String) req.getSession().getAttribute("checkCode");//获取图片的值
+        if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
+        {
+            req.setAttribute("messageBox", "验证码错误！");
+            logService.addLog(req, "Other", "注册验证码错误", "false");
+            req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+        }
+        else {
+            //获取用户输入的用户名和密码
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
+            String password_repeat = req.getParameter("password_repeat");
+            if (!password.equals(password_repeat)) {
+                req.setAttribute("messageBox", "两次输入的密码不一致！");
+
+                logService.addLog(req, "Read", "两次输入的密码不一致，无法注册", "false");
+                req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+            }
+            else {
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword(password);
+
+                if (userService.register(user))//注册成功（进行用户名查重）
+                {
+                    req.getSession().setAttribute("user", user);
+                    logService.addLog(req, "Create", "注册新用户,username=" + username, "true");
+                    resp.sendRedirect(req.getContextPath());//请求重定向，避免刷新时重复提交表单
+                }
+                else//用户名已存在
+                {
+                    req.setAttribute("messageBox", "用户名已存在！");
+
+                    logService.addLog(req, "Read", "用户名重复，无法注册", "false");
+                    req.getRequestDispatcher("/WEB-INF/jsp/User/Register.jsp").forward(req, resp);
+                }
+            }
+        }
+    }
+
+    public void changePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String vCode = req.getParameter("vCode");//获得输入的验证码值
+        String checkCode = (String) req.getSession().getAttribute("checkCode");//获取图片的值
+        if (!vCode.equalsIgnoreCase(checkCode))//验证码错误
+        {
+            req.setAttribute("messageBox", "验证码错误！");
+            logService.addLog(req, "Other", "改密验证码错误", "false");
+            req.getRequestDispatcher("/WEB-INF/jsp/User/SelfCenter.jsp").forward(req, resp);
+        }
+        else {
+            User user = (User) req.getSession().getAttribute("user");
+            String password_old = req.getParameter("password_old");
+            String password_new = req.getParameter("password_new");
+            String password_repeat = req.getParameter("password_repeat");
+            System.out.println(password_old + ":" + password_new + ":" + password_repeat);
+            if (!password_old.equals(user.getPassword())) {
+                req.setAttribute("messageBox", "原密码错误！");
+                logService.addLog(req, "Other", "改密原密码错误", "false");
+                req.getRequestDispatcher("/WEB-INF/jsp/User/SelfCenter.jsp").forward(req, resp);
+            }
+            else {
+                if (!password_new.equals(password_repeat)) {
+                    req.setAttribute("messageBox", "两次输入的密码不一致！");
+                    logService.addLog(req, "Other", "改密两次输入的密码不一致", "false");
+                    req.getRequestDispatcher("/WEB-INF/jsp/User/SelfCenter.jsp").forward(req, resp);
+                }
+                else {
+                    user.setPassword(password_new);
+                    userService.changePassword(user);
+                    logService.addLog(req, "Update", "修改密码", "true");
+                    resp.sendRedirect("../");
+                }
+            }
+        }
+    }
+
+    public void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().setAttribute("user", null);
+
+        logService.addLog(req, "Other", "退出登录", "true");
+        resp.sendRedirect(req.getContextPath());
+    }
+
+    //下面的为AJAX
     public void userExist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         User user = new User();
         user.setUsername(username);
 
+        resp.setContentType("text/plain");
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        PrintWriter out = resp.getWriter();
         if (userService.registerSuccess(user))//注册成功（进行用户名查重）
         {
-            resp.setContentType("text/plain");
-            resp.setHeader("Access-Control-Allow-Origin", "*");
-            PrintWriter out = resp.getWriter();
             out.print("");
         }
         else//用户名已存在
         {
-            resp.setContentType("text/plain");
-            resp.setHeader("Access-Control-Allow-Origin", "*");
-            PrintWriter out = resp.getWriter();
             out.print("用户名已存在");
+        }
+    }
+
+    public void checkPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
+        String password_old = (String) obj.get("password");
+
+        User user = (User) req.getSession().getAttribute("user");
+        String password = user.getPassword();
+
+        resp.setContentType("text/plain");
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        PrintWriter out = resp.getWriter();
+        if (password_old.equals(password))//原密码输入正确
+        {
+            out.print("");
+        }
+        else {
+            out.print("原密码有误，请重新输入！");
         }
     }
 
@@ -376,22 +372,4 @@ public class UserServlet extends HttpServlet {
         userService.updateReceiver(user.getUsername(), receiverList);
     }
 
-    public void IndexBack(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        User user = (User) req.getSession().getAttribute("user");
-        //下面先注释掉
-//        if (user.getUsername().equals("root"))//防止普通用户直接访问
-//        {
-//        List<UserLog> userLogList = logService.getLog();
-//        req.setAttribute("userLogList", userLogList);
-        JSONObject jsonObject = backStage.getIndexData();
-        req.setAttribute("json", jsonObject);
-        req.getRequestDispatcher("/WEB-INF/jsp/User/IndexBack.jsp").forward(req, resp);
-//        }
-    }
-
-    public void serviceBack(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("user", null);
-        //  logService.addLog(req, "Other", "", "true");
-        req.getRequestDispatcher("/WEB-INF/jsp/User/ServiceBack.jsp").forward(req, resp);
-    }
 }

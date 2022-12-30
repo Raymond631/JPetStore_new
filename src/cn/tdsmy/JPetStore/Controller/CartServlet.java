@@ -50,6 +50,13 @@ public class CartServlet extends HttpServlet {
 
         String url = req.getPathInfo();
         switch (url) {
+            case "/cartList":
+                cartList(req, resp);//查
+                break;
+            //下面的是AJAX
+            case "/getData":
+                getData(req, resp);//查
+                break;
             case "/addCartItem":
                 addCartItem(req, resp);//增
                 break;
@@ -59,14 +66,8 @@ public class CartServlet extends HttpServlet {
             case "/updateCart":
                 updateCart(req, resp);//改
                 break;
-            case "/cartList":
-                cartList(req, resp);//查
-                break;
-            case "/getData":
-                getData(req, resp);//查
-                break;
             case "/CheckOut":
-                CheckOut(req, resp);//
+                CheckOut(req, resp);
                 break;
         }
     }
@@ -83,6 +84,7 @@ public class CartServlet extends HttpServlet {
         }
     }
 
+    //下面的为AJAX
     public void getData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         List<CartJson> cartItemList = cartService.selectCartList(user.getUsername());
@@ -92,42 +94,6 @@ public class CartServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(cartItemList));
-    }
-
-    public void updateCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //TODO 后端解析JSON对象
-        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
-        StringBuilder responseStrBuilder = new StringBuilder();
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-            responseStrBuilder.append(inputStr);
-        }
-        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
-
-        String itemID = (String) obj.get("itemID");
-        int quantity = (int) obj.get("quantity");
-        User user = (User) req.getSession().getAttribute("user");
-        cartService.updateCart(user.getUsername(), itemID, quantity);
-
-        logService.addLog(req, "Update", "修改购物车商品数量", "true");
-        resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
-    }
-
-    public void removeCartItem(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
-        StringBuilder responseStrBuilder = new StringBuilder();
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-            responseStrBuilder.append(inputStr);
-        }
-        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
-
-        String itemID = (String) obj.get("itemID");
-        User user = (User) req.getSession().getAttribute("user");
-        cartService.removeCartItem(user.getUsername(), itemID);
-
-        logService.addLog(req, "Delete", "移出购物车，itemID=" + itemID, "true");
-        resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
 
     public void addCartItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -160,6 +126,42 @@ public class CartServlet extends HttpServlet {
 
             logService.addLog(req, "Create", "加入购物车,itemID=" + itemID, "true");
         }
+    }
+
+    public void removeCartItem(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
+
+        String itemID = (String) obj.get("itemID");
+        User user = (User) req.getSession().getAttribute("user");
+        cartService.removeCartItem(user.getUsername(), itemID);
+
+        logService.addLog(req, "Delete", "移出购物车，itemID=" + itemID, "true");
+        resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
+    }
+
+    public void updateCart(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //TODO 后端解析JSON对象
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String inputStr;
+        while ((inputStr = streamReader.readLine()) != null) {
+            responseStrBuilder.append(inputStr);
+        }
+        JSONObject obj = JSONObject.parseObject(responseStrBuilder.toString());
+
+        String itemID = (String) obj.get("itemID");
+        int quantity = (int) obj.get("quantity");
+        User user = (User) req.getSession().getAttribute("user");
+        cartService.updateCart(user.getUsername(), itemID, quantity);
+
+        logService.addLog(req, "Update", "修改购物车商品数量", "true");
+        resp.sendRedirect(req.getContextPath() + "/Cart/cartList");
     }
 
     public void CheckOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {

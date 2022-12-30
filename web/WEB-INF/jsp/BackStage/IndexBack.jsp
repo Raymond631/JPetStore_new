@@ -16,7 +16,7 @@
 	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-<%@include file="../Common/LeftBack.jsp" %>
+<%@include file="LeftBack.jsp" %>
 <div class="mainBox">
 	<div class="topName">JPetstore Backstage</div>
 	<div class="topContent">
@@ -25,13 +25,13 @@
 			to JPetstore backstage management system
 		</div>
 		<div class="fourButton">
-			<a href="">
+			<a href="#">
 				<li style="background-color: rgb(28,132,198);">User</li>
 			</a>
-			<a href="../Pet/ProductAllBack">
+			<a href="../BackStage/ProductAllBack">
 				<li style="background-color: rgb(35,198,200);">Product</li>
 			</a>
-			<a href="../User/ServiceBack">
+			<a href="../BackStage/ServiceBack">
 				<li style="background-color: rgb(26,179,148);">Call center</li>
 			</a>
 			<a href="../User/signOut">
@@ -41,7 +41,7 @@
 	</div>
 	<div class="bottomLeft">
 		<div class="introduction">We have 5 species,</br>each with 5 different varieties.</div>
-		<a href="../" style="font-size:20px;padding-left:30px;color:black"> check there to see</a>
+		<a href=".." style="font-size:20px;padding-left:30px;color:black"> check there to see</a>
 	</div>
 	<div class="bottomRight">
 		<div class="label">Tips</div>
