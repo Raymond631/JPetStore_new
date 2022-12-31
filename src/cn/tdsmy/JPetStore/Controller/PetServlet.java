@@ -95,7 +95,6 @@ public class PetServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");//跨域，这里其实不需要设置
         resp.getWriter().print(JSON.toJSONString(productList));
-        System.out.println(JSON.toJSONString(productList));
     }
 
     public void getDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -9,7 +9,6 @@ function getData() {
         type: "get",
         dataType: "json",
         success: function (obj) {
-            console.log(obj)
             if (obj.length > 0) {
                 let str = '';
                 for (var key in obj) {

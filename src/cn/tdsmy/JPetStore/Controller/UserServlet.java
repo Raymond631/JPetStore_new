@@ -87,8 +87,6 @@ public class UserServlet extends HttpServlet {
             case "/updateReceiver"://更新收件人信息
                 updateReceiver(req, resp);
                 break;
-
-
         }
     }
 
@@ -276,7 +274,6 @@ public class UserServlet extends HttpServlet {
             String password_old = req.getParameter("password_old");
             String password_new = req.getParameter("password_new");
             String password_repeat = req.getParameter("password_repeat");
-            System.out.println(password_old + ":" + password_new + ":" + password_repeat);
             if (!password_old.equals(user.getPassword())) {
                 req.setAttribute("messageBox", "原密码错误！");
                 logService.addLog(req, "Other", "改密原密码错误", "false");

@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    console.log("加载js")
     getDetails();
 })
 
@@ -14,7 +13,6 @@ function getDetails() {
         type: "get",
         dataType: "json",
         success: function (data) {
-            console.log("收到数据")
             let str = '<p class="order_box_p"><label for="receiver_name">姓名</label><input type="text" id="receiver_name" name="receiver_name" value="' + data.receiver.receiverName + '" disabled></p>' +
                 '<p class="order_box_p"><label for="receiver_tel">联系方式</label><input type="tel" id="receiver_tel" name="receiver_tel" value="' + data.receiver.phoneNumber + '" disabled></p>' +
                 '<p class="order_box_p"><label for="receiver_adr">收货地址</label><input type="text" id="receiver_adr" name="receiver_adr" value="' + data.receiver.address + '" disabled></p>';
@@ -25,7 +23,6 @@ function getDetails() {
             $("#cost").html(data.totalPrice);
 
             let items = data.cartItemList;
-            console.log(items)
             let str2 = "";
             for (let i = 0; i < items.length; i++) {
                 let item_cost = items[i].listPrice * items[i].quantity;
@@ -35,7 +32,6 @@ function getDetails() {
                     '<div class="order_price1"><p class="order_price_2" style="margin-top: 20px">' + item_cost + '</p></div>' +
                     '<div class="order_lien_in"></div>' + '</div>';
             }
-            console.log(str2)
             $("#order_item").html(str2);
         }
     });

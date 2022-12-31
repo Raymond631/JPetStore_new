@@ -7,7 +7,6 @@ $(function () {
     $('#username').on('blur', function (e) {
         e.preventDefault();
         var FormData = $('#registerForm').serialize();
-        console.log(FormData)
         $.ajax({
             type: 'POST',
             url: '../User/UsernameExist',

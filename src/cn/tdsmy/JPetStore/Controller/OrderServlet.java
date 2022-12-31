@@ -160,7 +160,6 @@ public class OrderServlet extends HttpServlet {
     public void getOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
         List<Order> orderList = orderService.getOrder(user.getUsername());
-        System.out.println(JSON.toJSONString(orderList));
 
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");

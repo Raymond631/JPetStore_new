@@ -11,5 +11,4 @@ $(".list_one").click(function () {
 
 $(".List_two").click(function () {
     let nexUrl = $(this).attr("value");
-    console.log(" next" + nexUrl)
 });

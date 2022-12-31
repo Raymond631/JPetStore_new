@@ -130,7 +130,6 @@ var xiaomi = {
         // 求和
         function sum() {
             if (isSelectAll() && !isEmpty) {
-                console.log("展示")
                 J_noSelectTip.style.display = 'none';
                 J_goCheckout.classList.remove('btn-disabled');
             } else {

@@ -24,7 +24,6 @@ public class PetDaoImpl implements PetDao {
     {
         List<Product> productList = new ArrayList<>();
         String sql = "select * from product where name like '%" + key + "%'";
-        System.out.println(sql);
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
             while (res.next()) {
                 String name = res.getString("name");//品种名
@@ -49,7 +48,6 @@ public class PetDaoImpl implements PetDao {
     public List<String> searchTips(String key) {
         List<String> productList = new ArrayList<>();
         String sql = "select * from product where name like '%" + key + "%'";
-        System.out.println(sql);
         try (Connection connection = DBUtils.getConnection(); PreparedStatement statement = connection.prepareStatement(sql); ResultSet res = statement.executeQuery(sql)) {
             while (res.next()) {
                 String name = res.getString("name");//品种名

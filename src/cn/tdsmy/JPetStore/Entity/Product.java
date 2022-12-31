@@ -1,5 +1,6 @@
 package cn.tdsmy.JPetStore.Entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
  * @Date: 2022/10/31 23:10
  * @Version 1.0
  */
-public class Product {
+public class Product implements Serializable {
+    private static final long serialVersionUID = 5580221200308457910L;
     private String category;
     private String productID;
     private String name;
